@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Idle_Breathe",
+    "first_image": 0,
+    "image_count": 25,
+    "preview_fps": 12
+  },
+  {
+    "name": "Walk",
+    "first_image": 25,
+    "image_count": 25,
+    "preview_fps": 12
+  },
+  {
+    "name": "Happy_Tail",
+    "first_image": 50,
+    "image_count": 31,
+    "preview_fps": 12
+  },
+  {
+    "name": "Takeoff_Hover",
+    "first_image": 81,
+    "image_count": 51,
+    "preview_fps": 12
+  }
+]

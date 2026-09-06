@@ -1,0 +1,43 @@
+{
+  "blender_version": "4.5.3 LTS",
+  "mesh_objects": 150,
+  "vertices": 1045157,
+  "triangles": 1473957,
+  "deform_bones": 33,
+  "control_bones": 8,
+  "groom_strands": 122969,
+  "clips": [
+    {
+      "name": "Idle_Breathe",
+      "frames": [
+        1.0,
+        121.0
+      ],
+      "fps": 30
+    },
+    {
+      "name": "Walk",
+      "frames": [
+        1.0,
+        41.0
+      ],
+      "fps": 30
+    },
+    {
+      "name": "Happy_Tail",
+      "frames": [
+        1.0,
+        91.0
+      ],
+      "fps": 30
+    },
+    {
+      "name": "Takeoff_Hover",
+      "frames": [
+        1.0,
+        151.0
+      ],
+      "fps": 30
+    }
+  ]
+}

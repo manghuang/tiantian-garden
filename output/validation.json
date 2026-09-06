@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "file": "Skye_Animated.glb",
+  "size_bytes": 73777516,
+  "exported_vertices_including_uv_splits": 1082515,
+  "joint_count": 33,
+  "max_weight_sum_error": 1.7881393432617188e-07,
+  "animations": [
+    {
+      "name": "Idle_Breathe",
+      "duration_seconds": 4.0,
+      "bone_channels": 99,
+      "morph_channels": 1,
+      "changing_channels": 12
+    },
+    {
+      "name": "Walk",
+      "duration_seconds": 1.3333,
+      "bone_channels": 99,
+      "morph_channels": 1,
+      "changing_channels": 22
+    },
+    {
+      "name": "Happy_Tail",
+      "duration_seconds": 3.0,
+      "bone_channels": 99,
+      "morph_channels": 1,
+      "changing_channels": 14
+    },
+    {
+      "name": "Takeoff_Hover",
+      "duration_seconds": 5.0,
+      "bone_channels": 99,
+      "morph_channels": 1,
+      "changing_channels": 20
+    }
+  ],
+  "checks": [
+    "All geometry, joint matrices, UVs, morphs and animation samples are finite.",
+    "Every exported mesh is skinned; joint references and normalized weights are valid.",
+    "All four animations include sampled bone movement and a blinking morph channel.",
+    "All textures are embedded; the GLB has no external image dependencies."
+  ]
+}

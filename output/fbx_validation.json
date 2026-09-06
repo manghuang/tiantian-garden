@@ -1,0 +1,16 @@
+{
+  "armatures": 1,
+  "bones": [
+    33
+  ],
+  "animation_actions": [
+    "Key|Skye_Rig|Happy_Tail",
+    "Key|Skye_Rig|Idle_Breathe",
+    "Key|Skye_Rig|Takeoff_Hover",
+    "Key|Skye_Rig|Walk",
+    "Skye_Rig|Skye_Rig|Happy_Tail",
+    "Skye_Rig|Skye_Rig|Idle_Breathe",
+    "Skye_Rig|Skye_Rig|Takeoff_Hover",
+    "Skye_Rig|Skye_Rig|Walk"
+  ]
+}

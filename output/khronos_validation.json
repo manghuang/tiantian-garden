@@ -1,0 +1,67 @@
+{
+  "uri": "Skye_Animated.glb",
+  "mimeType": "model/gltf-binary",
+  "validatorVersion": "2.0.0-dev.3.10",
+  "validatedAt": "2026-09-06T01:42:16.897Z",
+  "issues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "info": {
+    "version": "2.0",
+    "generator": "Khronos glTF Blender I/O v4.5.48",
+    "extensionsUsed": [
+      "KHR_materials_clearcoat"
+    ],
+    "resources": [
+      {
+        "pointer": "/buffers/0",
+        "mimeType": "application/gltf-buffer",
+        "storage": "glb",
+        "byteLength": 73540692
+      },
+      {
+        "pointer": "/images/0",
+        "mimeType": "image/png",
+        "storage": "buffer-view",
+        "image": {
+          "width": 512,
+          "height": 512,
+          "format": "rgba",
+          "primaries": "srgb",
+          "transfer": "srgb",
+          "bits": 8
+        }
+      },
+      {
+        "pointer": "/images/1",
+        "mimeType": "image/png",
+        "storage": "buffer-view",
+        "image": {
+          "width": 1024,
+          "height": 1024,
+          "format": "rgba",
+          "primaries": "srgb",
+          "transfer": "srgb",
+          "bits": 8
+        }
+      }
+    ],
+    "animationCount": 4,
+    "materialCount": 20,
+    "hasMorphTargets": true,
+    "hasSkins": true,
+    "hasTextures": true,
+    "hasDefaultScene": true,
+    "drawCallCount": 151,
+    "totalVertexCount": 1082515,
+    "totalTriangleCount": 1473957,
+    "maxUVs": 1,
+    "maxInfluences": 4,
+    "maxAttributes": 6
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "Skye_Rigged.blend": {
+    "bytes": 39325342,
+    "sha256": "b5c05aab4a6cd78eec2a5a3bbf2e3eb034984b1677fb8c5b91cc2ef3e23037a7"
+  },
+  "Skye_Animated.glb": {
+    "bytes": 73777516,
+    "sha256": "13f1bef21834c496f824cc59ef87d47c545a0445ec527b2ec72cdc36332906f4"
+  },
+  "Skye_Animated.fbx": {
+    "bytes": 52988236,
+    "sha256": "da44a1e26792dc2b4f6a2d13af57b5c37483f94a9a2fbbb8ac35c4c3cc2263b4"
+  },
+  "Skye_Animation_Demo.mp4": {
+    "bytes": 893482,
+    "sha256": "6dbc67a427538b16781c7c1f957546b90bae6c808086927e330c5a88ad544af3"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "imported_bones": 33,
+  "skinned_meshes": 150,
+  "actions": [
+    "Happy_Tail",
+    "Idle_Breathe",
+    "Takeoff_Hover",
+    "Walk"
+  ]
+}
