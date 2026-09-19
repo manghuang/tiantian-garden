@@ -4,7 +4,7 @@
 
 ## 儿童实时互动服务
 
-新增 [天天的小花园](companion/README.md)：复用当前 GLB 的浏览器互动服务。[Cloudflare 学习演示版](https://tiantian-garden.1255529524.workers.dev) 已接入中文语音识别、DeepSeek 对话/动作和默认 MiniMax Speech 2.8 Turbo；云端合成暂时不可用时，手机会尝试系统中文朗读，本机 GPU 角色声音和 MeloTTS 仍可选。预录音完整链路及打断恢复通过。双击 `Start_Local_Voice.cmd` 启动本机音色，使用期间电脑需保持开机；线上口令在 `companion/.env.production`。音色与原版的一致性、实际麦克风及浏览器播放仍待试听验收。部署见 [Cloudflare 说明](companion/CLOUDFLARE.md)，音色见 [本机运行说明](companion/local-voice/README.md)。`Start_Cloudflare.cmd` 启动 8787 本地开发版，`Start_Companion.cmd` 保留为旧 Node 入口。
+新增 [天天的小花园](companion/README.md)：复用当前 GLB 的浏览器互动服务。[Cloudflare 学习演示版](https://tiantian-garden.1255529524.workers.dev) 已接入中文语音识别、DeepSeek 对话/动作和默认 MiniMax Speech 2.8 Turbo；云端合成暂时不可用时，手机会尝试系统中文朗读，本机 GPU 角色声音和 MeloTTS 仍可选。预录音完整链路及打断恢复通过。双击 `Start_Local_Voice.cmd` 启动本机音色，使用期间电脑需保持开机；线上口令在 `companion/.env.production`。音色与原版的一致性、实际麦克风及浏览器播放仍待试听验收。部署见 [Cloudflare 说明](companion/docs/CLOUDFLARE.md)，音色见 [本机运行说明](companion/local-voice/README.md)。`Start_Cloudflare.cmd` 启动 8787 本地开发版，`Start_Companion.cmd` 保留为旧 Node 入口。
 
 ## 本次更新
 

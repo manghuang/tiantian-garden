@@ -71,7 +71,7 @@ test('happy hops stay bounded and stronger motion settles to grounded neutral at
 });
 
 test('all bundled voice entries exist as non-silent PCM WAV and cover every preset reply', () => {
-  const entries = JSON.parse(readFileSync(new URL('../scripts/voice-input.json', import.meta.url)));
+  const entries = JSON.parse(readFileSync(new URL('../scripts/voice/voice-input.json', import.meta.url)));
   const lookup = JSON.parse(readFileSync(new URL('../src/voice-assets.json', import.meta.url)));
   assert.ok(entries.length >= 36);
   for (const entry of entries) {

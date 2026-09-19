@@ -5,7 +5,7 @@ import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {spawn} from 'node:child_process';
 import {Agent} from 'undici';
-const root=fileURLToPath(new URL('../',import.meta.url));
+const root=fileURLToPath(new URL('../../',import.meta.url));
 const config=parseEnv(await readFile(resolve(root,'.env.voice.local'),'utf8'));
 const source=resolve(root,config.REFERENCE_WAV), ffmpeg=resolve(root,'../.tools/GPT-SoVITS/ffmpeg.exe'), output=resolve(root,'../output/voice-auditions/reference-levels');
 await mkdir(output,{recursive:true});

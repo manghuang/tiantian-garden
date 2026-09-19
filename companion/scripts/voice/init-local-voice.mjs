@@ -4,7 +4,7 @@ import { parseEnv } from 'node:util';
 import { randomBytes } from 'node:crypto';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-const root = fileURLToPath(new URL('../', import.meta.url));
+const root = fileURLToPath(new URL('../../', import.meta.url));
 const path = resolve(root, '.env.voice.local');
 let raw;
 try { raw = await readFile(path, 'utf8'); }

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
-process.loadEnvFile(fileURLToPath(new URL('../.dev.vars', import.meta.url)));
+process.loadEnvFile(fileURLToPath(new URL('../../.dev.vars', import.meta.url)));
 const origin = 'http://127.0.0.1:8787';
 const request = (path, options = {}) => fetch(origin + path, { ...options, headers: { Origin: origin, ...options.headers } });
 assert.equal((await request('/api/health')).status, 200);

@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { parseEnv } from 'node:util';
 import { fetch, WebSocket, EnvHttpProxyAgent } from 'undici';
 
-const root = new URL('../', import.meta.url);
+const root = new URL('../../', import.meta.url);
 const credentials = parseEnv(readFileSync(new URL('.env.production', root), 'utf8'));
 const deployment = JSON.parse(readFileSync(new URL('wrangler.jsonc', root), 'utf8'));
 const origin = deployment.vars.PUBLIC_ORIGIN;

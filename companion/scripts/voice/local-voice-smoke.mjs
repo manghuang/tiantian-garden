@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
 import { Miniflare, convertV4MiniflareOptions } from 'miniflare';
-const root = new URL('../', import.meta.url);
+const root = new URL('../../', import.meta.url);
 const bundled = await build({ entryPoints: [fileURLToPath(new URL('tests/fixtures/relay-worker.js', root))], bundle: true, write: false, format: 'esm', platform: 'neutral' });
 const origin = 'http://127.0.0.1:8792', code = 'local-workerd-test-code-1234567890', token = 'test-only-gpu-worker-token-1234567890';
 const mf = new Miniflare(convertV4MiniflareOptions({ host: '127.0.0.1', workers: [

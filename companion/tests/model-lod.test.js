@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { thinStrands } from '../scripts/model-lod.js';
+import { thinStrands } from '../scripts/model/model-lod.js';
 
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
 const sourceBytes = readFileSync(new URL('../../output/Skye_Animated.glb', import.meta.url));

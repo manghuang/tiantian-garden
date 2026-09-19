@@ -1,6 +1,6 @@
 # 天天的小花园 · 儿童实时互动原型
 
-学习演示版已部署至 [天天的小花园](https://tiantian-garden.1255529524.workers.dev)。当前版本使用 Cloudflare 中文识别 → DeepSeek 对话/动作 → 本机 RTX 4060 Ti / GPT-SoVITS 天天角色声音；本机桥接通过受保护的出站 WebSocket 接入线上 Worker。MeloTTS 与 MiniMax 仍可显式选择，真实麦克风、浏览器播放和“天天”音色相似度仍待验收，儿童真实会话仍关闭。证据见 [RELEASE.md](RELEASE.md)，本机音色见 [运行说明](local-voice/README.md)。
+学习演示版已部署至 [天天的小花园](https://tiantian-garden.1255529524.workers.dev)。当前版本使用 Cloudflare 中文识别 → DeepSeek 对话/动作 → 本机 RTX 4060 Ti / GPT-SoVITS 天天角色声音；本机桥接通过受保护的出站 WebSocket 接入线上 Worker。MeloTTS 与 MiniMax 仍可显式选择，真实麦克风、浏览器播放和“天天”音色相似度仍待验收，儿童真实会话仍关闭。证据见 [RELEASE.md](docs/RELEASE.md)，本机音色见 [运行说明](local-voice/README.md)。
 
 在屏幕中展示天天模型，用自然语音与孩子互动，由大模型选择角色动作。默认中文、4–8 岁，桌面和窄屏浏览器可运行。页面默认加载独立的轻量模型；真实平板的长时间性能仍需实机验收。
 
@@ -8,7 +8,7 @@
 
 在项目根目录双击 **`Start_Cloudflare.cmd`**。首次会安装依赖，并在缺失时从示例创建 `companion/.dev.vars`，已有配置不会覆盖。随后构建并启动 Cloudflare 本地模拟器；终端显示 Ready 后打开 <http://127.0.0.1:8787/>，使用 `.dev.vars` 的 `ACCESS_CODE` 登录。需要 Node.js 22.12 或更新版本。保留启动窗口，按 Ctrl+C 关闭服务。本地模拟器不需要 Cloudflare 登录，也不会发布到云端；8787 已有本项目运行时直接访问即可。
 
-在 `companion/.dev.vars` 配置 `DEEPSEEK_API_KEY` 可启用 DeepSeek 互动；本机 GPU 模式设置 `DEEPSEEK_TTS=local-gpu` 并保持根目录 `Start_Local_Voice.cmd` 运行。修改后重启模拟器。OpenAI 实时语音及定制音色也使用此文件，线上配置则使用 Wrangler secrets，详见 [Cloudflare 部署说明](CLOUDFLARE.md)。不要将密钥发到聊天。
+在 `companion/.dev.vars` 配置 `DEEPSEEK_API_KEY` 可启用 DeepSeek 互动；本机 GPU 模式设置 `DEEPSEEK_TTS=local-gpu` 并保持根目录 `Start_Local_Voice.cmd` 运行。修改后重启模拟器。OpenAI 实时语音及定制音色也使用此文件，线上配置则使用 Wrangler secrets，详见 [Cloudflare 部署说明](docs/CLOUDFLARE.md)。不要将密钥发到聊天。
 
 保留的 Node 版本可通过 `Start_Companion.cmd` 启动，它读取 `.env`，支持演示与旧 WebRTC，不提供 DeepSeek。该版本的开发运行方式：
 
@@ -31,7 +31,7 @@ npm run dev
 
 这是一套角色化合成声音，**不是动画官方原声的复刻**。如果已有通过服务方要求创建的定制音色，在 Cloudflare 本地 `.dev.vars` 填写 `OPENAI_CUSTOM_VOICE_ID=voice_...`，重启后用于 Realtime 和 DeepSeek 的语音合成；它优先于内置声音配置。线上使用 Wrangler secret，旧 Node 版本使用 `.env`。本项目不会自动创建或上传声音样本。OpenAI 定制音色目前只开放给符合条件的客户，需要配音者同意录音和匹配的声音样本。[官方定制音色说明](https://developers.openai.com/api/docs/guides/custom-voices)
 
-演示音频生成脚本位于 `scripts/voice-manifest.js` 和 `scripts/generate-demo-voice.ps1`。修改预设文本后，先用 Node 更新清单，再在有瑶瑶语音的 Windows 环境运行 PowerShell 生成 WAV；之后重新构建。引擎语速参数配合轻微的 PCM 播放速率调整实现两档声音，后者同时改变音高与速度；这不属于声音克隆。播放已打包音频不需要安装 Windows 音色。
+演示音频生成脚本位于 `scripts/voice/voice-manifest.js` 和 `scripts/voice/generate-demo-voice.ps1`。修改预设文本后，先用 Node 更新清单，再在有瑶瑶语音的 Windows 环境运行 PowerShell 生成 WAV；之后重新构建。引擎语速参数配合轻微的 PCM 播放速率调整实现两档声音，后者同时改变音高与速度；这不属于声音克隆。播放已打包音频不需要安装 Windows 音色。
 
 ## 连续故事和游戏
 
@@ -39,7 +39,7 @@ npm run dev
 
 ## 接入 OpenAI 实时语音
 
-1. 使用 `Start_Cloudflare.cmd`，或按 [Cloudflare 本地运行说明](CLOUDFLARE.md#本地运行)启动。
+1. 使用 `Start_Cloudflare.cmd`，或按 [Cloudflare 本地运行说明](docs/CLOUDFLARE.md#本地运行)启动。
 2. 在本机编辑 `companion/.dev.vars`，设置 `OPENAI_API_KEY`；不要将密钥放进浏览器或提交到 Git。
 3. 重启服务。在“家长设置”选 OpenAI，点击“开启语音聊天”。
 4. 由成年人阅读说明、确认，然后授权麦克风。建议先用耳机测试，减少外放回声。
@@ -47,7 +47,7 @@ npm run dev
 
 默认模型为 `gpt-realtime-2.1`，声音为 `coral`，均可由环境变量调整。Cloudflare 版默认由本站 WebSocket 中转音频，配置与动作执行由服务器持有，长期密钥不进入浏览器；Node 版暂时保留 WebRTC 连接。浏览器处理 24 kHz PCM、字幕、播放和插话截断。[官方 WebSocket 文档](https://developers.openai.com/api/docs/guides/voice-websockets)
 
-Cloudflare 版本已接入 DeepSeek 服务选择、文字互动及 OpenAI 转写/朗读链路；本地测试通过，真实账号和语音效果待验收，详见 [DEEPSEEK.md](DEEPSEEK.md)。
+Cloudflare 版本已接入 DeepSeek 服务选择、文字互动及 OpenAI 转写/朗读链路；本地测试通过，真实账号和语音效果待验收，详见 [DEEPSEEK.md](docs/DEEPSEEK.md)。
 
 **当前尚未用真实密钥做端到端语音联调。** 接口已根据官方文档实现，服务器与事件协议通过模拟上游测试；账号权限、网络可达性、中文声音与真实延迟需在目标环境验收。
 
@@ -88,7 +88,11 @@ companion/
   server/app.js              配置、会话创建 / 关闭、保护措施
   server/index.js            开发 / 发布静态服务
   tests/                     动作、协议、资源释放、HTTP 集成测试
-  DESIGN.md                  产品设计、架构、扩展与上线边界
+  scripts/cloudflare/        Cloudflare 构建、发布和线上冒烟检查
+  scripts/model/             模型优化与校验
+  scripts/voice/             配音清单、本机音色和试听工具
+  cloudflare/                Worker 实现与验收记录
+  docs/                      部署、设计、验收和声音资料
 ```
 
 默认模型为独立的 `assets/dog-balanced.glb`，约 23.5 MiB、50.6 万三角面；原始 `output/Skye_Animated.glb` 保留，配置 `MODEL_QUALITY=full` 可切换到原始精细模型。分发时需带上选用资产。省电显示另外隐藏细毛并降低像素比，**不会减少已选模型的下载量或全部内存占用**。
@@ -103,4 +107,4 @@ npm start
 
 `npm start` 使用 `dist`，绑定 `127.0.0.1`，便于本机体验，不会开放到局域网或公网。此处“发布运行”指本地生产构建，不表示已经部署在线服务。
 
-101 项测试通过，覆盖服务端语音中转、DeepSeek 适配器、Cloudflare 会话生命周期、分支故事、游戏提示与跳过、场景隔离、打断时序和场景配音。已检查登录与退出、轻量模型的飞行显示、390×844 窄屏下的开始和结束控制，以及预设互动、字幕清理和服务切换。轻量模型通过 Khronos 校验（0 错误、0 警告）。Cloudflare 本地运行时另外通过真实 GLB/WAV 读取与登录失效测试；当前验收范围见 [RELEASE.md](RELEASE.md)，历史设计见 [DESIGN.md](DESIGN.md)。
+140 项测试通过，覆盖服务端语音中转、DeepSeek 适配器、Cloudflare 会话生命周期、分支故事、游戏提示与跳过、场景隔离、打断时序和场景配音。已检查登录与退出、轻量模型的飞行显示、390×844 窄屏下的开始和结束控制，以及预设互动、字幕清理和服务切换。轻量模型通过 Khronos 校验（0 错误、0 警告）。Cloudflare 本地运行时另外通过真实 GLB/WAV 读取与登录失效测试；当前验收范围见 [RELEASE.md](docs/RELEASE.md)，历史设计见 [DESIGN.md](docs/DESIGN.md)。

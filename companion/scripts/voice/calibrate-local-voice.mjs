@@ -5,7 +5,7 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, execFileSync } from 'node:child_process';
 import { Agent, EnvHttpProxyAgent } from 'undici';
-const root = fileURLToPath(new URL('../', import.meta.url));
+const root = fileURLToPath(new URL('../../', import.meta.url));
 const config = parseEnv(await readFile(resolve(root, '.env.voice.local'), 'utf8'));
 const singleReference = process.argv.includes('--single-reference');
 const hookReference = process.argv.includes('--hook-reference');

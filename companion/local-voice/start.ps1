@@ -64,7 +64,7 @@ try {
     if (!$health -or $health.service -ne 'tiantian-local-voice' -or $health.workspace -ne $workspace -or !$health.cuda) { throw 'The GPU voice service did not become ready.' }
     Write-Host 'Connecting character voice to the online garden. Keep this window open; Ctrl+C stops it.'
     Push-Location (Join-Path $workspace 'companion')
-    try { & node scripts/local-voice-worker.mjs; if ($LASTEXITCODE -ne 0) { throw 'Voice bridge stopped with an error.' } } finally { Pop-Location }
+    try { & node scripts/voice/local-voice-worker.mjs; if ($LASTEXITCODE -ne 0) { throw 'Voice bridge stopped with an error.' } } finally { Pop-Location }
 } finally {
     # Only stop the exact process created by this invocation.
     if ($ownedApi -and !$ownedApi.HasExited) { & taskkill.exe /PID $ownedApi.Id /T /F | Out-Null }

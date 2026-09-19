@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
 import { Miniflare, convertV4MiniflareOptions } from 'miniflare';
 
-const root = new URL('../', import.meta.url);
+const root = new URL('../../', import.meta.url);
 const bundled = await build({ entryPoints: [fileURLToPath(new URL('tests/fixtures/relay-worker.js', root))], bundle: true, write: false, format: 'esm', platform: 'neutral' });
 const browserMode = process.argv.includes('--browser');
 const workletFile = readdirSync(new URL('dist/assets/', root)).find(name => /^pcm-capture\.worklet-.*\.js$/.test(name));

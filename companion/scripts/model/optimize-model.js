@@ -7,8 +7,8 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { thinStrands } from './model-lod.js';
 
-const source = new URL('../../output/Skye_Animated.glb', import.meta.url);
-const target = new URL('../assets/dog-balanced.glb', import.meta.url);
+const source = new URL('../../../output/Skye_Animated.glb', import.meta.url);
+const target = new URL('../../assets/dog-balanced.glb', import.meta.url);
 const original = readFileSync(source);
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
 const document = await io.readBinary(original);
@@ -49,7 +49,7 @@ for (const node of root.listNodes()) {
 // Only remove orphaned accessors/buffers, retaining original nodes and animation
 // targets including joints that may not contribute to a particular pose.
 await document.transform(prune({ propertyTypes: ['Accessor', 'Buffer'] }));
-mkdirSync(new URL('../assets/', import.meta.url), { recursive: true });
+mkdirSync(new URL('../../assets/', import.meta.url), { recursive: true });
 const encoded = Buffer.from(await io.writeBinary(document));
 // The exporter rounds near-identity transforms. Restore source TRS/matrices
 // verbatim so skinned rest poses cannot drift relative to inverse bind matrices.
@@ -80,5 +80,5 @@ const report = {
   policy: 'Keep 8% complete groom strands; simplify non-facial rigid vertices with 0.1% error ceiling; preserve morph targets, blended skin vertices, animation channels and textures.',
   meshes,
 };
-writeFileSync(new URL('../assets/model-report.json', import.meta.url), JSON.stringify(report, null, 2));
+writeFileSync(new URL('../../assets/model-report.json', import.meta.url), JSON.stringify(report, null, 2));
 console.log(JSON.stringify({ file: fileURLToPath(target), bytes: output.length, triangles: after, reduction: `${(100 * (1 - output.length / original.length)).toFixed(1)}%` }));

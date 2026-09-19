@@ -4,9 +4,9 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import { WebSocket, EnvHttpProxyAgent, Agent } from 'undici';
-import { pcmWav } from '../shared/speech-services.js';
+import { pcmWav } from '../../shared/speech-services.js';
 
-const root = fileURLToPath(new URL('../', import.meta.url));
+const root = fileURLToPath(new URL('../../', import.meta.url));
 const config = parseEnv(await readFile(resolve(root, '.env.voice.local'), 'utf8'));
 const temperature = Number(config.TTS_TEMPERATURE || 1), speed = Number(config.TTS_SPEED || 1);
 if (!Number.isFinite(temperature) || temperature < 0.5 || temperature > 1.2 || !Number.isFinite(speed) || speed < 0.85 || speed > 1.1) throw new Error('Invalid local voice tuning parameters.');

@@ -2,7 +2,7 @@ import { cpSync, mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const root = fileURLToPath(new URL('../', import.meta.url));
+const root = fileURLToPath(new URL('../../', import.meta.url));
 const target = resolve(root, '.cf-assets');
 // Delete only this explicit generated staging directory within the project.
 if (dirname(target) !== resolve(root) || !target.endsWith('.cf-assets')) throw new Error('Unsafe staging directory');

@@ -4,24 +4,24 @@
 
 ## 当前线上部署
 
-2026-09-18 更新：版本 `b903e9b3-e0ff-4ea6-b203-8468cb1c44a2` 已切换到 `DEEPSEEK_TTS=local-gpu`。本机 RTX 4060 Ti / GPT-SoVITS v2ProPlus 桥接已启动并连接，线上生产回归通过真实 GPU 开场白、Cloudflare 中文识别 → DeepSeek → 本机 TTS、打断、下一轮恢复和退出；134 项测试通过。
+2026-09-18 更新：版本 `b903e9b3-e0ff-4ea6-b203-8468cb1c44a2` 已切换到 `DEEPSEEK_TTS=local-gpu`。本机 RTX 4060 Ti / GPT-SoVITS v2ProPlus 桥接已启动并连接，线上生产回归通过真实 GPU 开场白、Cloudflare 中文识别 → DeepSeek → 本机 TTS、打断、下一轮恢复和退出；140 项测试通过。
 
 - 地址：https://tiantian-garden.1255529524.workers.dev；自定义域名：https://tiantian-garden.catcoder.dpdns.org
 - 当前配置：默认 `DEEPSEEK_ASR=cloudflare`、`DEEPSEEK_TTS=local-gpu`。Worker 不接收本机权重或参考音频，只通过独立 `VOICE_WORKER_TOKEN` 接收本机桥接主动建立的音频连接；线上保留 `DEEPSEEK_API_KEY` Secret。使用期间需要保持根目录 `Start_Local_Voice.cmd` 运行。
 - 上一版：`83ba14b0-70cb-46d2-8dd5-c47ec13fd4d8`，曾尝试 MiniMax Speech 2.8 Turbo；余额不足时回退系统朗读，已切回本机 GPU。
-- 前一语音输入版本：`a276761d-d205-47ea-b169-e8b098c8a9f7`，只使用浏览器本机声音输出，历史 [音频输入验收](cloudflare/audio-acceptance-2026-09-14.json) 保留。
+- 前一语音输入版本：`a276761d-d205-47ea-b169-e8b098c8a9f7`，只使用浏览器本机声音输出，历史 [音频输入验收](../cloudflare/acceptance/audio-acceptance-2026-09-14.json) 保留。
 - 前一文字版本：`91eb2f54-15c8-4876-a550-859af6bc1759`；更早 `e9a4e1e9-74a8-480f-b7df-d55af8fe395c` 缺少连续对话修复。
 - 独立线上口令保存在本机 `.env.production`，此文件已被 Git 忽略；本地 `.dev.vars` 的示例口令未发布。DeepSeek 密钥由 Wrangler secrets 存储，没有进入网页资源。
-- `node scripts/publish-secrets.js` 将 `.env.production` 的口令和 `.dev.vars` 中已填写的模型密钥通过标准输入写入 Worker secrets；不打印值，不删除未填写的已有云端 secret。运行前检查 `wrangler.jsonc` 的目标账号和地址。
-- 历史文字版本：102 项自动测试及当时 dry-run 通过，Worker 71.73 KiB / gzip 18.42 KiB。真实线上 24 项断言通过：HTTPS/CSP、登录前保护、Secure/HttpOnly Cookie、CSRF/跨站拒绝、完整 GLB/WAV、WebSocket、两轮 DeepSeek 回答与动作、上下文保留、退出断线及旧 Cookie 撤销。记录见 [云端验收数据](cloudflare/acceptance-2026-09-14.json)。
+- `node scripts/cloudflare/publish-secrets.js` 将 `.env.production` 的口令和 `.dev.vars` 中已填写的模型密钥通过标准输入写入 Worker secrets；不打印值，不删除未填写的已有云端 secret。运行前检查 `wrangler.jsonc` 的目标账号和地址。
+- 历史文字版本：102 项自动测试及当时 dry-run 通过，Worker 71.73 KiB / gzip 18.42 KiB。真实线上 24 项断言通过：HTTPS/CSP、登录前保护、Secure/HttpOnly Cookie、CSRF/跨站拒绝、完整 GLB/WAV、WebSocket、两轮 DeepSeek 回答与动作、上下文保留、退出断线及旧 Cookie 撤销。记录见 [云端验收数据](../cloudflare/acceptance/acceptance-2026-09-14.json)。
 - 尚未验证：线上浏览器画面、本机朗读、真实麦克风/原声音色、实际五分钟到期及 Alarm、回滚演练、移动设备长期性能。浏览器控制连接失败；服务端鉴权与文件检查不代表画面验收。`CHILD_USE_ENABLED=false`。
 
 ## 当前验证证据
 
 - `npm run cf:build`：83 个应用资源，共约 52.0 MiB，最大文件为 23.5 MiB 模型，均小于 Cloudflare 单文件 25 MiB 限制。Wrangler 自身还会生成资源清单。
 - `npm run cf:check`：MiniMax 默认版本预检通过并已部署。2026-09-13 的 71.39 KiB 预检属于此前历史版本。
-- `npm test`：134 项通过，覆盖手机录音兼容、文字模式、语音播放打断、MeloTTS / MiniMax 音频、云端失败兜底和 DeepSeek 适配器回归测试。后端生命周期测试使用存储/上游替身。
-- `node scripts/mobile-live-smoke.mjs`：线上开场白、文字回复、合成 WAV → Cloudflare 识别 → DeepSeek 回复及退出清理通过；当前 MiniMax 返回 402/2021 时明确报告本机朗读兜底。该脚本不模拟真实手机浏览器播放。
+- `npm test`：140 项通过，覆盖手机录音兼容、文字模式、语音播放打断、MeloTTS / MiniMax 音频、云端失败兜底和 DeepSeek 适配器回归测试。后端生命周期测试使用存储/上游替身。
+- `node scripts/cloudflare/mobile-live-smoke.mjs`：线上开场白、文字回复、合成 WAV → Cloudflare 识别 → DeepSeek 回复及退出清理通过；当前 MiniMax 返回 402/2021 时明确报告本机朗读兜底。该脚本不模拟真实手机浏览器播放。
 - `npm run cf:relay-smoke`：真实本地 workerd / WebSocketPair / Durable Object 连接通过 OpenAI 中转、DeepSeek 文字及转写/合成音频、字幕、服务端动作、注入拒绝、名额回收和退出测试。`npm run cf:relay-smoke -- --browser` 另提供回环地址测试页，用本地测试音验证实际 AudioWorklet 与播放；不连接模型服务、不采集麦克风。
 - `npm run cf:smoke`：在真实本地 workerd / Durable Objects 运行时验证登录、CSRF、24,603,508 字节 GLB、WAV 读取、退出和旧 Cookie 失效。此检查不创建 OpenAI 会话。
 - 历史浏览器检查通过本地版本的登录、模型渲染、故事选项、配音请求成功和退出回到登录页。现已完成用户账号授权及线上部署；当前浏览器控制工具不可用，最新页面仍需浏览器复核。
@@ -77,6 +77,29 @@ npx wrangler secret put CLOUDFLARE_TTS_VOICE_ID
 ```
 
 Worker 会通过已有的 `AI` binding 调用 Cloudflare AI 目录中的 MiniMax Speech 2.8 HD/Turbo，服务端抓取返回的 WAV 并转换成网页播放器需要的 24 kHz PCM。音色 ID、模型选择和可选的速度/音高/音量/情绪参数都不下发浏览器；未配置音色 ID 时会在创建会话前返回明确错误。Cloudflare 负责部署与调用，定制音色本身仍由 MiniMax 音频服务创建。
+
+## MiniMax 直连切换
+
+如果需要绕过 Cloudflare Unified Billing 或 Cloudflare 余额不足，可只切换 TTS 后端，不改变前端调用方式：
+
+```text
+TTS_PROVIDER=minimax_direct
+MINIMAX_TTS_BASE_URL=https://api.minimaxi.com/v1
+MINIMAX_TTS_MODEL=speech-2.8-turbo
+MINIMAX_TTS_VOICE_ID=lovely_girl
+MINIMAX_TTS_SPEED=1.08
+MINIMAX_TTS_PITCH=2
+MINIMAX_TTS_VOLUME=1
+```
+
+直连密钥必须使用 Worker Secret：
+
+```powershell
+npx wrangler secret put MINIMAX_API_KEY
+npx wrangler deploy
+```
+
+直连 Worker 调用 MiniMax 的 `/v1/t2a_v2` 非流式接口，校验 HTTP 状态和 `base_resp.status_code`，把 `data.audio` 的 hex 内容转换为 MP3 分片。`MINIMAX_TTS_VOICE_ID` 与 `CLOUDFLARE_TTS_VOICE_ID` 分开配置；未配置密钥、音色或地址时会拒绝启动会话。401/2049、402/2056、429 和 5xx 会转换为不包含供应商响应正文的安全提示，默认不自动切换到另一家供应商。每轮回答还会根据 `emotion` 动态调整语速、音高、音量和 `voice_modify` 的强度/音色质感。
 
 ## 部署到账号
 

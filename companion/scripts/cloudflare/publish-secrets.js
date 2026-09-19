@@ -5,7 +5,7 @@ import { parseEnv } from 'node:util';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
-const root = new URL('../', import.meta.url);
+const root = new URL('../../', import.meta.url);
 const local = parseEnv(readFileSync(new URL('.dev.vars', root), 'utf8'));
 const production = parseEnv(readFileSync(new URL('.env.production', root), 'utf8'));
 const config = JSON.parse(readFileSync(new URL('wrangler.jsonc', root), 'utf8'));
