@@ -19,8 +19,19 @@
     "OPENAI_REALTIME_VOICE": "coral",
     "DEEPSEEK_MODEL": "deepseek-flash",
     "DEEPSEEK_ASR": "cloudflare",
-    "DEEPSEEK_TTS": "local-gpu",
+    "DEEPSEEK_TTS": "cloudflare-minimax",
+    "TTS_PROVIDER": "minimax_direct",
     "CLOUDFLARE_MELOTTS_LANG": "zh",
-    "CLOUDFLARE_TTS_MODEL": "minimax/speech-2.8-turbo"
+    "CLOUDFLARE_TTS_MODEL": "minimax/speech-2.8-turbo",
+    "CLOUDFLARE_TTS_VOICE_ID": "Chinese (Mandarin)_Cute_Spirit",
+    "CLOUDFLARE_TTS_SPEED": "1.08",
+    "CLOUDFLARE_TTS_PITCH": "2",
+    "CLOUDFLARE_TTS_VOLUME": "1",
+    "MINIMAX_TTS_BASE_URL": "https://api.minimaxi.com/v1",
+    "MINIMAX_TTS_MODEL": "speech-2.8-turbo",
+    "MINIMAX_TTS_VOICE_ID": "lovely_girl",
+    "MINIMAX_TTS_SPEED": "1.08",
+    "MINIMAX_TTS_PITCH": "2",
+    "MINIMAX_TTS_VOLUME": "1"
   }
 }

@@ -7,6 +7,8 @@ OPENAI_API_KEY=
 # DeepSeek conversation. Cloudflare ASR/TTS use the AI binding; no OpenAI key is needed for them.
 DEEPSEEK_API_KEY=
 DEEPSEEK_MODEL=deepseek-flash
+# TTS_PROVIDER selects the MiniMax backend: cloudflare | minimax_direct.
+TTS_PROVIDER=cloudflare
 # Default Chinese TTS. MiniMax runs through the existing Cloudflare AI binding.
 DEEPSEEK_TTS=cloudflare-minimax
 DEEPSEEK_ASR=cloudflare
@@ -15,6 +17,18 @@ CLOUDFLARE_MELOTTS_LANG=zh
 # Built-in Chinese voice chosen for the cheerful 天天-like character style.
 CLOUDFLARE_TTS_MODEL=minimax/speech-2.8-turbo
 CLOUDFLARE_TTS_VOICE_ID=Chinese (Mandarin)_Cute_Spirit
+CLOUDFLARE_TTS_SPEED=1
+CLOUDFLARE_TTS_PITCH=0
+CLOUDFLARE_TTS_VOLUME=1
+# To bypass Cloudflare billing, set TTS_PROVIDER=minimax_direct and keep the
+# API key only in this Worker secret/local vars file; never expose it to the browser.
+MINIMAX_TTS_BASE_URL=https://api.minimaxi.com/v1
+MINIMAX_TTS_MODEL=speech-2.8-turbo
+MINIMAX_TTS_VOICE_ID=lovely_girl
+MINIMAX_TTS_SPEED=1.08
+MINIMAX_TTS_PITCH=2
+MINIMAX_TTS_VOLUME=1
+MINIMAX_API_KEY=
 OPENAI_TRANSCRIPTION_MODEL=gpt-4o-mini-transcribe
 OPENAI_TTS_MODEL=gpt-4o-mini-tts
 OPENAI_TTS_VOICE=coral

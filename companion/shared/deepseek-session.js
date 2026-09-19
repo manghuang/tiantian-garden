@@ -1,6 +1,6 @@
 import { deepseekReply } from './deepseek.js';
 import { safetyReply } from './behavior.js';
-import { speechCloudflareMeloTTS, speechCloudflarePCM, speechPCM, transcribePCM, cloudflareMeloTTSPlaybackRate, deepseekSpeech } from './speech-services.js';
+import { speechCloudflareMeloTTS, speechCloudflarePCM, speechMiniMaxDirect, speechPCM, transcribePCM, cloudflareMeloTTSPlaybackRate, deepseekSpeech } from './speech-services.js';
 import { SpeechSegmenter } from './speech-segmenter.js';
 import { moderateText, ModerationError, reviewedFallback } from './moderation.js';
 
@@ -93,18 +93,18 @@ export class DeepSeekSession {
       this.emit({ type: 'garden.behavior', response_id: job.id, behavior: { action: reply.action, emotion: reply.emotion } });
       this.emit({ type: 'response.output_audio_transcript.done', response_id: job.id, item_id: itemId, transcript: reply.text });
        const tts = deepseekSpeech(this.env).tts;
-       const audioFormat = tts === 'cloudflare-melotts' ? 'audio/mpeg' : 'audio/pcm';
+       const audioFormat = ['cloudflare-melotts', 'minimax_direct'].includes(tts) ? 'audio/mpeg' : 'audio/pcm';
        const output = { bytes: 0, ...(audioFormat === 'audio/mpeg' ? { maxPlayedMs: 30000 } : {}) }; this.outputs.set(itemId, output);
        if (this.outputs.size > 16) this.outputs.delete(this.outputs.keys().next().value);
        if (this.audio) {
         try {
-         const speechOptions = { env: this.env, text: reply.text, style: this.settings.voiceStyle, signal: job.abort.signal, fetcher: this.fetcher };
-         const stream = tts === 'local-gpu' ? this.localVoice.synthesize(speechOptions) : tts === 'cloudflare-minimax' ? speechCloudflarePCM(speechOptions) : tts === 'cloudflare-melotts' ? speechCloudflareMeloTTS(speechOptions) : speechPCM(speechOptions);
+         const speechOptions = { env: this.env, text: reply.text, style: this.settings.voiceStyle, emotion: reply.emotion, signal: job.abort.signal, fetcher: this.fetcher };
+          const stream = tts === 'local-gpu' ? this.localVoice.synthesize(speechOptions) : tts === 'cloudflare-minimax' ? speechCloudflarePCM(speechOptions) : tts === 'cloudflare-melotts' ? speechCloudflareMeloTTS(speechOptions) : tts === 'minimax_direct' ? speechMiniMaxDirect(speechOptions) : speechPCM(speechOptions);
          for await (const bytes of stream) {
            if (!current()) return; output.bytes += bytes.length;
            this.emit({ type: 'response.output_audio.delta', response_id: job.id, item_id: itemId, delta: encode(bytes), ...(audioFormat === 'audio/mpeg' ? { audio_format: audioFormat } : {}) });
          }
-         if (audioFormat === 'audio/mpeg') this.emit({ type: 'response.output_audio.done', response_id: job.id, item_id: itemId, audio_format: audioFormat, playback_rate: cloudflareMeloTTSPlaybackRate(this.env, this.settings.voiceStyle) });
+          if (audioFormat === 'audio/mpeg') this.emit({ type: 'response.output_audio.done', response_id: job.id, item_id: itemId, audio_format: audioFormat, playback_rate: tts === 'cloudflare-melotts' ? cloudflareMeloTTSPlaybackRate(this.env, this.settings.voiceStyle) : 1 });
         } catch (error) {
           if (!current()) return;
           if (!['cloudflare-melotts', 'cloudflare-minimax'].includes(tts)) throw error;
@@ -118,7 +118,7 @@ export class DeepSeekSession {
     } catch (error) {
       if (!current()) return; this.job = null;
       this.emit({ type: 'response.done', response: { id: job.id, status: 'failed', output: [] } });
-      this.emit({ type: 'garden.notice', message: error instanceof ModerationError ? error.message : '天天刚刚没能完整回答，请再试一次。' });
+      this.emit({ type: 'garden.notice', message: error instanceof ModerationError ? error.message : error?.userMessage || '天天刚刚没能完整回答，请再试一次。' });
     }
   }
 }

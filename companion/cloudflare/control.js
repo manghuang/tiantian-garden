@@ -94,7 +94,7 @@ export class GardenControl {
     if (path === '/api/config' && request.method === 'GET') {
       const speech = deepseekSpeech(this.env);
       const voiceReady = speech.tts === 'local-gpu' ? this.localVoice.ready : speech.ttsReady;
-      const label = speech.tts === 'local-gpu' ? 'DeepSeek + 本机角色音色' : speech.tts === 'cloudflare-minimax' ? 'DeepSeek + Cloudflare 天天音色' : speech.tts === 'cloudflare-melotts' ? 'DeepSeek + Cloudflare MeloTTS' : speech.asr === 'cloudflare' ? 'DeepSeek + Cloudflare 语音输入' : this.env.OPENAI_API_KEY ? 'DeepSeek 对话 + OpenAI 语音' : 'DeepSeek 文字 + 本机朗读';
+      const label = speech.tts === 'local-gpu' ? 'DeepSeek + 本机角色音色' : speech.tts === 'cloudflare-minimax' ? 'DeepSeek + Cloudflare 天天音色' : speech.tts === 'minimax_direct' ? 'DeepSeek + MiniMax 直连音色' : speech.tts === 'cloudflare-melotts' ? 'DeepSeek + Cloudflare MeloTTS' : speech.asr === 'cloudflare' ? 'DeepSeek + Cloudflare 语音输入' : this.env.OPENAI_API_KEY ? 'DeepSeek 对话 + OpenAI 语音' : 'DeepSeek 文字 + 本机朗读';
       return json({
         csrf: login.csrf, defaultProvider: this.env.OPENAI_API_KEY ? 'openai' : this.env.DEEPSEEK_API_KEY ? 'deepseek' : 'demo', accessRequired: true,
         providers: [
@@ -140,7 +140,7 @@ export class GardenControl {
     if (!(provider === 'deepseek' ? this.env.DEEPSEEK_API_KEY : this.env.OPENAI_API_KEY)) return problem(`尚未配置 ${provider === 'deepseek' ? 'DEEPSEEK_API_KEY' : 'OPENAI_API_KEY'}。可以先使用本地演示。`, 503);
     const speech = provider === 'deepseek' ? deepseekSpeech(this.env) : null;
     if (provider === 'deepseek' && speech.tts === 'local-gpu' && !this.localVoice.ready) return problem('请先在电脑上启动天天音色服务，再开始互动。', 503);
-    if (provider === 'deepseek' && ['cloudflare-minimax', 'cloudflare-melotts'].includes(speech.tts) && !speech.ttsReady) return problem(cloudflareTTSConfigError(this.env) || 'Cloudflare 天天音色服务尚未配置。', 503);
+    if (provider === 'deepseek' && ['cloudflare-minimax', 'cloudflare-melotts', 'minimax_direct', 'invalid'].includes(speech.tts) && !speech.ttsReady) return problem(cloudflareTTSConfigError(this.env) || 'TTS 语音服务尚未配置。', 503);
     if (body.consent !== true) return problem('请由家长阅读并确认语音使用说明。', 400);
     if (body.audience !== 'adult-test' && !(body.audience === 'child' && this.env.CHILD_USE_ENABLED === 'true')) return problem('当前仅开放成年人测试。', 403);
     const socket = provider === 'deepseek' || this.env.REALTIME_TRANSPORT !== 'webrtc';

@@ -35,7 +35,7 @@ document.querySelector('#app').innerHTML = `
         <div class="suggestions" id="suggestions"><span>不知道说什么？试试看</span><button data-prompt="天天，你好！">天天，你好呀 👋</button><button data-prompt="给我讲一个故事">给我讲个故事 ${icon('book')}</button><button data-prompt="你会飞吗？">你会飞吗？ ${icon('spark')}</button></div>
         <div id="activity-choices" class="activity-choices" aria-label="故事和游戏选项" hidden></div>
         <div id="notice" class="notice" role="status" hidden></div>
-        <div class="voice-zone"><div class="voice-wave" id="voice-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="voice-zone" id="voice-zone"><div class="voice-wave" id="voice-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           <button id="voice-button" class="primary-button">${icon('mic')}<span>开始互动</span></button>
           <p id="voice-hint">演示模式 · 点击话题或输入文字</p>
           <div class="call-controls" id="call-controls" hidden><button id="interrupt-button">${icon('stop')}打断</button><button id="resume-audio">${icon('volume')}恢复声音</button><button id="end-button">结束互动</button></div>
@@ -76,7 +76,7 @@ document.querySelector('#app').innerHTML = `
 `;
 
 const $ = id => document.getElementById(id);
-let config, scene, provider, active = false, connecting = false, pushTalking = false, modelReady = false, lightweight = false, textOnlyInput = false;
+let config, scene, provider, active = false, connecting = false, pushTalking = false, pushTalkPhase = 'idle', activePointerId = null, activeInput = null, modelReady = false, lightweight = false, textOnlyInput = false;
 let selectedProvider = 'demo', settings = sessionSettings(), expiresAt = 0, sessionVersion = 0, state = 'ready';
 let localVoice = '', motion = 'lively', previewing = false, pendingInitialText = '';
 const messageElements = new Map();
@@ -116,28 +116,32 @@ function updateUI(next = state) {
   state = next;
   const textOnly = isTextOnlySession();
   const voiceSession = active && !textOnly && selectedProvider !== 'demo';
-  const readyLabel = !active ? '我在这里，慢慢来' : textOnly ? '我在这里，打字告诉我吧' : voiceSession && pushTalking ? '我在听，你慢慢说' : voiceSession ? '按住按钮说话' : '我在这里，慢慢来';
+  const readyLabel = !active ? '我在这里，慢慢来' : textOnly ? '我在这里，打字告诉我吧' : voiceSession && pushTalkPhase === 'listening' ? '我在听，你慢慢说' : voiceSession && pushTalkPhase === 'sending' ? '松开了，正在发送…' : voiceSession ? '按住按钮说话' : '我在这里，慢慢来';
   const labels = { ready: readyLabel, listening: '竖起耳朵听你说', thinking: '让我想一想…', speaking: '天天正在说话', connecting: '正在连接…' };
   $('state-label').replaceChildren();
-  const dot = document.createElement('span'); dot.className = 'online-dot'; $('state-label').append(dot, document.createTextNode(pushTalking && voiceSession ? '正在收音，松开后发送' : labels[state] || labels.ready));
+  const dot = document.createElement('span'); dot.className = 'online-dot'; $('state-label').append(dot, document.createTextNode(pushTalkPhase === 'listening' && voiceSession ? '正在收音，松开后发送' : pushTalkPhase === 'sending' && voiceSession ? '正在发送，马上就好' : labels[state] || labels.ready));
   $('voice-wave').classList.toggle('moving', ['speaking', 'listening'].includes(state));
-  const buttonLabel = connecting ? '正在连接…' : textOnly ? active ? '文字互动中' : '开始文字互动' : active ? selectedProvider === 'demo' ? '演示进行中' : pushTalking ? '松开后发送' : '按住说话' : selectedProvider === 'demo' ? '开始互动' : '开启语音聊天';
+  const buttonLabel = connecting ? '正在连接…' : textOnly ? active ? '文字互动中' : '开始文字互动' : active ? selectedProvider === 'demo' ? '演示进行中' : pushTalkPhase === 'listening' ? '松开即可发送' : pushTalkPhase === 'sending' ? '正在发送…' : '按住说话' : selectedProvider === 'demo' ? '开始互动' : '开启语音聊天';
+  const talkState = voiceSession ? pushTalkPhase : 'idle';
+  $('voice-zone').dataset.pttState = talkState;
+  $('voice-button').dataset.pttState = talkState;
   $('voice-button').innerHTML = icon(textOnly ? 'chat' : 'mic') + `<span>${buttonLabel}</span>`;
   $('voice-button').setAttribute('aria-label', buttonLabel);
   $('voice-button').setAttribute('aria-pressed', voiceSession ? String(pushTalking) : 'false');
+  $('voice-button').setAttribute('aria-busy', String(talkState === 'sending'));
   $('voice-button').disabled = !config || !modelReady || connecting || (active && (selectedProvider === 'demo' || textOnly));
   $('call-controls').hidden = !active && !connecting;
-  $('voice-hint').textContent = selectedProvider === 'demo' ? '演示模式 · 预设回复，不采集语音' : textOnly ? '输入文字 · 有可用中文声音时可朗读 · 不采集语音' : active ? '按住按钮说话，松开后发送 · 只在按住时采集' : '首次使用需要家长确认与麦克风权限';
+  $('voice-hint').textContent = selectedProvider === 'demo' ? '演示模式 · 预设回复，不采集语音' : textOnly ? '输入文字 · 有可用中文声音时可朗读 · 不采集语音' : active ? pushTalkPhase === 'listening' ? '正在收音 · 松开即可发送' : pushTalkPhase === 'sending' ? '正在发送 · 很快就好' : '按住按钮说话，松开后发送 · 只在按住时采集' : '首次使用需要家长确认与麦克风权限';
   const mode = selectedProvider === 'deepseek' ? textOnly ? 'DeepSeek 文字' : 'DeepSeek 语音' : textOnly ? 'OpenAI 文字' : '实时语音';
   $('mode-badge').textContent = selectedProvider === 'demo' ? '本地演示 · 预设回复' : `${mode} · ${active ? '已连接' : '待连接'}`;
   $('text-input').disabled = connecting || !modelReady;
   document.querySelectorAll('[data-prompt]').forEach(button => { button.disabled = connecting || !modelReady; });
 }
 function receive(type, value) {
-  if (type === 'inputMode') { textOnlyInput = value === 'text'; updateUI(); }
+  if (type === 'inputMode') { textOnlyInput = value === 'text'; pushTalkPhase = 'idle'; updateUI(); }
   if (type === 'choices') renderChoices(value);
   if (type === 'sessionEnd') { endSession(); $('rest-dialog').showModal(); }
-  if (type === 'state') updateUI(value);
+  if (type === 'state') { if (['ready', 'speaking'].includes(value) && !pushTalking) pushTalkPhase = 'idle'; updateUI(value); }
   if (type === 'notice') notice(value);
   if (type === 'error') { endSession(); notice(value); }
   if (type === 'speaking' && scene) scene.speaking = value;
@@ -145,7 +149,7 @@ function receive(type, value) {
   if (type === 'expires') expiresAt = value;
   if (type === 'behavior') {
     scene?.play(value.action);
-    $('hello-note').textContent = { happy: '和你一起，真开心', curious: '咦？让我想想', calm: '慢慢来，我在听', warm: '一起发现小美好' }[value.emotion];
+    $('hello-note').textContent = { happy: '和你一起，真开心', curious: '咦？让我想想', calm: '慢慢来，我在听', sad: '我会陪你慢慢说', warm: '一起发现小美好' }[value.emotion];
   }
   if (type === 'transcript') { addMessage(value.role, value.text, value.id); $('suggestions').hidden = true; }
   if (type === 'delta') {
@@ -163,7 +167,7 @@ async function begin(consent, initialText = '') {
     await nextProvider.connect({ ...settings, localVoice }, consent, { inputMode: initialText ? 'text' : 'voice' });
     if (version !== sessionVersion) return;
     nextProvider.setPushToTalk?.(false);
-    active = true; connecting = false; pushTalking = false;
+    active = true; connecting = false; pushTalking = false; pushTalkPhase = 'idle'; activePointerId = null; activeInput = null;
     expiresAt ||= Date.now() + settings.minutes * 60000;
     scene.play('wave'); updateUI('ready');
     if (initialText) await sendText(initialText);
@@ -173,7 +177,7 @@ async function begin(consent, initialText = '') {
 function endSession() {
   localSpeech.stop(); previewing = false;
   pendingInitialText = ''; $('consent-dialog').close();
-  ++sessionVersion; provider?.disconnect(); provider = null; active = false; connecting = false; pushTalking = false; textOnlyInput = false; expiresAt = 0;
+  ++sessionVersion; provider?.disconnect(); provider = null; active = false; connecting = false; pushTalking = false; pushTalkPhase = 'idle'; activePointerId = null; activeInput = null; textOnlyInput = false; expiresAt = 0;
   if (scene) { scene.speaking = false; scene.play('idle'); }
   clearMessages(); $('text-input').value = ''; updateUI('ready');
   $('clock-label').textContent = `每次 ${settings.minutes} 分钟，刚刚好`;
@@ -213,18 +217,27 @@ function requestVoice(initialText = '') {
   $('consent-dialog').showModal();
 }
 
+function talkHaptic(duration = 10) {
+  if (typeof navigator === 'undefined' || typeof navigator.vibrate !== 'function') return;
+  const coarse = window.matchMedia?.('(pointer: coarse)').matches || navigator.maxTouchPoints > 0;
+  if (!coarse) return;
+  try { navigator.vibrate(duration); } catch { /* Haptics are optional. */ }
+}
 function startPushToTalk(event) {
-  if (!active || connecting || isTextOnlySession() || selectedProvider === 'demo' || !provider || pushTalking) return;
+  if (!active || connecting || isTextOnlySession() || selectedProvider === 'demo' || !provider || pushTalking || event?.isPrimary === false) return;
   event?.preventDefault();
   if (event?.pointerId != null) {
+    activePointerId = event.pointerId; activeInput = 'pointer';
     try { event.currentTarget?.setPointerCapture(event.pointerId); } catch { /* Pointer capture is optional. */ }
-  }
-  pushTalking = true; provider.setPushToTalk?.(true); updateUI('listening');
+  } else activeInput = 'keyboard';
+  pushTalking = true; pushTalkPhase = 'listening'; talkHaptic(12); provider.setPushToTalk?.(true); updateUI('listening');
 }
 function stopPushToTalk(event) {
   if (!pushTalking) return;
+  if (event?.pointerId != null && activeInput !== 'pointer') return;
+  if (event?.pointerId != null && activePointerId !== null && event.pointerId !== activePointerId) return;
   event?.preventDefault();
-  pushTalking = false; provider?.setPushToTalk?.(false); updateUI(state === 'listening' ? 'ready' : state);
+  pushTalking = false; pushTalkPhase = 'sending'; activePointerId = null; activeInput = null; talkHaptic(8); provider?.setPushToTalk?.(false); updateUI('thinking');
 }
 const voiceButton = $('voice-button');
 voiceButton.addEventListener('pointerdown', event => { if (active) startPushToTalk(event); });
@@ -280,18 +293,18 @@ $('quality').onclick = () => setQuality(!lightweight);
 function updateDataInfo(id, textInput = false) {
   const entry = config?.providers.find(p => p.id === id), audio = entry?.audio && !textInput;
   const deepseekInput = !audio ? '此模式不采集麦克风；' : entry?.asr === 'cloudflare' ? '麦克风音频发送给本站 Cloudflare 语音识别服务转成文字；' : '麦克风音频经本站发送给 OpenAI 转成文字；';
-  const deepseekOutput = entry?.tts === 'local-gpu' ? '回答文字发送到配置的电脑，由本机 GPU 合成角色声音，再经本站传回播放。' : entry?.tts === 'cloudflare-minimax' ? '回答文字交给本站 Cloudflare AI 的 MiniMax 音色服务合成“天天”声音，再传回播放。' : entry?.tts === 'cloudflare-melotts' ? '回答文字交给本站 Cloudflare Workers AI 的 MeloTTS 中文音色服务合成，再传回播放。' : entry?.tts === 'openai' ? '回答由 OpenAI 合成声音。' : '回答使用本机中文离线声音朗读。';
+  const deepseekOutput = entry?.tts === 'local-gpu' ? '回答文字发送到配置的电脑，由本机 GPU 合成角色声音，再经本站传回播放。' : entry?.tts === 'cloudflare-minimax' ? '回答文字交给本站 Cloudflare AI 的 MiniMax 音色服务合成“天天”声音，再传回播放。' : entry?.tts === 'minimax_direct' ? '回答文字由本站 Worker 直连 MiniMax 音色服务合成，再传回播放。' : entry?.tts === 'cloudflare-melotts' ? '回答文字交给本站 Cloudflare Workers AI 的 MeloTTS 中文音色服务合成，再传回播放。' : entry?.tts === 'openai' ? '回答由 OpenAI 合成声音。' : '回答使用本机中文离线声音朗读。';
   const deepseekReview = entry?.moderation === 'openai-text' ? '输入和回答文字另交给 OpenAI 检查内容。' : '当前仅使用基础本地内容规则。';
   const data = id === 'demo' ? '本地演示使用预设回复和本机声音，不采集麦克风音频。'
     : id === 'deepseek' ? `${deepseekInput}文字和本次对话上下文发送给 DeepSeek 生成回答。${deepseekReview}${deepseekOutput}`
     : `${config?.realtimeTransport === 'websocket' ? '麦克风音频经过本站 Cloudflare 服务转发' : '麦克风音频发送'}给 OpenAI，用于理解和生成语音。${config?.providers.find(p => p.id === id)?.moderation === 'output-text' ? '回答文字再交给 OpenAI 检查内容，通过后才显示字幕和播放对应语音。' : ''}`;
-  $('voice-data-info').textContent = `天天是 AI 角色，${entry?.tts === 'local-gpu' ? '声音由本机角色模型合成，音色仍在试听校准。' : entry?.tts === 'cloudflare-melotts' ? '声音由 Cloudflare Workers AI MeloTTS 合成，当前不是声音克隆。' : '当前声音不是动画原声。'}${data}本应用不持久保存录音或聊天内容；服务方的数据处理规则由部署者确认。`;
+  $('voice-data-info').textContent = `天天是 AI 角色，${entry?.tts === 'local-gpu' ? '声音由本机角色模型合成，音色仍在试听校准。' : entry?.tts === 'cloudflare-melotts' ? '声音由 Cloudflare Workers AI MeloTTS 合成，当前不是声音克隆。' : entry?.tts === 'minimax_direct' ? '声音由 MiniMax 直连接口合成，当前不是声音克隆。' : '当前声音不是动画原声。'}${data}本应用不持久保存录音或聊天内容；服务方的数据处理规则由部署者确认。`;
   $('voice-consent-info').textContent = `${audio ? '只有按住“按住说话”按钮时才会采集并发送麦克风音频；松开后完成收尾并停止发送。' : ''}${data}${audio ? '如果设备没有可用麦克风，会自动改为文字互动，你仍可在下方打字。' : ''}你可以随时结束；结束后关闭麦克风、清除本页字幕和服务器会话上下文。`;
 }
 function providerNote() {
   const id = $('provider-select').value, entry = config?.providers.find(p => p.id === id);
   const localCharacterVoice = entry?.tts === 'local-gpu';
-  const configuredCharacterVoice = localCharacterVoice || entry?.tts === 'cloudflare-minimax' || entry?.tts === 'cloudflare-melotts';
+  const configuredCharacterVoice = localCharacterVoice || entry?.tts === 'cloudflare-minimax' || entry?.tts === 'minimax_direct' || entry?.tts === 'cloudflare-melotts';
   if (previewing) { localSpeech.stop(); previewing = false; }
   $('voice-style-select').disabled = localCharacterVoice;
   $('voice-style-select').title = localCharacterVoice ? '当前角色模型使用固定音色与语速。' : '';
@@ -300,12 +313,14 @@ function providerNote() {
   $('voice-preview-note').textContent = localCharacterVoice
     ? '当前使用天天参考音色，音色与语速由角色模型固定。保存后点击「开始互动」，即可听到实际回答；明亮 / 温柔选项暂不适用。'
     : entry?.tts === 'cloudflare-minimax' ? '当前使用服务器配置的 Cloudflare MiniMax“天天”定制音色；明亮 / 温柔会映射为服务端的情绪和语速。保存后点击「开始互动」试听实际回答。'
+    : entry?.tts === 'minimax_direct' ? '当前使用服务器直连 MiniMax 的“天天”音色；Worker 会根据每轮回答的情绪动态调整语速、音高、音量和音色质感。保存后点击「开始互动」试听实际回答。'
     : entry?.tts === 'cloudflare-melotts' ? '当前使用 Cloudflare Workers AI MeloTTS 中文音色；模型没有定制音色参数，明亮 / 温柔会映射为轻微的语速与音高变化。保存后点击「开始互动」试听实际回答。'
     : '试听按钮使用演示配音。实时语音使用服务器配置的音色，请保存后开始互动试听。';
   $('provider-note').textContent = id === 'demo' ? '默认使用打包的瑶瑶角色配音。用预设对话体验动作和流程，不接入大模型，也不采集语音。'
     : !entry?.ready ? `尚未配置 ${id === 'deepseek' ? 'DEEPSEEK_API_KEY' : 'OPENAI_API_KEY'}，请由部署者设置。密钥只保留在服务器。`
     : id === 'deepseek' && entry.tts === 'local-gpu' ? `DeepSeek 负责对话与动作，配置的电脑生成角色声音。请保持电脑上的音色服务运行。${entry.voiceReady ? '音色服务已连接。' : '上次检查时音色服务未连接，启动后可重新开始互动。'}当前音色仍需试听校准。`
     : id === 'deepseek' && entry.tts === 'cloudflare-minimax' ? `DeepSeek 负责对话与动作，Cloudflare AI 的 MiniMax 负责合成服务器配置的“天天”定制音色。${entry.voiceReady ? '定制音色已配置。' : '定制音色尚未配置，请由部署者设置 CLOUDFLARE_TTS_VOICE_ID。'}${entry.asr === 'cloudflare' ? '中文语音识别也使用 Cloudflare。' : ''}生成音频需要等待片刻。`
+    : id === 'deepseek' && entry.tts === 'minimax_direct' ? `DeepSeek 负责对话与动作，Worker 直连 MiniMax 合成服务器配置的“天天”音色。${entry.voiceReady ? '直连语音已配置。' : '直连语音尚未配置，请由部署者设置 MINIMAX_API_KEY 和相关 TTS 配置。'}${entry.asr === 'cloudflare' ? '中文语音识别也使用 Cloudflare。' : ''}生成音频需要等待片刻。`
     : id === 'deepseek' && entry.tts === 'cloudflare-melotts' ? `DeepSeek 负责对话与动作，Cloudflare Workers AI 的 MeloTTS 负责合成中文语音。${entry.voiceReady ? 'MeloTTS 已配置。' : 'MeloTTS 尚未配置，请由部署者确认 AI binding。'}${entry.asr === 'cloudflare' ? '中文语音识别也使用 Cloudflare。' : ''}当前使用固定模型音色，生成音频需要等待片刻。`
     : id === 'deepseek' ? entry.asr === 'cloudflare' ? `Cloudflare 识别中文语音，DeepSeek 负责对话与动作。${entry.tts === 'openai' ? 'OpenAI 负责文字内容检查和朗读。' : '回答先使用本机中文声音朗读，尚未接入动画原声音色；当前仅有基础本地内容规则。'}说完后稍作停顿，识别和回答需要时间。`
       : entry.audio ? 'DeepSeek 负责对话与动作，OpenAI 负责语音识别、文字内容检查和朗读。说完后需停顿约一秒，检查和生成也需要时间。内容检查不能保证所有回答都适合儿童。' : 'DeepSeek 已配置，可打字并使用本机中文离线声音朗读。目前仅有基础本地规则；语音和模型内容检查还需服务器配置 OpenAI 服务。'

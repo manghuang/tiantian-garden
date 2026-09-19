@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { DeepSeekSession } from '../shared/deepseek-session.js';
 import { SpeechSegmenter } from '../shared/speech-segmenter.js';
-import { cloudflareMeloTTSReady, cloudflareTTSConfigError, cloudflareTTSReady, deepseekSpeech, pcmWav, speechCloudflareMeloTTS, speechCloudflarePCM, speechPCM, transcribePCM } from '../shared/speech-services.js';
+import { cloudflareMeloTTSReady, cloudflareTTSConfigError, cloudflareTTSReady, deepseekSpeech, minimaxDirectTTSReady, pcmWav, speechCloudflareMeloTTS, speechCloudflarePCM, speechMiniMaxDirect, speechPCM, transcribePCM } from '../shared/speech-services.js';
 import { sessionSettings } from '../shared/behavior.js';
 
 const answer = text => Response.json({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ text, action: 'wave', emotion: 'warm' }) } }] });
@@ -85,6 +85,38 @@ test('Cloudflare MiniMax TTS fails closed until a voice id is configured', () =>
   assert.equal(deepseekSpeech(env).tts, 'cloudflare-minimax'); assert.equal(deepseekSpeech(env).ttsReady, false); assert.equal(cloudflareTTSReady(env), false); assert.match(cloudflareTTSConfigError(env), /CLOUDFLARE_TTS_VOICE_ID/);
 });
 
+test('MiniMax direct TTS switches independently from Cloudflare and returns bounded MP3 chunks', async () => {
+  const audioBytes = new Uint8Array([0x49, 0x44, 0x33, 0x04, 0x05, 0x06]); const calls = [];
+  const env = {
+    DEEPSEEK_TTS: 'cloudflare-minimax', TTS_PROVIDER: 'minimax_direct', MINIMAX_API_KEY: 'sk-api-test',
+    MINIMAX_TTS_BASE_URL: 'https://api.minimaxi.com/v1', MINIMAX_TTS_MODEL: 'speech-2.8-turbo', MINIMAX_TTS_VOICE_ID: 'male-qn-qingse',
+    MINIMAX_TTS_SPEED: '0.95', MINIMAX_TTS_PITCH: '1', MINIMAX_TTS_VOLUME: '1',
+  };
+  assert.equal(deepseekSpeech(env).tts, 'minimax_direct'); assert.equal(deepseekSpeech(env).ttsProvider, 'minimax_direct'); assert.equal(minimaxDirectTTSReady(env), true);
+  const chunks = [];
+  for await (const bytes of speechMiniMaxDirect({ env, text: '你好，我是天天。', style: 'gentle', emotion: 'happy', fetcher: async (url, options) => {
+    calls.push({ url, options });
+    assert.equal(url, 'https://api.minimaxi.com/v1/t2a_v2'); assert.equal(options.headers.Authorization, 'Bearer sk-api-test');
+    const body = JSON.parse(options.body); assert.deepEqual(body, {
+      model: 'speech-2.8-turbo', text: '你好，我是天天。', stream: false,
+      voice_setting: { voice_id: 'male-qn-qingse', speed: 1.045, vol: 1.03, pitch: 3 },
+      audio_setting: { format: 'mp3', sample_rate: 32000, bitrate: 128000, channel: 1 }, output_format: 'hex',
+      voice_modify: { pitch: 0, intensity: 30, timbre: 12 },
+    });
+    return Response.json({ data: { audio: Buffer.from(audioBytes).toString('hex') }, trace_id: 'trace-direct-1', base_resp: { status_code: 0, status_msg: 'success' } });
+  } })) chunks.push(bytes);
+  assert.equal(calls.length, 1); assert.deepEqual([...Buffer.concat(chunks)], [...audioBytes]);
+});
+
+test('MiniMax direct TTS requires its own voice id and maps provider quota errors without leaking details', async () => {
+  const env = { DEEPSEEK_TTS: 'cloudflare-minimax', TTS_PROVIDER: 'minimax_direct', MINIMAX_API_KEY: 'sk-api-test' };
+  assert.equal(deepseekSpeech(env).tts, 'minimax_direct'); assert.equal(minimaxDirectTTSReady(env), false); assert.match(cloudflareTTSConfigError(env), /MINIMAX_TTS_VOICE_ID/);
+  const response = Response.json({ trace_id: 'trace-quota-1', base_resp: { status_code: 2056, status_msg: 'private quota detail' } });
+  await assert.rejects(async () => { for await (const _ of speechMiniMaxDirect({ env: { ...env, MINIMAX_TTS_VOICE_ID: 'male-qn-qingse' }, text: '你好', fetcher: async () => response })) {} }, error => {
+    assert.match(error.message, /余额|套餐|积分/); assert.equal(error.traceId, 'trace-quota-1'); assert.ok(!error.message.includes('private quota detail')); return true;
+  });
+});
+
 test('Cloudflare MeloTTS uses the Chinese model and streams bounded MP3 chunks without a voice id', async () => {
   const calls = []; const source = new Uint8Array(48001); source.fill(7);
   const env = { DEEPSEEK_TTS: 'cloudflare-melotts', CLOUDFLARE_MELOTTS_LANG: 'zh', AI: { run: async (model, input, options) => {
@@ -119,6 +151,19 @@ test('DeepSeek session emits MeloTTS MP3 events and style playback metadata', as
   f.session.dispose();
 });
 
+test('DeepSeek session emits MiniMax direct MP3 events without changing the client protocol', async () => {
+  const mp3 = new Uint8Array([0x49, 0x44, 0x33, 0x01, 0x02]);
+  const f = fixture(async url => url === 'https://api.deepseek.com/chat/completions'
+    ? answer('彩虹是阳光和水滴一起变出来的。')
+    : Response.json({ data: { audio: Buffer.from(mp3).toString('hex') }, trace_id: 'trace-direct-ok', base_resp: { status_code: 0 } }), {
+    DEEPSEEK_TTS: 'cloudflare-minimax', TTS_PROVIDER: 'minimax_direct', MINIMAX_API_KEY: 'sk-api-test', MINIMAX_TTS_VOICE_ID: 'male-qn-qingse',
+  });
+  f.send({ type: 'text', text: '请讲讲彩虹为什么有颜色？' }); await until(f.done);
+  const delta = f.events.find(e => e.type === 'response.output_audio.delta'); const finished = f.events.find(e => e.type === 'response.output_audio.done');
+  assert.equal(delta.audio_format, 'audio/mpeg'); assert.deepEqual([...Buffer.from(delta.delta, 'base64')], [...mp3]); assert.equal(finished.playback_rate, 1); assert.equal(f.events.filter(e => e.type === 'response.done').at(-1).response.status, 'completed');
+  f.session.dispose();
+});
+
 test('MeloTTS outage preserves text history and explicitly requests local speech on every turn', async () => {
   const requests = [];
   const f = fixture(async (_url, options) => { requests.push(JSON.parse(options.body)); return answer('你好，一起来玩吧！'); }, { DEEPSEEK_TTS: 'cloudflare-melotts', AI: { run: async () => new Response('private error', { status: 500 }) } });
@@ -142,6 +187,18 @@ test('MiniMax TTS outage preserves text history and explicitly requests local sp
   assert.ok(f.events.some(e => e.type === 'garden.speech_fallback' && e.transcript === '你好，天天在这里！'));
   assert.ok(f.events.some(e => e.type === 'garden.notice' && e.message.includes('MiniMax')));
   f.session.dispose();
+});
+
+test('MiniMax direct outage fails the turn without silently switching to another voice', async () => {
+  const f = fixture(async (url) => url === 'https://api.deepseek.com/chat/completions'
+    ? answer('你好，天天在这里！')
+    : Response.json({ trace_id: 'trace-direct-fail', base_resp: { status_code: 2056, status_msg: 'quota' } }), {
+    DEEPSEEK_TTS: 'cloudflare-minimax', TTS_PROVIDER: 'minimax_direct', MINIMAX_API_KEY: 'sk-api-test', MINIMAX_TTS_VOICE_ID: 'male-qn-qingse',
+  });
+  f.send({ type: 'text', text: '你好' }); await until(f.done);
+  const completed = f.events.filter(e => e.type === 'response.done').at(-1);
+  assert.equal(completed.response.status, 'failed'); assert.ok(!f.events.some(e => e.type === 'garden.speech_fallback'));
+  assert.ok(f.events.some(e => e.type === 'garden.notice' && /余额|套餐|积分/.test(e.message))); f.session.dispose();
 });
 
 test('speech adapters reject incomplete, oversized and private upstream error bodies', async () => {

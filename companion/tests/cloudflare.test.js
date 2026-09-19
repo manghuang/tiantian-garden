@@ -37,6 +37,18 @@ test('Cloudflare MiniMax voice selection is advertised and missing custom voice 
   assert.equal(speech.voiceReady, true); const session = await (await f.request('/api/session', { ...valid, provider: 'deepseek' }, auth)).json(); assert.equal(session.transport, 'websocket');
   await f.request(`/api/session/${session.id}`, undefined, auth, { method: 'DELETE' });
 });
+
+test('Cloudflare advertises MiniMax direct switching without exposing its API key', async () => {
+  const f = fixture(undefined, {
+    OPENAI_API_KEY: '', DEEPSEEK_API_KEY: 'test', DEEPSEEK_TTS: 'cloudflare-minimax', TTS_PROVIDER: 'minimax_direct',
+    MINIMAX_API_KEY: 'sk-api-test', MINIMAX_TTS_VOICE_ID: 'male-qn-qingse',
+  });
+  const auth = await f.login(); const config = await (await f.request('/api/config', undefined, auth)).json(); const speech = config.providers.find(p => p.id === 'deepseek');
+  assert.equal(speech.tts, 'minimax_direct'); assert.equal(speech.ttsProvider, 'minimax_direct'); assert.equal(speech.voiceReady, true); assert.ok(!JSON.stringify(config).includes(f.env.MINIMAX_API_KEY));
+  const session = await (await f.request('/api/session', { ...valid, provider: 'deepseek' }, auth)).json(); assert.equal(session.transport, 'websocket');
+  await f.request(`/api/session/${session.id}`, undefined, auth, { method: 'DELETE' });
+  f.env.MINIMAX_API_KEY = ''; assert.equal((await f.request('/api/session', { ...valid, provider: 'deepseek' }, auth)).status, 503);
+});
 function storage() {
   let data; let alarm; let queue = Promise.resolve();
   return {

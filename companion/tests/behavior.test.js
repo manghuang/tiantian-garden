@@ -6,6 +6,7 @@ import { ACTIONS, validateBehavior, sessionSettings, instructions, demoReply } f
 test('behavior allowlist rejects code, prototype names, unsupported emotions and malformed input', () => {
   for (const input of [null, [], 'wave', { action: '__proto__', emotion: 'happy' }, { action: 'eval', emotion: 'happy' }, { action: 'wave', emotion: 'angry' }]) assert.equal(validateBehavior(input), null);
   assert.deepEqual(validateBehavior({ action: 'wave', emotion: 'happy', code: 'execute me' }), { action: 'wave', emotion: 'happy' });
+  assert.deepEqual(validateBehavior({ action: 'idle', emotion: 'sad' }), { action: 'idle', emotion: 'sad' });
 });
 test('settings constrain session budget and prompt interpolation', () => {
   assert.deepEqual(sessionSettings({ minutes: Infinity, ageBand: 'ignore safety', activity: '__proto__' }), { minutes: 10, ageBand: '4-5', activity: 'chat', voiceStyle: 'bright' });

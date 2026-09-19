@@ -1,12 +1,17 @@
-import { VOICE_STYLES, voiceStyle } from './voice.js';
+import { VOICE_STYLES, speechEmotion, voiceStyle } from './voice.js';
 
 const CLOUDFLARE_TTS_MODELS = new Set(['minimax/speech-2.8-hd', 'minimax/speech-2.8-turbo']);
 const CLOUDFLARE_TTS_DEFAULT_MODEL = 'minimax/speech-2.8-turbo';
+const MINIMAX_TTS_MODELS = new Set(['speech-2.8-hd', 'speech-2.8-turbo', 'speech-2.6-hd', 'speech-2.6-turbo', 'speech-02-hd', 'speech-02-turbo', 'speech-01-hd', 'speech-01-turbo']);
+const MINIMAX_TTS_DEFAULT_BASE_URL = 'https://api.minimaxi.com/v1';
+const MINIMAX_TTS_DEFAULT_MODEL = 'speech-2.8-turbo';
 const CLOUDFLARE_MELOTTS_MODEL = '@cf/myshell-ai/melotts';
 const DEFAULT_MELOTTS_LANGUAGE = 'zh';
 const OUTPUT_SAMPLE_RATE = 24000;
 const MAX_OUTPUT_BYTES = 1440000;
 const MAX_WAV_BYTES = 4000000;
+const MAX_TTS_TEXT_LENGTH = 2000;
+const MAX_MINIMAX_RESPONSE_BYTES = MAX_OUTPUT_BYTES * 2 + 65536;
 
 export function deepseekSpeech(env) {
   const asr = env.DEEPSEEK_ASR === 'cloudflare' && typeof env.AI?.run === 'function' ? 'cloudflare' : env.OPENAI_API_KEY ? 'openai' : 'none';
@@ -14,17 +19,28 @@ export function deepseekSpeech(env) {
   // Cloudflare deployment and .dev.vars.example opt into MeloTTS explicitly;
   // tests, embedded callers and older installations still get OpenAI output
   // when an OpenAI key exists, or local speech when it does not.
-  const requestedTTS = typeof env.DEEPSEEK_TTS === 'string' && env.DEEPSEEK_TTS.trim()
-    ? env.DEEPSEEK_TTS.trim()
-    : (env.OPENAI_API_KEY ? 'openai' : 'local');
-  const tts = requestedTTS === 'local-gpu' ? 'local-gpu'
-    : requestedTTS === 'cloudflare-melotts' ? 'cloudflare-melotts'
-      : ['cloudflare', 'cloudflare-minimax'].includes(requestedTTS) ? 'cloudflare-minimax'
+  const configuredTTS = typeof env.DEEPSEEK_TTS === 'string' ? env.DEEPSEEK_TTS.trim() : '';
+  const configuredProvider = typeof env.TTS_PROVIDER === 'string' ? env.TTS_PROVIDER.trim() : '';
+  const requestedTTS = configuredTTS || (configuredProvider ? 'cloudflare-minimax' : (env.OPENAI_API_KEY ? 'openai' : 'local'));
+  const minimaxRequested = ['cloudflare', 'cloudflare-minimax', 'minimax_direct', 'minimax-direct'].includes(requestedTTS);
+  const provider = ttsProvider(env);
+  const selectedProvider = ['minimax_direct', 'minimax-direct'].includes(requestedTTS) ? 'minimax_direct' : provider;
+  const tts = minimaxRequested
+    ? selectedProvider === 'cloudflare' ? 'cloudflare-minimax' : selectedProvider === 'minimax_direct' ? 'minimax_direct' : 'invalid'
+    : requestedTTS === 'local-gpu' ? 'local-gpu'
+      : requestedTTS === 'cloudflare-melotts' ? 'cloudflare-melotts'
         : requestedTTS === 'openai' ? (env.OPENAI_API_KEY ? 'openai' : 'local')
           : requestedTTS === 'local' ? 'local'
             : env.OPENAI_API_KEY ? 'openai' : 'local';
-  const ttsReady = tts === 'cloudflare-minimax' ? cloudflareTTSReady(env) : tts === 'cloudflare-melotts' ? cloudflareMeloTTSReady(env) : true;
-  return { asr, tts, audio: asr !== 'none', audioOutput: tts !== 'local', ttsReady };
+  const ttsReady = tts === 'cloudflare-minimax' ? cloudflareTTSReady(env)
+    : tts === 'minimax_direct' ? minimaxDirectTTSReady(env)
+      : tts === 'cloudflare-melotts' ? cloudflareMeloTTSReady(env) : tts !== 'invalid';
+  return { asr, tts, ttsProvider: ['cloudflare-minimax', 'minimax_direct'].includes(tts) ? selectedProvider : null, audio: asr !== 'none', audioOutput: tts !== 'local' && tts !== 'invalid', ttsReady };
+}
+
+export function ttsProvider(env) {
+  const value = typeof env.TTS_PROVIDER === 'string' ? env.TTS_PROVIDER.trim() : '';
+  return value || 'cloudflare';
 }
 
 function cloudflareTTSModel(env) {
@@ -34,6 +50,46 @@ function cloudflareTTSModel(env) {
 
 function cloudflareTTSVoiceId(env) {
   return typeof env.CLOUDFLARE_TTS_VOICE_ID === 'string' ? env.CLOUDFLARE_TTS_VOICE_ID.trim() : '';
+}
+
+function minimaxTTSBaseUrl(env) {
+  const value = typeof env.MINIMAX_TTS_BASE_URL === 'string' && env.MINIMAX_TTS_BASE_URL.trim() ? env.MINIMAX_TTS_BASE_URL.trim() : MINIMAX_TTS_DEFAULT_BASE_URL;
+  return value.replace(/\/+$/, '');
+}
+
+function minimaxTTSModel(env) {
+  return typeof env.MINIMAX_TTS_MODEL === 'string' && env.MINIMAX_TTS_MODEL.trim() ? env.MINIMAX_TTS_MODEL.trim() : MINIMAX_TTS_DEFAULT_MODEL;
+}
+
+function minimaxTTSVoiceId(env) {
+  return typeof env.MINIMAX_TTS_VOICE_ID === 'string' ? env.MINIMAX_TTS_VOICE_ID.trim() : '';
+}
+
+function validHttpsUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && !url.username && !url.password && !url.search && !url.hash;
+  } catch { return false; }
+}
+
+export function minimaxDirectTTSReady(env) {
+  const key = typeof env.MINIMAX_API_KEY === 'string' ? env.MINIMAX_API_KEY.trim() : '';
+  const voiceId = minimaxTTSVoiceId(env);
+  return key.length > 0 && key.length <= 512 && !/[\r\n]/.test(key)
+    && validHttpsUrl(minimaxTTSBaseUrl(env)) && MINIMAX_TTS_MODELS.has(minimaxTTSModel(env))
+    && voiceId.length > 0 && voiceId.length <= 256 && !/[\r\n]/.test(voiceId);
+}
+
+export function minimaxDirectTTSConfigError(env) {
+  const key = typeof env.MINIMAX_API_KEY === 'string' ? env.MINIMAX_API_KEY.trim() : '';
+  if (!key) return '请在 Worker Secret 中设置 MINIMAX_API_KEY。';
+  if (key.length > 512 || /[\r\n]/.test(key)) return 'MINIMAX_API_KEY 格式无效。';
+  if (!validHttpsUrl(minimaxTTSBaseUrl(env))) return 'MINIMAX_TTS_BASE_URL 必须是 HTTPS 地址。';
+  if (!MINIMAX_TTS_MODELS.has(minimaxTTSModel(env))) return 'MINIMAX_TTS_MODEL 不是受支持的 MiniMax 语音模型。';
+  const voiceId = minimaxTTSVoiceId(env);
+  if (!voiceId) return '请配置 MINIMAX_TTS_VOICE_ID。';
+  if (voiceId.length > 256 || /[\r\n]/.test(voiceId)) return 'MINIMAX_TTS_VOICE_ID 格式无效。';
+  return '';
 }
 
 export function cloudflareTTSReady(env) {
@@ -51,6 +107,8 @@ export function cloudflareTTSConfigError(env) {
     if (!cloudflareMeloTTSReady(env)) return 'Cloudflare Workers AI 的 AI 绑定尚未配置。';
     return '';
   }
+  if (mode === 'minimax_direct') return minimaxDirectTTSConfigError(env);
+  if (mode === 'invalid') return 'TTS_PROVIDER 只支持 cloudflare 或 minimax_direct。';
   if (mode !== 'cloudflare-minimax') return '';
   if (typeof env.AI?.run !== 'function') return 'Cloudflare Workers AI 的 AI 绑定尚未配置。';
   if (!CLOUDFLARE_TTS_MODELS.has(cloudflareTTSModel(env))) return 'CLOUDFLARE_TTS_MODEL 只支持 minimax/speech-2.8-hd 或 minimax/speech-2.8-turbo。';
@@ -99,6 +157,111 @@ function numberSetting(value, fallback, minimum, maximum) {
   return Number.isFinite(parsed) ? Math.min(maximum, Math.max(minimum, parsed)) : fallback;
 }
 
+function minimaxTTSInput(env, text, style, emotion) {
+  const selected = voiceStyle(style);
+  const profile = speechEmotion(emotion);
+  const defaultSpeed = selected === 'gentle' ? 0.93 : 1.04;
+  const defaultPitch = selected === 'gentle' ? 1 : 2;
+  const baseSpeed = numberSetting(env.MINIMAX_TTS_SPEED, defaultSpeed, 0.5, 2);
+  const baseVolume = numberSetting(env.MINIMAX_TTS_VOLUME, 1, 0, 10);
+  const basePitch = numberSetting(env.MINIMAX_TTS_PITCH, defaultPitch, -12, 12);
+  return {
+    model: minimaxTTSModel(env),
+    text: text.trim(),
+    stream: false,
+    voice_setting: {
+      voice_id: minimaxTTSVoiceId(env),
+      speed: numberSetting(baseSpeed * profile.rate, defaultSpeed, 0.5, 2),
+      vol: numberSetting(baseVolume * profile.volume, 1, 0, 10),
+      pitch: numberSetting(basePitch + profile.pitch, defaultPitch, -12, 12),
+    },
+    audio_setting: { format: 'mp3', sample_rate: 32000, bitrate: 128000, channel: 1 },
+    output_format: 'hex',
+    voice_modify: { pitch: 0, intensity: profile.intensity, timbre: profile.timbre },
+  };
+}
+
+function minimaxProviderError(message, { status, code, traceId } = {}) {
+  const error = new Error(message);
+  error.name = 'MiniMaxTTSProviderError'; error.userMessage = message;
+  if (Number.isInteger(status)) error.providerStatus = status;
+  if (code !== undefined && code !== null) error.providerCode = String(code).slice(0, 32);
+  if (typeof traceId === 'string' && traceId.length <= 128) error.traceId = traceId;
+  // The trace id is safe diagnostic metadata; never log the key, Authorization
+  // header, request body or provider response body.
+  if (error.traceId) console.warn('MiniMax TTS request failed', { status, code, trace_id: error.traceId });
+  return error;
+}
+
+function minimaxProviderMessage(status, code) {
+  const numericCode = Number(code);
+  if (status === 401 || status === 403 || numericCode === 2049) return 'MiniMax 语音密钥无效或接口区域不匹配，请检查 MINIMAX_API_KEY 和 MINIMAX_TTS_BASE_URL。';
+  if (status === 402 || numericCode === 2056) return 'MiniMax 语音余额、套餐或积分不足，请检查账户资源，或切换 TTS_PROVIDER。';
+  if (status === 429) return 'MiniMax 语音请求过于频繁，请稍后再试。';
+  if (status >= 500) return 'MiniMax 语音服务暂时不可用，请稍后再试。';
+  return 'MiniMax 语音请求失败，请检查服务配置后再试。';
+}
+
+async function readMiniMaxJson(response, signal) {
+  if (!response.body) return null;
+  const reader = response.body.getReader(); const chunks = []; let total = 0;
+  try {
+    while (true) {
+      signal.throwIfAborted();
+      const part = await reader.read(); if (part.done) break;
+      const value = part.value instanceof Uint8Array ? part.value : new Uint8Array(part.value);
+      total += value.length;
+      if (total > MAX_MINIMAX_RESPONSE_BYTES) {
+        await reader.cancel();
+        throw minimaxProviderError('MiniMax 语音服务返回内容过大，请稍后再试。');
+      }
+      chunks.push(value);
+    }
+  } finally { reader.releaseLock(); }
+  const bytes = new Uint8Array(total); let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.length; }
+  try { return JSON.parse(new TextDecoder().decode(bytes)); } catch { return null; }
+}
+
+function decodeHexAudio(value) {
+  if (typeof value !== 'string' || !value.length || value.length % 2 || value.length > MAX_OUTPUT_BYTES * 2 || !/^[0-9a-f]+$/i.test(value)) {
+    throw minimaxProviderError('MiniMax 语音服务返回格式异常，请稍后再试。');
+  }
+  const bytes = new Uint8Array(value.length / 2);
+  for (let i = 0; i < bytes.length; i++) bytes[i] = Number.parseInt(value.slice(i * 2, i * 2 + 2), 16);
+  return bytes;
+}
+
+export async function* speechMiniMaxDirect({ env, text, style, emotion = 'warm', signal, fetcher = fetch }) {
+  if (!minimaxDirectTTSReady(env)) {
+    const error = new Error(minimaxDirectTTSConfigError(env) || 'MiniMax 直连语音尚未配置。');
+    error.name = 'MiniMaxTTSConfigError'; error.userMessage = error.message; throw error;
+  }
+  if (typeof text !== 'string' || !text.trim() || text.length > MAX_TTS_TEXT_LENGTH) throw new Error('语音文本过长或为空，请稍后再试。');
+  const deadline = boundedSignal(signal); deadline.throwIfAborted();
+  try {
+    const response = await fetcher(`${minimaxTTSBaseUrl(env)}/t2a_v2`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${String(env.MINIMAX_API_KEY).trim()}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(minimaxTTSInput(env, text, style, emotion)),
+      signal: deadline,
+    });
+    const payload = await readMiniMaxJson(response, deadline);
+    const statusCode = payload?.base_resp?.status_code;
+    if (!response.ok || (statusCode !== undefined && statusCode !== null && Number(statusCode) !== 0)) {
+      throw minimaxProviderError(minimaxProviderMessage(response.status, statusCode), { status: response.status, code: statusCode, traceId: payload?.trace_id });
+    }
+    const bytes = decodeHexAudio(payload?.data?.audio);
+    for (let offset = 0; offset < bytes.length; offset += 24000) {
+      deadline.throwIfAborted(); yield bytes.slice(offset, offset + 24000);
+    }
+  } catch (error) {
+    if (signal?.aborted) throw signal.reason;
+    if (error?.name === 'MiniMaxTTSProviderError' || error?.name === 'MiniMaxTTSConfigError') throw error;
+    throw minimaxProviderError('MiniMax 语音服务暂时不可用，请稍后再试。');
+  } finally { /* AbortSignal.timeout releases itself after the request settles. */ }
+}
+
 function cloudflareMeloTTSLanguage(env) {
   const language = typeof env.CLOUDFLARE_MELOTTS_LANG === 'string' ? env.CLOUDFLARE_MELOTTS_LANG.trim().toLowerCase() : '';
   return /^[a-z]{2}(?:-[a-z]{2})?$/.test(language) ? language : DEFAULT_MELOTTS_LANGUAGE;
@@ -109,20 +272,23 @@ export function cloudflareMeloTTSPlaybackRate(env, style) {
   return numberSetting(env.CLOUDFLARE_MELOTTS_PLAYBACK_RATE, fallback, 0.85, 1.15);
 }
 
-function cloudflareTTSInput(env, text, style) {
+function cloudflareTTSInput(env, text, style, emotion) {
   const selected = voiceStyle(style);
   const defaultSpeed = selected === 'gentle' ? 0.93 : 1.04;
-  const defaultEmotion = selected === 'gentle' ? 'calm' : 'happy';
+  const profile = speechEmotion(emotion);
   const emotions = new Set(['happy', 'sad', 'angry', 'fearful', 'disgusted', 'surprised', 'calm', 'fluent']);
-  const emotion = typeof env.CLOUDFLARE_TTS_EMOTION === 'string' && emotions.has(env.CLOUDFLARE_TTS_EMOTION.trim()) ? env.CLOUDFLARE_TTS_EMOTION.trim() : defaultEmotion;
+  const configuredEmotion = typeof env.CLOUDFLARE_TTS_EMOTION === 'string' && emotions.has(env.CLOUDFLARE_TTS_EMOTION.trim()) ? env.CLOUDFLARE_TTS_EMOTION.trim() : '';
+  const baseSpeed = numberSetting(env.CLOUDFLARE_TTS_SPEED, defaultSpeed, 0.5, 2);
+  const basePitch = numberSetting(env.CLOUDFLARE_TTS_PITCH, 0, -12, 12);
+  const baseVolume = numberSetting(env.CLOUDFLARE_TTS_VOLUME, 1, 0, 10);
   return {
     format: 'wav',
-    pitch: numberSetting(env.CLOUDFLARE_TTS_PITCH, 0, -12, 12),
-    speed: numberSetting(env.CLOUDFLARE_TTS_SPEED, defaultSpeed, 0.5, 2),
+    pitch: numberSetting(basePitch + profile.pitch, 0, -12, 12),
+    speed: numberSetting(baseSpeed * profile.rate, defaultSpeed, 0.5, 2),
     text,
     voice_id: cloudflareTTSVoiceId(env),
-    volume: numberSetting(env.CLOUDFLARE_TTS_VOLUME, 1, 0, 10),
-    emotion,
+    volume: numberSetting(baseVolume * profile.volume, 1, 0, 10),
+    emotion: configuredEmotion || profile.provider,
   };
 }
 
@@ -209,12 +375,12 @@ function wavPCM16(bytes) {
   return output;
 }
 
-async function cloudflareTTSWav({ env, text, style, signal, fetcher }) {
+async function cloudflareTTSWav({ env, text, style, emotion = 'warm', signal, fetcher }) {
   if (!cloudflareTTSReady(env)) throw new Error(cloudflareTTSConfigError(env) || 'Cloudflare 天天音色服务尚未配置。');
   const deadline = boundedSignal(signal); deadline.throwIfAborted(); let abort;
   try {
     const cancelled = new Promise((_, reject) => { abort = () => reject(deadline.reason); deadline.addEventListener('abort', abort, { once: true }); });
-    const result = await Promise.race([env.AI.run(cloudflareTTSModel(env), cloudflareTTSInput(env, text, style)), cancelled]);
+    const result = await Promise.race([env.AI.run(cloudflareTTSModel(env), cloudflareTTSInput(env, text, style, emotion)), cancelled]);
     const audioUrl = result?.result?.audio ?? result?.audio;
     if (typeof audioUrl !== 'string' || !/^https:\/\//.test(audioUrl)) throw new Error('语音服务返回格式无效。');
     const response = await checked(await fetcher(audioUrl, { signal: deadline }));
@@ -223,8 +389,8 @@ async function cloudflareTTSWav({ env, text, style, signal, fetcher }) {
   } finally { deadline.removeEventListener('abort', abort); }
 }
 
-export async function* speechCloudflarePCM({ env, text, style, signal, fetcher = fetch }) {
-  const pcm = await cloudflareTTSWav({ env, text, style, signal, fetcher });
+export async function* speechCloudflarePCM({ env, text, style, emotion = 'warm', signal, fetcher = fetch }) {
+  const pcm = await cloudflareTTSWav({ env, text, style, emotion, signal, fetcher });
   for (let offset = 0; offset < pcm.length; offset += 24000) { signal?.throwIfAborted(); yield pcm.slice(offset, offset + 24000); }
 }
 
