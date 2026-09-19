@@ -21,3 +21,20 @@
 @media(max-width:480px){.hello-note{display:none}}
 .activity-choices{display:flex;flex-wrap:wrap;gap:8px;padding:10px 0;flex-shrink:0}.activity-choices button{min-height:42px;padding:8px 12px;border:1px solid #b8caa8;border-radius:12px;background:#edf4e5;color:#425c36;font-size:13px}.activity-choices button:hover{background:#deebd2}
 .voice-zone>.primary-button{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+
+@media(max-width:800px){
+  .voice-zone{transition:background .2s,border-color .2s,box-shadow .2s}
+  .voice-zone>.primary-button{position:relative;overflow:hidden;isolation:isolate;min-height:54px;border:1px solid transparent;-webkit-tap-highlight-color:transparent;box-shadow:0 6px 14px #36533c18;transition:background .18s,border-color .18s,box-shadow .18s,transform .16s cubic-bezier(.2,.8,.2,1)}
+  .voice-zone>.primary-button:before{content:"";position:absolute;inset:3px;border:1px solid #ffffff26;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .18s}
+  .voice-zone>.primary-button>*{position:relative;z-index:1}
+  .voice-zone[data-ptt-state="listening"]{background:linear-gradient(180deg,#fffef9 0%,#f5f9ef 100%);border-top-color:#a9c19c;box-shadow:0 -8px 28px #5b80531f}
+  .voice-zone[data-ptt-state="listening"]>.primary-button{background:#315d45;border-color:#a8c49b;transform:scale(.985);box-shadow:0 2px 8px #36533c24,0 0 0 5px #93b2852e,inset 0 1px 0 #ffffff20}
+  .voice-zone[data-ptt-state="listening"]>.primary-button:before{opacity:1;animation:pttPulse 1.35s ease-out infinite}
+  .voice-zone[data-ptt-state="listening"]>.primary-button svg{transform:scale(1.12)}
+  .voice-zone[data-ptt-state="listening"]>p{color:#64825b;font-weight:500}
+  .voice-zone[data-ptt-state="sending"]>.primary-button{background:#66836a;border-color:#c0d2b7;box-shadow:0 4px 12px #36533c1c}
+  .voice-zone[data-ptt-state="sending"]>.primary-button svg{animation:pttSend .8s ease-in-out infinite}
+  .voice-zone[data-ptt-state="sending"]>p{color:#70866a}
+}
+@keyframes pttPulse{0%,100%{opacity:.35}50%{opacity:.9}}
+@keyframes pttSend{50%{transform:translateY(-1px);opacity:.72}}
