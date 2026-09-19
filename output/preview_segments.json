@@ -1,26 +1,101 @@
 [
   {
-    "name": "Idle_Breathe",
+    "name": "Mouth_OpenClose",
+    "label_zh": "自然张合",
     "first_image": 0,
-    "image_count": 25,
-    "preview_fps": 12
+    "image_count": 120,
+    "preview_fps": 24,
+    "source_start_seconds": 0,
+    "authored_speed": true
+  },
+  {
+    "name": "Idle_Breathe",
+    "label_zh": "放松待机",
+    "first_image": 120,
+    "image_count": 36,
+    "preview_fps": 24,
+    "source_start_seconds": 1,
+    "authored_speed": true
   },
   {
     "name": "Walk",
-    "first_image": 25,
-    "image_count": 25,
-    "preview_fps": 12
+    "label_zh": "自然行走",
+    "first_image": 156,
+    "image_count": 77,
+    "preview_fps": 24,
+    "source_start_seconds": 0,
+    "authored_speed": true
+  },
+  {
+    "name": "Trot",
+    "label_zh": "轻快小跑",
+    "first_image": 233,
+    "image_count": 48,
+    "preview_fps": 24,
+    "source_start_seconds": 0,
+    "authored_speed": true
   },
   {
     "name": "Happy_Tail",
-    "first_image": 50,
-    "image_count": 31,
-    "preview_fps": 12
+    "label_zh": "开心摇尾",
+    "first_image": 281,
+    "image_count": 48,
+    "preview_fps": 24,
+    "source_start_seconds": 0.4,
+    "authored_speed": true
+  },
+  {
+    "name": "Curious_Look",
+    "label_zh": "好奇张望",
+    "first_image": 329,
+    "image_count": 82,
+    "preview_fps": 24,
+    "source_start_seconds": 0.2,
+    "authored_speed": true
+  },
+  {
+    "name": "Sniff",
+    "label_zh": "探头嗅闻",
+    "first_image": 411,
+    "image_count": 36,
+    "preview_fps": 24,
+    "source_start_seconds": 0.6,
+    "authored_speed": true
+  },
+  {
+    "name": "Play_Bow",
+    "label_zh": "邀请玩耍",
+    "first_image": 447,
+    "image_count": 96,
+    "preview_fps": 24,
+    "source_start_seconds": 0,
+    "authored_speed": true
+  },
+  {
+    "name": "Wink",
+    "label_zh": "俏皮眨眼",
+    "first_image": 543,
+    "image_count": 38,
+    "preview_fps": 24,
+    "source_start_seconds": 0.5,
+    "authored_speed": true
+  },
+  {
+    "name": "Hello_Wave",
+    "label_zh": "抬爪招呼",
+    "first_image": 581,
+    "image_count": 53,
+    "preview_fps": 24,
+    "source_start_seconds": 1.1,
+    "authored_speed": true
   },
   {
     "name": "Takeoff_Hover",
-    "first_image": 81,
-    "image_count": 51,
-    "preview_fps": 12
+    "label_zh": "展翼起飞",
+    "first_image": 634,
+    "image_count": 144,
+    "preview_fps": 24,
+    "source_start_seconds": 0,
+    "authored_speed": true
   }
 ]

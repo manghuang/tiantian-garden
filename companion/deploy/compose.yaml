@@ -1,0 +1,55 @@
+name: tiantian-garden
+services:
+  garden:
+    build:
+      context: ../..
+      dockerfile: companion/Dockerfile
+    restart: unless-stopped
+    init: true
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    stop_grace_period: 45s
+    environment:
+      PUBLIC_ORIGIN: https://${GARDEN_DOMAIN:?Set GARDEN_DOMAIN}
+      ACCESS_CODE: ${ACCESS_CODE:?Set a random ACCESS_CODE of at least 24 characters}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_REALTIME_MODEL: ${OPENAI_REALTIME_MODEL:-gpt-realtime-2.1}
+      OPENAI_REALTIME_VOICE: ${OPENAI_REALTIME_VOICE:-coral}
+      OPENAI_CUSTOM_VOICE_ID: ${OPENAI_CUSTOM_VOICE_ID:-}
+      MODEL_QUALITY: ${MODEL_QUALITY:-balanced}
+      CHILD_USE_ENABLED: ${CHILD_USE_ENABLED:-false}
+      SESSION_STORE_FILE: /app/companion/data/realtime-leases.json
+    volumes:
+      - leases:/app/companion/data
+    healthcheck:
+      test: [CMD, node, -e, "require('node:http').get({host:'127.0.0.1',port:3210,path:'/api/health',headers:{Host:new URL(process.env.PUBLIC_ORIGIN).host}},r=>{r.resume();process.exitCode=r.statusCode===200?0:1}).on('error',()=>{process.exitCode=1})"]
+      interval: 30s
+      timeout: 5s
+      start_period: 45s
+      retries: 3
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: "3"}
+  https:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      GARDEN_DOMAIN: ${GARDEN_DOMAIN:?Set GARDEN_DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      garden: {condition: service_healthy}
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: "3"}
+volumes:
+  leases:
+  caddy_data:
+  caddy_config:

@@ -1,0 +1,90 @@
+[
+  {
+    "name": "Idle_Breathe",
+    "label_zh": "放松待机",
+    "frames": 181,
+    "duration_seconds": 6.0,
+    "fps": 30,
+    "loop": true
+  },
+  {
+    "name": "Mouth_OpenClose",
+    "label_zh": "自然张合",
+    "frames": 151,
+    "duration_seconds": 5.0,
+    "fps": 30,
+    "loop": false
+  },
+  {
+    "name": "Walk",
+    "label_zh": "自然行走",
+    "frames": 49,
+    "duration_seconds": 1.6,
+    "fps": 30,
+    "loop": true
+  },
+  {
+    "name": "Trot",
+    "label_zh": "轻快小跑",
+    "frames": 31,
+    "duration_seconds": 1.0,
+    "fps": 30,
+    "loop": true
+  },
+  {
+    "name": "Happy_Tail",
+    "label_zh": "开心摇尾",
+    "frames": 121,
+    "duration_seconds": 4.0,
+    "fps": 30,
+    "loop": true
+  },
+  {
+    "name": "Curious_Look",
+    "label_zh": "好奇张望",
+    "frames": 151,
+    "duration_seconds": 5.0,
+    "fps": 30,
+    "loop": false
+  },
+  {
+    "name": "Sniff",
+    "label_zh": "探头嗅闻",
+    "frames": 121,
+    "duration_seconds": 4.0,
+    "fps": 30,
+    "loop": false
+  },
+  {
+    "name": "Play_Bow",
+    "label_zh": "邀请玩耍",
+    "frames": 121,
+    "duration_seconds": 4.0,
+    "fps": 30,
+    "loop": false
+  },
+  {
+    "name": "Wink",
+    "label_zh": "俏皮眨眼",
+    "frames": 91,
+    "duration_seconds": 3.0,
+    "fps": 30,
+    "loop": false
+  },
+  {
+    "name": "Hello_Wave",
+    "label_zh": "抬爪招呼",
+    "frames": 151,
+    "duration_seconds": 5.0,
+    "fps": 30,
+    "loop": false
+  },
+  {
+    "name": "Takeoff_Hover",
+    "label_zh": "展翼起飞",
+    "frames": 181,
+    "duration_seconds": 6.0,
+    "fps": 30,
+    "loop": false
+  }
+]

@@ -1,0 +1,275 @@
+{
+  "checkedAt": "2026-09-16T21:10:04.427Z",
+  "origin": "https://tiantian-garden.1255529524.workers.dev",
+  "source": "Bundled synthetic preview-bright.wav; no microphone captured",
+  "browserPlaybackVerified": false,
+  "voiceSimilarityVerified": false,
+  "checks": [
+    "Production advertises connected local GPU output and Cloudflare voice input",
+    "Real GPU greeting PCM returned through the production Worker",
+    "Real ASR → DeepSeek → local GPU → production PCM with captions/actions",
+    "Interrupted GPU answer discards late audio",
+    "Next spoken turn succeeds after cancellation",
+    "Logout closes the speech socket and revokes its cookie"
+  ],
+  "voiceReference": "../.tools/voice-reference/clip-1440/candidates/skye-multi-clean.wav",
+  "temperature": 0.7,
+  "speed": 1,
+  "greeting": {
+    "seconds": 5.18,
+    "rms": 3020.882273725958,
+    "text": "你好呀，我是屏幕里的 AI 小狗天天！今天想聊些什么呢？"
+  },
+  "voiceRoundTrip": {
+    "seconds": 9.14,
+    "rms": 2895.969980260189,
+    "text": "哇，你也叫天天呀，真巧！我们先从身边找一件有趣的小东西，好不好？",
+    "inputSeconds": 6.992083333333333,
+    "elapsedMs": 13168,
+    "firstAudioMs": 12911,
+    "transcript": "嗨,我是天天,小爪子准备好了,我们一起去发现有趣的事情吧"
+  },
+  "ok": true,
+  "eventLog": [
+    {
+      "type": "garden.ready",
+      "receivedAt": 1789593005542
+    },
+    {
+      "type": "response.created",
+      "receivedAt": 1789593005542
+    },
+    {
+      "type": "garden.behavior",
+      "receivedAt": 1789593005542
+    },
+    {
+      "type": "response.output_audio_transcript.done",
+      "receivedAt": 1789593005542
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593005672
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593005727
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593005760
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593005791
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593005806
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593005832
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593005857
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593005870
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593005882
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593005887
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593005888
+    },
+    {
+      "type": "response.done",
+      "receivedAt": 1789593005888,
+      "status": "completed"
+    },
+    {
+      "type": "input_audio_buffer.speech_started",
+      "receivedAt": 1789593006247
+    },
+    {
+      "type": "garden.pong",
+      "receivedAt": 1789593010286
+    },
+    {
+      "type": "input_audio_buffer.speech_stopped",
+      "receivedAt": 1789593014124
+    },
+    {
+      "type": "response.created",
+      "receivedAt": 1789593014125
+    },
+    {
+      "type": "garden.pong",
+      "receivedAt": 1789593015287
+    },
+    {
+      "type": "conversation.item.input_audio_transcription.completed",
+      "receivedAt": 1789593015877
+    },
+    {
+      "type": "garden.behavior",
+      "receivedAt": 1789593016583
+    },
+    {
+      "type": "response.output_audio_transcript.done",
+      "receivedAt": 1789593016583
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018850
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018855
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018863
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018875
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018893
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018909
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018923
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018936
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018953
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018969
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018974
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018987
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593018998
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593019016
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593019031
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593019047
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593019060
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593019078
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593019082
+    },
+    {
+      "type": "response.done",
+      "receivedAt": 1789593019094,
+      "status": "completed"
+    },
+    {
+      "type": "response.created",
+      "receivedAt": 1789593019194
+    },
+    {
+      "type": "garden.behavior",
+      "receivedAt": 1789593019894
+    },
+    {
+      "type": "response.output_audio_transcript.done",
+      "receivedAt": 1789593019894
+    },
+    {
+      "type": "response.done",
+      "receivedAt": 1789593019999,
+      "status": "cancelled"
+    },
+    {
+      "type": "garden.pong",
+      "receivedAt": 1789593020294
+    },
+    {
+      "type": "response.created",
+      "receivedAt": 1789593023135
+    },
+    {
+      "type": "garden.behavior",
+      "receivedAt": 1789593023578
+    },
+    {
+      "type": "response.output_audio_transcript.done",
+      "receivedAt": 1789593023579
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593024477
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593024486
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593024502
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593024517
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593024528
+    },
+    {
+      "type": "response.output_audio.delta",
+      "receivedAt": 1789593024535
+    },
+    {
+      "type": "response.done",
+      "receivedAt": 1789593024550,
+      "status": "completed"
+    }
+  ]
+}

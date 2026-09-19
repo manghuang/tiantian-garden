@@ -1,0 +1,126 @@
+{
+  "result": {
+    "transcription_info": {
+      "language": "zh",
+      "language_probability": 1,
+      "duration": 5.08,
+      "duration_after_vad": 5.08
+    },
+    "text": "别着急 我们慢慢来 我陪你再试一次 好吗",
+    "word_count": 4,
+    "segments": [
+      {
+        "start": 0,
+        "end": 1.68,
+        "text": "别着急 我们慢慢来",
+        "temperature": 0,
+        "avg_logprob": -0.4754971658641642,
+        "compression_ratio": 0.8688524590163934,
+        "no_speech_prob": 0,
+        "words": [
+          {
+            "word": "别",
+            "start": 0,
+            "end": 0.26
+          },
+          {
+            "word": "着",
+            "start": 0.26,
+            "end": 0.38
+          },
+          {
+            "word": "急",
+            "start": 0.38,
+            "end": 0.58
+          },
+          {
+            "word": " 我",
+            "start": 0.58,
+            "end": 1.08
+          },
+          {
+            "word": "们",
+            "start": 1.08,
+            "end": 1.16
+          },
+          {
+            "word": "慢慢",
+            "start": 1.16,
+            "end": 1.36
+          },
+          {
+            "word": "来",
+            "start": 1.36,
+            "end": 1.68
+          }
+        ],
+        "word_count": 2
+      },
+      {
+        "start": 2.3799999999999994,
+        "end": 4.62,
+        "text": "我陪你再试一次 好吗",
+        "temperature": 0,
+        "avg_logprob": -0.4754971658641642,
+        "compression_ratio": 0.8688524590163934,
+        "no_speech_prob": 0,
+        "words": [
+          {
+            "word": "我",
+            "start": 2.3799999999999994,
+            "end": 2.78
+          },
+          {
+            "word": "陪",
+            "start": 2.78,
+            "end": 2.98
+          },
+          {
+            "word": "你",
+            "start": 2.98,
+            "end": 3.14
+          },
+          {
+            "word": "再",
+            "start": 3.14,
+            "end": 3.32
+          },
+          {
+            "word": "试",
+            "start": 3.32,
+            "end": 3.56
+          },
+          {
+            "word": "一次",
+            "start": 3.56,
+            "end": 3.88
+          },
+          {
+            "word": " 好",
+            "start": 3.88,
+            "end": 4.44
+          },
+          {
+            "word": "吗",
+            "start": 4.44,
+            "end": 4.62
+          }
+        ],
+        "word_count": 2
+      }
+    ],
+    "vtt": "WEBVTT\n\n00:00.000 --> 00:00.260\n别\n\n00:00.260 --> 00:00.380\n着\n\n00:00.380 --> 00:00.580\n急\n\n00:00.580 --> 00:01.080\n 我\n\n00:01.080 --> 00:01.160\n们\n\n00:01.160 --> 00:01.360\n慢慢\n\n00:01.360 --> 00:01.680\n来\n\n00:02.380 --> 00:02.780\n我\n\n00:02.780 --> 00:02.980\n陪\n\n00:02.980 --> 00:03.140\n你\n\n00:03.140 --> 00:03.320\n再\n\n00:03.320 --> 00:03.560\n试\n\n00:03.560 --> 00:03.880\n一次\n\n00:03.880 --> 00:04.440\n 好\n\n00:04.440 --> 00:04.620\n吗\n\n",
+    "usage": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "neurons": 3.9480267922719996
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

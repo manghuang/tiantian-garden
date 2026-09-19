@@ -1,10 +1,17 @@
 {
-  "imported_bones": 33,
-  "skinned_meshes": 150,
+  "imported_bones": 40,
+  "skinned_meshes": 194,
   "actions": [
+    "Curious_Look",
     "Happy_Tail",
+    "Hello_Wave",
     "Idle_Breathe",
+    "Mouth_OpenClose",
+    "Play_Bow",
+    "Sniff",
     "Takeoff_Hover",
-    "Walk"
+    "Trot",
+    "Walk",
+    "Wink"
   ]
 }

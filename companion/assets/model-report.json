@@ -1,0 +1,1044 @@
+{
+  "source": "output/Skye_Animated.glb",
+  "target": "companion/assets/dog-balanced.glb",
+  "sourceSha256": "2973096d598084c5cbf2b3a5e6cfc0286ab5b120357af0e3c71e0a96c44ecc99",
+  "targetSha256": "79f338f1e9706bf5690d715e6149eee07842027b6305b56964d48cd4cb6d8fb0",
+  "originalBytes": 111348532,
+  "optimizedBytes": 24603508,
+  "originalTriangles": 2416713,
+  "optimizedTriangles": 505922,
+  "animations": [
+    "Idle_Breathe",
+    "Mouth_OpenClose",
+    "Walk",
+    "Trot",
+    "Happy_Tail",
+    "Curious_Look",
+    "Sniff",
+    "Play_Bow",
+    "Wink",
+    "Hello_Wave",
+    "Takeoff_Hover"
+  ],
+  "policy": "Keep 8% complete groom strands; simplify non-facial rigid vertices with 0.1% error ceiling; preserve morph targets, blended skin vertices, animation channels and textures.",
+  "meshes": [
+    {
+      "name": "Badge | propeller blade",
+      "before": 720,
+      "after": 720
+    },
+    {
+      "name": "Badge | propeller blade.001",
+      "before": 720,
+      "after": 720
+    },
+    {
+      "name": "Badge | propeller blade.002",
+      "before": 720,
+      "after": 720
+    },
+    {
+      "name": "Badge | propeller hub",
+      "before": 720,
+      "after": 720
+    },
+    {
+      "name": "Badge | raspberry enamel",
+      "before": 332,
+      "after": 332
+    },
+    {
+      "name": "Badge | silver shield",
+      "before": 332,
+      "after": 332
+    },
+    {
+      "name": "Body | continuous neck, torso and four legs",
+      "before": 44208,
+      "after": 36698,
+      "error": 0.0009958514710888267
+    },
+    {
+      "name": "Brow | fine hairs.L",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.001",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.002",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.003",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.004",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.005",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.006",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.007",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.008",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.009",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.010",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.011",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.012",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.013",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.014",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.015",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.016",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.017",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.018",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.L.019",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.001",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.002",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.003",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.004",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.005",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.006",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.007",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.008",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.009",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.010",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.011",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.012",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.013",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.014",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.015",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.016",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.017",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.018",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | fine hairs.R.019",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | sculpted.L",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Brow | sculpted.R",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Collar | pale rose band",
+      "before": 960,
+      "after": 960
+    },
+    {
+      "name": "Ear | continuous curled silhouette.L",
+      "before": 5632,
+      "after": 5632,
+      "error": 0
+    },
+    {
+      "name": "Ear | continuous curled silhouette.R",
+      "before": 5632,
+      "after": 5632,
+      "error": 0
+    },
+    {
+      "name": "Eye white.L",
+      "before": 8160,
+      "after": 8160
+    },
+    {
+      "name": "Eye white.R",
+      "before": 8160,
+      "after": 8160
+    },
+    {
+      "name": "Fine whisker",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Fine whisker.001",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Flight wing | aluminium airfoil.L",
+      "before": 396,
+      "after": 396
+    },
+    {
+      "name": "Flight wing | aluminium airfoil.R",
+      "before": 396,
+      "after": 396
+    },
+    {
+      "name": "Flight wing | rose leading edge.L",
+      "before": 720,
+      "after": 720
+    },
+    {
+      "name": "Flight wing | rose leading edge.R",
+      "before": 720,
+      "after": 720
+    },
+    {
+      "name": "Flight wing | tip light.L",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Flight wing | tip light.R",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Forelock | sculpted curl 00",
+      "before": 3456,
+      "after": 1910,
+      "error": 0.0009757484658621252
+    },
+    {
+      "name": "Forelock | sculpted curl 01",
+      "before": 3456,
+      "after": 1704,
+      "error": 0.0009991115657612681
+    },
+    {
+      "name": "Forelock | sculpted curl 02",
+      "before": 2688,
+      "after": 1684,
+      "error": 0.0009855864336714149
+    },
+    {
+      "name": "Goggle | curved smoked lens.L",
+      "before": 2208,
+      "after": 1570,
+      "error": 0.0009868452325463295
+    },
+    {
+      "name": "Goggle | curved smoked lens.R",
+      "before": 2208,
+      "after": 1572,
+      "error": 0.0009824625449255109
+    },
+    {
+      "name": "Goggle | lens glint.L",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Goggle | lens glint.R",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Goggle | rose frame.L",
+      "before": 10560,
+      "after": 3168,
+      "error": 0.00015592481940984726
+    },
+    {
+      "name": "Goggle | rose frame.R",
+      "before": 10560,
+      "after": 3168,
+      "error": 0.0001491291623096913
+    },
+    {
+      "name": "Goggle | rubber seal.L",
+      "before": 10560,
+      "after": 3168,
+      "error": 0.00014947273302823305
+    },
+    {
+      "name": "Goggle | rubber seal.R",
+      "before": 10560,
+      "after": 3168,
+      "error": 0.0001482778461650014
+    },
+    {
+      "name": "Goggle | side buckle.L",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Goggle | side buckle.R",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Goggles | fitted headband",
+      "before": 13440,
+      "after": 4032,
+      "error": 0.00016134636825881898
+    },
+    {
+      "name": "Goggles | hanging strap.L",
+      "before": 256,
+      "after": 256
+    },
+    {
+      "name": "Goggles | hanging strap.R",
+      "before": 256,
+      "after": 256
+    },
+    {
+      "name": "Groom | body and paws",
+      "before": 433830,
+      "after": 34710,
+      "strands": 28922,
+      "retained": 2314
+    },
+    {
+      "name": "Groom | cream muzzle",
+      "before": 53595,
+      "after": 4290,
+      "strands": 3573,
+      "retained": 286
+    },
+    {
+      "name": "Groom | face and scalp",
+      "before": 533910,
+      "after": 42720,
+      "strands": 35594,
+      "retained": 2848
+    },
+    {
+      "name": "Groom | feathered Ear | continuous curled silhouette.L",
+      "before": 330000,
+      "after": 26400,
+      "strands": 22000,
+      "retained": 1760
+    },
+    {
+      "name": "Groom | feathered Ear | continuous curled silhouette.R",
+      "before": 330000,
+      "after": 26400,
+      "strands": 22000,
+      "retained": 1760
+    },
+    {
+      "name": "Groom | Forelock | sculpted curl 00",
+      "before": 39000,
+      "after": 3120,
+      "strands": 2600,
+      "retained": 208
+    },
+    {
+      "name": "Groom | Forelock | sculpted curl 01",
+      "before": 39000,
+      "after": 3120,
+      "strands": 2600,
+      "retained": 208
+    },
+    {
+      "name": "Groom | Forelock | sculpted curl 02",
+      "before": 39000,
+      "after": 3120,
+      "strands": 2600,
+      "retained": 208
+    },
+    {
+      "name": "Groom | rounded chin",
+      "before": 20160,
+      "after": 1620,
+      "strands": 1344,
+      "retained": 108
+    },
+    {
+      "name": "Groom | tail plume",
+      "before": 82500,
+      "after": 6600,
+      "strands": 5500,
+      "retained": 440
+    },
+    {
+      "name": "Head | sculpted cranium and cheeks",
+      "before": 76888,
+      "after": 23066,
+      "error": 0.0005979656125418842
+    },
+    {
+      "name": "Iris | wet radial fibres.L",
+      "before": 3248,
+      "after": 3248
+    },
+    {
+      "name": "Iris | wet radial fibres.R",
+      "before": 3248,
+      "after": 3248
+    },
+    {
+      "name": "Jaw | rounded soft chin",
+      "before": 72384,
+      "after": 32196,
+      "error": 0.0009909765794873238
+    },
+    {
+      "name": "Lower incisor 00",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Lower incisor 01",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Lower incisor 02",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Lower incisor 03",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Lower incisor 04",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Lower incisor 05",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Mouth | continuous palate and floor",
+      "before": 1630,
+      "after": 1630
+    },
+    {
+      "name": "Mouth | lower gum",
+      "before": 5760,
+      "after": 5760
+    },
+    {
+      "name": "Mouth | lower lip seal",
+      "before": 1748,
+      "after": 1748
+    },
+    {
+      "name": "Mouth | soft corner crease.L",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Mouth | soft corner crease.R",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Mouth | upper gum",
+      "before": 5760,
+      "after": 5760
+    },
+    {
+      "name": "Mouth | upper lip seal",
+      "before": 1748,
+      "after": 1748
+    },
+    {
+      "name": "Muzzle follicle",
+      "before": 168,
+      "after": 168
+    },
+    {
+      "name": "Muzzle follicle.001",
+      "before": 168,
+      "after": 168
+    },
+    {
+      "name": "Muzzle follicle.002",
+      "before": 168,
+      "after": 168
+    },
+    {
+      "name": "Muzzle follicle.003",
+      "before": 168,
+      "after": 168
+    },
+    {
+      "name": "Muzzle follicle.004",
+      "before": 168,
+      "after": 168
+    },
+    {
+      "name": "Muzzle follicle.005",
+      "before": 168,
+      "after": 168
+    },
+    {
+      "name": "Muzzle | blended cream cheeks",
+      "before": 17764,
+      "after": 14406,
+      "error": 0.0009965156204998493
+    },
+    {
+      "name": "Nose | supple leather",
+      "before": 4992,
+      "after": 3608,
+      "error": 0.0009925742633640766
+    },
+    {
+      "name": "Nostril",
+      "before": 1216,
+      "after": 1124,
+      "error": 0.0009634642046876252
+    },
+    {
+      "name": "Nostril.001",
+      "before": 1216,
+      "after": 1124,
+      "error": 0.0009723358671180904
+    },
+    {
+      "name": "Paw | toe pad",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe pad.001",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe pad.002",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe pad.003",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe pad.004",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe pad.005",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe pad.006",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe pad.007",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe pad.008",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe pad.009",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe pad.010",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe pad.011",
+      "before": 528,
+      "after": 528
+    },
+    {
+      "name": "Paw | toe separation",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Paw | toe separation.001",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Paw | toe separation.002",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Paw | toe separation.003",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Paw | toe separation.004",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Paw | toe separation.005",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Paw | toe separation.006",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Paw | toe separation.007",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Paw | underside pad",
+      "before": 840,
+      "after": 840
+    },
+    {
+      "name": "Paw | underside pad.001",
+      "before": 840,
+      "after": 840
+    },
+    {
+      "name": "Paw | underside pad.002",
+      "before": 840,
+      "after": 840
+    },
+    {
+      "name": "Paw | underside pad.003",
+      "before": 840,
+      "after": 840
+    },
+    {
+      "name": "Philtrum",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Pup pack | cooling vent.L",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Pup pack | cooling vent.L.001",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Pup pack | cooling vent.L.002",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Pup pack | cooling vent.R",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Pup pack | cooling vent.R.001",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Pup pack | cooling vent.R.002",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Pup pack | hinge.L",
+      "before": 1216,
+      "after": 1208,
+      "error": 0.0009879450080916286
+    },
+    {
+      "name": "Pup pack | hinge.R",
+      "before": 1216,
+      "after": 1214,
+      "error": 0.0009879441931843758
+    },
+    {
+      "name": "Pup pack | main housing",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Pup pack | padded lower mount",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Pup pack | rear hatch",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Pup pack | top panel",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Tail | curled plume",
+      "before": 4928,
+      "after": 4928,
+      "error": 0
+    },
+    {
+      "name": "Tongue | delicate center groove",
+      "before": 480,
+      "after": 480
+    },
+    {
+      "name": "Tongue | soft articulated body",
+      "before": 3968,
+      "after": 3968
+    },
+    {
+      "name": "Upper canine",
+      "before": 1280,
+      "after": 1074,
+      "error": 0.0009940554155036807
+    },
+    {
+      "name": "Upper canine.001",
+      "before": 1280,
+      "after": 1072,
+      "error": 0.0009968702215701342
+    },
+    {
+      "name": "Upper incisor 00",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Upper incisor 01",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Upper incisor 02",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Upper incisor 03",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Upper incisor 04",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Upper incisor 05",
+      "before": 816,
+      "after": 816
+    },
+    {
+      "name": "Upper_lids | Blink shape key",
+      "before": 31104,
+      "after": 31104
+    },
+    {
+      "name": "Vest | bound opening",
+      "before": 8640,
+      "after": 7134,
+      "error": 0.0009947010548785329
+    },
+    {
+      "name": "Vest | bound opening.001",
+      "before": 30720,
+      "after": 26686,
+      "error": 0.0009964301716536283
+    },
+    {
+      "name": "Vest | fitted continuous shell with armholes",
+      "before": 21332,
+      "after": 18750,
+      "error": 0.0009734267950989306
+    },
+    {
+      "name": "Vest | front zipper",
+      "before": 3360,
+      "after": 1008,
+      "error": 0.00009578185563441366
+    },
+    {
+      "name": "Zipper pull",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.001",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.002",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.003",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.004",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.005",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.006",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.007",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.008",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.009",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.010",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.011",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.012",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.013",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.014",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.015",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.016",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.017",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.018",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.019",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.020",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.021",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.022",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.023",
+      "before": 300,
+      "after": 300
+    },
+    {
+      "name": "Zipper tooth.024",
+      "before": 300,
+      "after": 300
+    }
+  ]
+}

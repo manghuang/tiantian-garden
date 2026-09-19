@@ -1,17 +1,36 @@
 {
   "blender_version": "4.5.3 LTS",
-  "mesh_objects": 150,
-  "vertices": 1045157,
-  "triangles": 1473957,
-  "deform_bones": 33,
+  "mesh_objects": 194,
+  "vertices": 1527003,
+  "triangles": 2416713,
+  "deform_bones": 40,
   "control_bones": 8,
-  "groom_strands": 122969,
+  "groom_strands": 126733,
+  "morph_targets": [
+    "Blink.L",
+    "BlinkArc.L",
+    "Squint.L",
+    "Wide.L",
+    "Blink.R",
+    "BlinkArc.R",
+    "Squint.R",
+    "Wide.R"
+  ],
+  "asset_version": "2.1",
   "clips": [
     {
       "name": "Idle_Breathe",
       "frames": [
         1.0,
-        121.0
+        181.0
+      ],
+      "fps": 30
+    },
+    {
+      "name": "Mouth_OpenClose",
+      "frames": [
+        1.0,
+        151.0
       ],
       "fps": 30
     },
@@ -19,7 +38,15 @@
       "name": "Walk",
       "frames": [
         1.0,
-        41.0
+        49.0
+      ],
+      "fps": 30
+    },
+    {
+      "name": "Trot",
+      "frames": [
+        1.0,
+        31.0
       ],
       "fps": 30
     },
@@ -27,7 +54,47 @@
       "name": "Happy_Tail",
       "frames": [
         1.0,
+        121.0
+      ],
+      "fps": 30
+    },
+    {
+      "name": "Curious_Look",
+      "frames": [
+        1.0,
+        151.0
+      ],
+      "fps": 30
+    },
+    {
+      "name": "Sniff",
+      "frames": [
+        1.0,
+        121.0
+      ],
+      "fps": 30
+    },
+    {
+      "name": "Play_Bow",
+      "frames": [
+        1.0,
+        121.0
+      ],
+      "fps": 30
+    },
+    {
+      "name": "Wink",
+      "frames": [
+        1.0,
         91.0
+      ],
+      "fps": 30
+    },
+    {
+      "name": "Hello_Wave",
+      "frames": [
+        1.0,
+        151.0
       ],
       "fps": 30
     },
@@ -35,7 +102,7 @@
       "name": "Takeoff_Hover",
       "frames": [
         1.0,
-        151.0
+        181.0
       ],
       "fps": 30
     }

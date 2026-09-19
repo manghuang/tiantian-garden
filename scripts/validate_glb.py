@@ -63,8 +63,15 @@ for anim in g.get('animations',[]):
         if float(np.ptp(v,axis=0).max())>1e-4:moving.append(g['nodes'][ch['target']['node']].get('name','unnamed')+':'+path)
     assert bone_channels>0 and morph_channels>0 and len(moving)>5
     anims.append({'name':anim['name'],'duration_seconds':round(duration,4),'bone_channels':bone_channels,'morph_channels':morph_channels,'changing_channels':len(moving)})
-assert {a['name'] for a in anims}=={'Idle_Breathe','Walk','Happy_Tail','Takeoff_Hover'}
-checks.append('All four animations include sampled bone movement and a blinking morph channel.')
+catalog=json.loads((ROOT/'output'/'animation_catalog.json').read_text(encoding='utf-8'))
+assert {a['name'] for a in anims}=={a['name'] for a in catalog}
+checks.append('All eleven animations include sampled bone movement and coordinated facial morph channels.')
+mouth_anim=next(a for a in g['animations'] if a['name']=='Mouth_OpenClose')
+jaw_channel=next(c for c in mouth_anim['channels'] if c['target']['path']=='rotation' and g['nodes'][c['target']['node']].get('name')=='jaw')
+jaw_quats=accessor(mouth_anim['samplers'][jaw_channel['sampler']]['output'])
+angles=2*np.arccos(np.clip(np.abs(jaw_quats@jaw_quats[0]),0,1))
+assert float(angles.max())>.35 and float(angles[-1])<.001
+checks.append('The exported mouth take opens the jaw and returns to the same closed rotation.')
 assert all('uri' not in im for im in g.get('images',[]))
 checks.append('All textures are embedded; the GLB has no external image dependencies.')
 report={'passed':True,'file':p.name,'size_bytes':len(data),'exported_vertices_including_uv_splits':vertices,'joint_count':len(g['skins'][0]['joints']),'max_weight_sum_error':max_weight_error,'animations':anims,'checks':checks}

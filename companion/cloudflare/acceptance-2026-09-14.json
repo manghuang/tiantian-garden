@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-09-14T15:40:16.965Z",
+  "origin": "https://tiantian-garden.1255529524.workers.dev",
+  "checks": [
+    "HTTPS shell and CSP",
+    "Configuration requires login",
+    "Model requires login",
+    "Production login succeeds",
+    "Secure HttpOnly host cookie",
+    "DeepSeek text mode advertised",
+    "Children real sessions remain disabled",
+    "CSRF rejection",
+    "Cross-origin rejection",
+    "Complete protected GLB served",
+    "Bundled voice served",
+    "Real cloud session created",
+    "Server-owned five-minute deadline",
+    "Authenticated WebSocket greeting",
+    "Real DeepSeek completed response",
+    "Validated cloud behavior",
+    "Real DeepSeek completed response",
+    "Validated cloud behavior",
+    "Conversation context retained",
+    "Text mode did not emit synthetic server audio",
+    "Logout succeeds",
+    "Logout closes active cloud WebSocket",
+    "Old cookie revoked",
+    "Old cookie cannot read model"
+  ],
+  "replies": [
+    {
+      "input": "天天，为什么雨后有时会出现彩虹？",
+      "text": "阳光钻进小雨滴，像穿过小玻璃球，被折了一下又弹出来，就分成七种颜色啦。想不想猜猜它为什么是弯弯的桥？",
+      "elapsedMs": 1301
+    },
+    {
+      "input": "我们刚才聊的是彩虹还是雪花？",
+      "text": "我们刚才聊的是彩虹哦！雪花是白白的小冰晶，彩虹是七种颜色的弯桥。你还想听哪一个？",
+      "elapsedMs": 982
+    }
+  ],
+  "ok": true
+}

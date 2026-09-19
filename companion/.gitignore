@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.env
+test-results/
+*.log
+data/
+.env.*
+!.env.example
+!.env.voice.example
+.cf-assets/
+.wrangler/
+.npm-cache/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example

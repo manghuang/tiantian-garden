@@ -1,44 +1,94 @@
 {
   "passed": true,
   "file": "Skye_Animated.glb",
-  "size_bytes": 73777516,
-  "exported_vertices_including_uv_splits": 1082515,
-  "joint_count": 33,
+  "size_bytes": 111348532,
+  "exported_vertices_including_uv_splits": 1570143,
+  "joint_count": 40,
   "max_weight_sum_error": 1.7881393432617188e-07,
   "animations": [
     {
       "name": "Idle_Breathe",
-      "duration_seconds": 4.0,
-      "bone_channels": 99,
+      "duration_seconds": 6.0,
+      "bone_channels": 120,
       "morph_channels": 1,
-      "changing_channels": 12
+      "changing_channels": 25
+    },
+    {
+      "name": "Mouth_OpenClose",
+      "duration_seconds": 5.0,
+      "bone_channels": 120,
+      "morph_channels": 1,
+      "changing_channels": 24
     },
     {
       "name": "Walk",
-      "duration_seconds": 1.3333,
-      "bone_channels": 99,
+      "duration_seconds": 1.6,
+      "bone_channels": 120,
       "morph_channels": 1,
-      "changing_channels": 22
+      "changing_channels": 30
+    },
+    {
+      "name": "Trot",
+      "duration_seconds": 1.0,
+      "bone_channels": 120,
+      "morph_channels": 1,
+      "changing_channels": 31
     },
     {
       "name": "Happy_Tail",
-      "duration_seconds": 3.0,
-      "bone_channels": 99,
+      "duration_seconds": 4.0,
+      "bone_channels": 120,
       "morph_channels": 1,
-      "changing_channels": 14
+      "changing_channels": 26
+    },
+    {
+      "name": "Curious_Look",
+      "duration_seconds": 5.0,
+      "bone_channels": 120,
+      "morph_channels": 1,
+      "changing_channels": 29
+    },
+    {
+      "name": "Sniff",
+      "duration_seconds": 4.0,
+      "bone_channels": 120,
+      "morph_channels": 1,
+      "changing_channels": 24
+    },
+    {
+      "name": "Play_Bow",
+      "duration_seconds": 4.0,
+      "bone_channels": 120,
+      "morph_channels": 1,
+      "changing_channels": 24
+    },
+    {
+      "name": "Wink",
+      "duration_seconds": 3.0,
+      "bone_channels": 120,
+      "morph_channels": 1,
+      "changing_channels": 29
+    },
+    {
+      "name": "Hello_Wave",
+      "duration_seconds": 5.0,
+      "bone_channels": 120,
+      "morph_channels": 1,
+      "changing_channels": 36
     },
     {
       "name": "Takeoff_Hover",
-      "duration_seconds": 5.0,
-      "bone_channels": 99,
+      "duration_seconds": 6.0,
+      "bone_channels": 120,
       "morph_channels": 1,
-      "changing_channels": 20
+      "changing_channels": 34
     }
   ],
   "checks": [
     "All geometry, joint matrices, UVs, morphs and animation samples are finite.",
     "Every exported mesh is skinned; joint references and normalized weights are valid.",
-    "All four animations include sampled bone movement and a blinking morph channel.",
+    "All eleven animations include sampled bone movement and coordinated facial morph channels.",
+    "The exported mouth take opens the jaw and returns to the same closed rotation.",
     "All textures are embedded; the GLB has no external image dependencies."
   ]
 }

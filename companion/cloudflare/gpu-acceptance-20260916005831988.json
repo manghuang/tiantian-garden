@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-09-16T00:58:31.988Z",
+  "origin": "https://tiantian-garden.1255529524.workers.dev",
+  "source": "Bundled synthetic preview-bright.wav; no microphone captured",
+  "browserPlaybackVerified": false,
+  "voiceSimilarityVerified": false,
+  "checks": [
+    "Production advertises connected local GPU output and Cloudflare voice input",
+    "Real GPU greeting PCM returned through the production Worker"
+  ],
+  "greeting": {
+    "seconds": 6.12,
+    "rms": 2732.956956568649,
+    "text": "你好呀，我是屏幕里的 AI 小狗天天！今天想聊些什么呢？"
+  },
+  "ok": false,
+  "error": "Cloud GPU acceptance timed out/closed"
+}

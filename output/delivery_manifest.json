@@ -1,18 +1,56 @@
 {
-  "Skye_Rigged.blend": {
-    "bytes": 39325342,
-    "sha256": "b5c05aab4a6cd78eec2a5a3bbf2e3eb034984b1677fb8c5b91cc2ef3e23037a7"
-  },
-  "Skye_Animated.glb": {
-    "bytes": 73777516,
-    "sha256": "13f1bef21834c496f824cc59ef87d47c545a0445ec527b2ec72cdc36332906f4"
-  },
-  "Skye_Animated.fbx": {
-    "bytes": 52988236,
-    "sha256": "da44a1e26792dc2b4f6a2d13af57b5c37483f94a9a2fbbb8ac35c4c3cc2263b4"
-  },
-  "Skye_Animation_Demo.mp4": {
-    "bytes": 893482,
-    "sha256": "6dbc67a427538b16781c7c1f957546b90bae6c808086927e330c5a88ad544af3"
-  }
+  "asset_version": "2.1",
+  "baseline_git_commit": "012c326",
+  "files": [
+    {
+      "file": "output/Skye_Rigged.blend",
+      "bytes": 64085894,
+      "sha256": "d947c925db334d0744b244184a04a9edadaef66ddbbd4516c60aa75787a5ce47"
+    },
+    {
+      "file": "output/Skye_Animated.glb",
+      "bytes": 111348532,
+      "sha256": "2973096d598084c5cbf2b3a5e6cfc0286ab5b120357af0e3c71e0a96c44ecc99"
+    },
+    {
+      "file": "output/Skye_Animated.fbx",
+      "bytes": 85405900,
+      "sha256": "cf645f7b0f886f9e6a859a8e64a5a0ada59dced35ca41d27f5224f22f557f32f"
+    },
+    {
+      "file": "output/Skye_Animation_Demo.mp4",
+      "bytes": 5868120,
+      "sha256": "d6913b5404703c7537ed0c0f2437585f6fbbf16acdbe14270504ec04b465c63a"
+    },
+    {
+      "file": "output/Skye_Preview.png",
+      "bytes": 2069516,
+      "sha256": "d001a140ed051d235d9d24fc68f8d0d7dc3d4f91d7fbade2c2c80ec248032e49"
+    },
+    {
+      "file": "output/Skye_Expressions.jpg",
+      "bytes": 301924,
+      "sha256": "0a8cb4d73a01e5ea0b1650f3fc96bba387bf439803c6aa828fdbdb783f6118d1"
+    },
+    {
+      "file": "output/Skye_Mouth_Demo.mp4",
+      "bytes": 1101640,
+      "sha256": "c885f56333b028c4ae2a812868ba6af1cbd8025f9055bc7beb9c936850905ed8"
+    },
+    {
+      "file": "output/Skye_Mouth_States.jpg",
+      "bytes": 174403,
+      "sha256": "3cbeee12e91dc78f1c2e4b15327288cca5cb24fc44269d6eb553c17a1bda1942"
+    }
+  ],
+  "deform_bones": 40,
+  "control_bones": 8,
+  "eyelid_morph_targets": 8,
+  "animation_clips": 11,
+  "jaw_open_range": [
+    0,
+    1
+  ],
+  "khronos_errors": 0,
+  "khronos_warnings": 0
 }

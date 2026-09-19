@@ -1,0 +1,119 @@
+{
+  "result": {
+    "transcription_info": {
+      "language": "zh",
+      "language_probability": 1,
+      "duration": 4.6,
+      "duration_after_vad": 4.6
+    },
+    "text": "绝对好了吗?让我们飞上天空,开始新的冒险吧!",
+    "word_count": 1,
+    "segments": [
+      {
+        "start": 0,
+        "end": 4.22,
+        "text": "绝对好了吗?让我们飞上天空,开始新的冒险吧!",
+        "temperature": 0,
+        "avg_logprob": -0.398437506877459,
+        "compression_ratio": 0.8450704225352113,
+        "no_speech_prob": 0,
+        "words": [
+          {
+            "word": "绝",
+            "start": 0,
+            "end": 0.2
+          },
+          {
+            "word": "对",
+            "start": 0.2,
+            "end": 0.34
+          },
+          {
+            "word": "好了",
+            "start": 0.34,
+            "end": 0.54
+          },
+          {
+            "word": "吗?",
+            "start": 0.54,
+            "end": 0.82
+          },
+          {
+            "word": "让",
+            "start": 1.06,
+            "end": 1.46
+          },
+          {
+            "word": "我们",
+            "start": 1.46,
+            "end": 1.72
+          },
+          {
+            "word": "飞",
+            "start": 1.72,
+            "end": 1.9
+          },
+          {
+            "word": "上",
+            "start": 1.9,
+            "end": 2.1
+          },
+          {
+            "word": "天",
+            "start": 2.1,
+            "end": 2.28
+          },
+          {
+            "word": "空,",
+            "start": 2.28,
+            "end": 2.56
+          },
+          {
+            "word": "开始",
+            "start": 2.94,
+            "end": 3.42
+          },
+          {
+            "word": "新",
+            "start": 3.42,
+            "end": 3.58
+          },
+          {
+            "word": "的",
+            "start": 3.58,
+            "end": 3.72
+          },
+          {
+            "word": "冒",
+            "start": 3.72,
+            "end": 3.86
+          },
+          {
+            "word": "险",
+            "start": 3.86,
+            "end": 4.04
+          },
+          {
+            "word": "吧!",
+            "start": 4.04,
+            "end": 4.22
+          }
+        ],
+        "word_count": 1
+      }
+    ],
+    "vtt": "WEBVTT\n\n00:00.000 --> 00:00.200\n绝\n\n00:00.200 --> 00:00.340\n对\n\n00:00.340 --> 00:00.540\n好了\n\n00:00.540 --> 00:00.820\n吗?\n\n00:01.060 --> 00:01.460\n让\n\n00:01.460 --> 00:01.720\n我们\n\n00:01.720 --> 00:01.900\n飞\n\n00:01.900 --> 00:02.100\n上\n\n00:02.100 --> 00:02.280\n天\n\n00:02.280 --> 00:02.560\n空,\n\n00:02.940 --> 00:03.420\n开始\n\n00:03.420 --> 00:03.580\n新\n\n00:03.580 --> 00:03.720\n的\n\n00:03.720 --> 00:03.860\n冒\n\n00:03.860 --> 00:04.040\n险\n\n00:04.040 --> 00:04.220\n吧!\n\n",
+    "usage": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "neurons": 3.5749848906399997
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

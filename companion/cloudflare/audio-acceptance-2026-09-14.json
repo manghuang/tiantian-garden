@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-09-14T15:55:46.118Z",
+  "origin": "https://tiantian-garden.1255529524.workers.dev",
+  "source": "bundled preview-bright.wav, synthetic dialogue; no microphone recorded",
+  "events": [
+    {
+      "type": "input_audio_buffer.speech_started"
+    },
+    {
+      "type": "garden.pong"
+    },
+    {
+      "type": "input_audio_buffer.speech_stopped"
+    },
+    {
+      "type": "response.created"
+    },
+    {
+      "type": "garden.pong"
+    },
+    {
+      "type": "garden.pong"
+    },
+    {
+      "type": "conversation.item.input_audio_transcription.completed",
+      "text": "嗨,我是天天,小爪子准备好了,我们一起去发现有趣的事情吧"
+    },
+    {
+      "type": "garden.behavior"
+    },
+    {
+      "type": "response.output_audio_transcript.done",
+      "text": "哇，你也叫天天呀，真巧！我的小爪子也准备好啦。你想先去发现什么呢？"
+    },
+    {
+      "type": "response.done",
+      "status": "completed"
+    }
+  ],
+  "audioSeconds": 6.992083333333333,
+  "elapsedMs": 16300,
+  "ok": true
+}

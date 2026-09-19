@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-09-16T13:55:09.037Z",
+  "version": "89953c2b-fab6-4811-9bf2-d3be29ae6fc1",
+  "ok": true,
+  "checks": [
+    "Authenticated production page serves current settings bundle",
+    "GPU provider advertises connected voice",
+    "Local bridge heartbeat fresh after cold launch"
+  ],
+  "browserPlaybackVerified": false,
+  "voiceSimilarityVerified": false
+}

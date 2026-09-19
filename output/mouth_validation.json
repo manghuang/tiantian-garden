@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "poses": [
+    {
+      "opening": 0,
+      "measured_central_lip_gap": -0.0039953844887869695,
+      "visible_interior_rays": 0,
+      "hit_objects": [
+        "Mouth | lower lip seal",
+        "Mouth | upper lip seal",
+        "Mouth | upper lip seal",
+        "Mouth | upper lip seal",
+        "Mouth | lower lip seal"
+      ]
+    },
+    {
+      "opening": 0.15,
+      "measured_central_lip_gap": 0.02363950865609305,
+      "visible_interior_rays": 2,
+      "hit_objects": [
+        "Muzzle | blended cream cheeks",
+        "Upper incisor 00",
+        "Muzzle | blended cream cheeks",
+        "Upper incisor 05",
+        "Muzzle | blended cream cheeks"
+      ]
+    },
+    {
+      "opening": 0.35,
+      "measured_central_lip_gap": 0.0596780606678554,
+      "visible_interior_rays": 5,
+      "hit_objects": [
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor"
+      ]
+    },
+    {
+      "opening": 0.65,
+      "measured_central_lip_gap": 0.11139144216264997,
+      "visible_interior_rays": 5,
+      "hit_objects": [
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor"
+      ]
+    },
+    {
+      "opening": 1,
+      "measured_central_lip_gap": 0.16700688430241176,
+      "visible_interior_rays": 5,
+      "hit_objects": [
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor",
+        "Mouth | continuous palate and floor"
+      ]
+    },
+    {
+      "opening": 0,
+      "measured_central_lip_gap": -0.0039953844887869695,
+      "visible_interior_rays": 0,
+      "hit_objects": [
+        "Mouth | lower lip seal",
+        "Mouth | upper lip seal",
+        "Mouth | upper lip seal",
+        "Mouth | upper lip seal",
+        "Mouth | lower lip seal"
+      ]
+    }
+  ],
+  "closed_lips_seal": true,
+  "open_close_cycle_returns_to_seal": true
+}

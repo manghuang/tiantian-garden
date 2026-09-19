@@ -1,0 +1,4 @@
+{$GARDEN_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy garden:3210
+}

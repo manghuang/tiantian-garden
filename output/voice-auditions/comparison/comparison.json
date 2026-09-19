@@ -1,0 +1,9 @@
+{
+  "generatedAt": "2026-09-16T21:09:33.086Z",
+  "text": "我来救！我来救！太好了，我钩住了！",
+  "reference": "../.tools/voice-reference/clip-1440/candidates/skye-multi-clean.wav",
+  "temperature": 0.7,
+  "speed": 1,
+  "voiceSimilarityVerified": false,
+  "note": "Same-text listening comparison only. Repeating reference text does not establish generalization to new dialogue. Both files loudness-normalized to approximately -20 LUFS."
+}

@@ -1,0 +1,83 @@
+{
+  "clips": [
+    {
+      "name": "Idle_Breathe",
+      "samples": 244,
+      "max_ik_target_error": 4.430433734452279e-07,
+      "max_paw_rotation_error_radians": 0,
+      "minimum_paw_joint_height": 0.27999985218048096
+    },
+    {
+      "name": "Mouth_OpenClose",
+      "samples": 204,
+      "max_ik_target_error": 5.732591170570655e-07,
+      "max_paw_rotation_error_radians": 0,
+      "minimum_paw_joint_height": 0.2799997329711914
+    },
+    {
+      "name": "Walk",
+      "samples": 68,
+      "max_ik_target_error": 6.906169787798206e-07,
+      "max_paw_rotation_error_radians": 0,
+      "minimum_paw_joint_height": 0.27999967336654663
+    },
+    {
+      "name": "Trot",
+      "samples": 44,
+      "max_ik_target_error": 6.603753508973223e-07,
+      "max_paw_rotation_error_radians": 0,
+      "minimum_paw_joint_height": 0.27999985218048096
+    },
+    {
+      "name": "Happy_Tail",
+      "samples": 164,
+      "max_ik_target_error": 4.823927300047471e-07,
+      "max_paw_rotation_error_radians": 0,
+      "minimum_paw_joint_height": 0.27999964356422424
+    },
+    {
+      "name": "Curious_Look",
+      "samples": 204,
+      "max_ik_target_error": 5.732591170570655e-07,
+      "max_paw_rotation_error_radians": 0,
+      "minimum_paw_joint_height": 0.2799997329711914
+    },
+    {
+      "name": "Sniff",
+      "samples": 164,
+      "max_ik_target_error": 6.643979790689932e-07,
+      "max_paw_rotation_error_radians": 0,
+      "minimum_paw_joint_height": 0.27999961376190186
+    },
+    {
+      "name": "Play_Bow",
+      "samples": 164,
+      "max_ik_target_error": 6.750077994409874e-07,
+      "max_paw_rotation_error_radians": 0,
+      "minimum_paw_joint_height": 0.2799995243549347
+    },
+    {
+      "name": "Wink",
+      "samples": 124,
+      "max_ik_target_error": 4.430433734452279e-07,
+      "max_paw_rotation_error_radians": 0,
+      "minimum_paw_joint_height": 0.27999985218048096
+    },
+    {
+      "name": "Hello_Wave",
+      "samples": 204,
+      "max_ik_target_error": 4.659085809198094e-06,
+      "max_paw_rotation_error_radians": 0,
+      "minimum_paw_joint_height": 0.2799997329711914
+    },
+    {
+      "name": "Takeoff_Hover",
+      "samples": 244,
+      "max_ik_target_error": 7.754332918678336e-07,
+      "max_paw_rotation_error_radians": 0,
+      "minimum_paw_joint_height": 0.27999985218048096
+    }
+  ],
+  "all_ik_targets_within_1cm": true,
+  "passed": true
+}

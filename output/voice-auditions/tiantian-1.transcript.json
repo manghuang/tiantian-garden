@@ -1,0 +1,114 @@
+{
+  "result": {
+    "transcription_info": {
+      "language": "zh",
+      "language_probability": 1,
+      "duration": 4.52,
+      "duration_after_vad": 4.52
+    },
+    "text": "你好呀,我是天天,我们一起去发现有趣的事情吧",
+    "word_count": 1,
+    "segments": [
+      {
+        "start": 0,
+        "end": 4.08,
+        "text": "你好呀,我是天天,我们一起去发现有趣的事情吧",
+        "temperature": 0,
+        "avg_logprob": -0.24472654908895491,
+        "compression_ratio": 0.8732394366197183,
+        "no_speech_prob": 0,
+        "words": [
+          {
+            "word": "你好",
+            "start": 0,
+            "end": 0.38
+          },
+          {
+            "word": "呀,",
+            "start": 0.38,
+            "end": 0.66
+          },
+          {
+            "word": "我是",
+            "start": 1.04,
+            "end": 1.28
+          },
+          {
+            "word": "天",
+            "start": 1.28,
+            "end": 1.48
+          },
+          {
+            "word": "天,",
+            "start": 1.48,
+            "end": 1.72
+          },
+          {
+            "word": "我们",
+            "start": 2.38,
+            "end": 2.48
+          },
+          {
+            "word": "一起",
+            "start": 2.48,
+            "end": 2.76
+          },
+          {
+            "word": "去",
+            "start": 2.76,
+            "end": 2.88
+          },
+          {
+            "word": "发",
+            "start": 2.88,
+            "end": 3.06
+          },
+          {
+            "word": "现",
+            "start": 3.06,
+            "end": 3.2
+          },
+          {
+            "word": "有",
+            "start": 3.2,
+            "end": 3.36
+          },
+          {
+            "word": "趣",
+            "start": 3.36,
+            "end": 3.5
+          },
+          {
+            "word": "的",
+            "start": 3.5,
+            "end": 3.6
+          },
+          {
+            "word": "事情",
+            "start": 3.6,
+            "end": 3.84
+          },
+          {
+            "word": "吧",
+            "start": 3.84,
+            "end": 4.08
+          }
+        ],
+        "word_count": 1
+      }
+    ],
+    "vtt": "WEBVTT\n\n00:00.000 --> 00:00.380\n你好\n\n00:00.380 --> 00:00.660\n呀,\n\n00:01.040 --> 00:01.280\n我是\n\n00:01.280 --> 00:01.480\n天\n\n00:01.480 --> 00:01.720\n天,\n\n00:02.380 --> 00:02.480\n我们\n\n00:02.480 --> 00:02.760\n一起\n\n00:02.760 --> 00:02.880\n去\n\n00:02.880 --> 00:03.060\n发\n\n00:03.060 --> 00:03.200\n现\n\n00:03.200 --> 00:03.360\n有\n\n00:03.360 --> 00:03.500\n趣\n\n00:03.500 --> 00:03.600\n的\n\n00:03.600 --> 00:03.840\n事情\n\n00:03.840 --> 00:04.080\n吧\n\n",
+    "usage": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "neurons": 3.5128112403679994
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

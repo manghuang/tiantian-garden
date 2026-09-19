@@ -1,11 +1,7 @@
 .tools/
+optix7cache.db*
 __pycache__/
 *.blend1
 output/frames/
-build.log
-render.log
-roundtrip.log
-animation.log
-export.log
-fbx-validation.log
-Skye_3D_Package.zip
+*.log
+/archives/

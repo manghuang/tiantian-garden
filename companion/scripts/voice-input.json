@@ -1,0 +1,520 @@
+[
+  {
+    "file": "38a598ab8c74aa9a02d0.wav",
+    "text": "听起来你需要帮助。请现在去找身边可信赖的大人，把发生的事告诉他，好吗？",
+    "style": "bright",
+    "calm": true,
+    "sample": false
+  },
+  {
+    "file": "9903c00600e1d7bc667d.wav",
+    "text": "这些小秘密和个人信息不用告诉我哦。我们可以聊聊你喜欢的颜色！",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "892cc5b3bc5d3964c0ae.wav",
+    "text": "我们换一个安全的话题吧。要不要一起猜一种小动物？",
+    "style": "bright",
+    "calm": true,
+    "sample": false
+  },
+  {
+    "file": "3fb3b0a1836f3bfc9587.wav",
+    "text": "谢谢你告诉我。难过的时候，可以找信任的大人抱一抱，慢慢说说发生了什么。",
+    "style": "bright",
+    "calm": true,
+    "sample": false
+  },
+  {
+    "file": "a51500a1f595c33a8a8d.wav",
+    "text": "再见啦！让眼睛休息一下，也去和身边的人玩一玩吧。",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "2eb63dbcc1a7ace64d94.wav",
+    "text": "看，我在屏幕里展开小翅膀啦！你坐着看就好。我们想象着去云朵上散散步。",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "baea1c2ea1f57d34cf3f.wav",
+    "text": "你好呀，我是屏幕里的 AI 小狗天天！很高兴见到你。今天想聊些什么呢？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "ec706ef511f01d87ddd4.wav",
+    "text": "看我的小爪子，哒哒哒！你可以坐着给我数数，一、二、三！",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "3546b69981b707690e91.wav",
+    "text": "小鼻子动一动！我们想象一下，花园里飘来了淡淡的花香。",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "2dd7369564194d97578c.wav",
+    "text": "一小步，再一小步。我在屏幕里的小花园散步呢！",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "fb8bd320b023726c5fcd.wav",
+    "text": "我的尾巴也开心地摇起来啦！今天有什么让你开心的小事？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "8d7b54cbe6447e08a913.wav",
+    "text": "眨一下眼睛，送你一个小小的问好！",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "74d4413fd5ae1e820eca.wav",
+    "text": "小兔子发现了一颗会发光的种子。它想给种子找一个家。你觉得种在花园里，还是窗边的小花盆里呢？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "012ba002ace0f6a84df2.wav",
+    "text": "阳光看起来是白色的，其实藏着好多颜色！雨后的水滴能把这些颜色分开，就成了彩虹。你最喜欢哪种颜色？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "9008649c3698e77b8d89.wav",
+    "text": "来猜猜看：长长的耳朵，短短的尾巴，蹦蹦跳跳。它是什么小动物呀？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "29450a860cfb65aedc7a.wav",
+    "text": "小兔子，蹦蹦跳！你的想象真有意思。我们再想一种住在森林里的动物吧？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "c0656bc6baec276b11ed.wav",
+    "text": "我听见啦！现在是预设演示，你可以试试让我招手、摇尾巴，或者讲一个故事。",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "85489895e0e654e28818.wav",
+    "text": "小兔子找到一颗发光的种子。它想给种子安个家。你想选花园，还是窗边的花盆？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "f549cba25f30004299c3.wav",
+    "text": "种子住进了花园。小兔子发现泥土干干的。我们给它浇一点水，还是先看看小水壶？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "f293214dc2f2a105394d.wav",
+    "text": "种子住进了窗边的花盆。小兔子请大人帮忙放稳花盆。我们先浇一点水，还是给花盆画个标记？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "88e84233115eecf19033.wav",
+    "text": "小水壶里有清清的水。小兔子慢慢浇了一点，让泥土湿润。过了几天，会发生什么呢？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "7c27c83f8a31e9ba23dc.wav",
+    "text": "花盆上多了一个笑眯眯的小太阳。小兔子照顾种子，耐心等了几天。要看看它的变化吗？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "f259bc812023caca62a5.wav",
+    "text": "一片嫩绿的小芽探出了头！小兔子真开心。它想邀请小伙伴来看，还是画下小芽的样子？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "b39acdbbe403cf88986f.wav",
+    "text": "小伙伴们围着小芽，轻声说你好。小兔子发现，分享一件小小的开心事，也能让大家笑起来。故事讲完啦。",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "b42d77012dce6cb8097d.wav",
+    "text": "小兔子画下小芽，把画送给家人。它记住了等待和照顾的时光。发光种子的故事讲完啦。",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "2f120b2c071a8f79c985.wav",
+    "text": "来猜第一位动物朋友：长耳朵，短尾巴，喜欢蹦蹦跳。它是谁？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "f0a9e625891a6d5801e6.wav",
+    "text": "再想一想，它有两只长长的耳朵。可以选小兔子，也可以让我告诉你答案。",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "4d5ba7655950fbc8cad1.wav",
+    "text": "答案是小兔子！长耳朵和蹦蹦跳是这道题的线索。要认识下一位动物朋友吗？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "7981195edac3c9e8e8a9.wav",
+    "text": "第二位朋友有大耳朵，还有一条长长的鼻子。它是谁？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "134d4333e205cd834285.wav",
+    "text": "它能用长鼻子卷起食物。你想选大象，还是听我说答案？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "2c440e22b8cca7525c9e.wav",
+    "text": "答案是大象！它的鼻子能帮助它取水和拿食物。还有最后一位朋友。",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "3ae8e89bef6705773f65.wav",
+    "text": "最后一位朋友会喵喵叫，脚下有软软的肉垫。它是谁？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "5755513c1b56dbdbad89.wav",
+    "text": "它会轻轻地喵一声。你想选小猫咪，还是让我告诉你答案？",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "edc61b82d98334b624a4.wav",
+    "text": "答案是小猫咪！我们认识了兔子、大象和小猫。今天的猜动物结束啦，给眼睛和耳朵休息一下吧。",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "dd953cb5acbb01b441d0.wav",
+    "text": "我还没明白你选的是哪一个。可以点下面的选项，或者让我再说一遍。",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "7b6b36c52bc2bfc1b8c2.wav",
+    "text": "好呀，我们停下来。你可以聊点别的，也可以休息一下。",
+    "style": "bright",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "6dfef2f69ffe7eac030f.wav",
+    "text": "嗨！我是天天！小爪子准备好啦，我们一起去发现有趣的事情吧！",
+    "style": "bright",
+    "calm": false,
+    "sample": true
+  },
+  {
+    "file": "b551ac30b0338c723d65.wav",
+    "text": "听起来你需要帮助。请现在去找身边可信赖的大人，把发生的事告诉他，好吗？",
+    "style": "gentle",
+    "calm": true,
+    "sample": false
+  },
+  {
+    "file": "1b61817c9f9463999863.wav",
+    "text": "这些小秘密和个人信息不用告诉我哦。我们可以聊聊你喜欢的颜色！",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "91c722e16822da2b5eb3.wav",
+    "text": "我们换一个安全的话题吧。要不要一起猜一种小动物？",
+    "style": "gentle",
+    "calm": true,
+    "sample": false
+  },
+  {
+    "file": "94c82372ca50bb6ffbaf.wav",
+    "text": "谢谢你告诉我。难过的时候，可以找信任的大人抱一抱，慢慢说说发生了什么。",
+    "style": "gentle",
+    "calm": true,
+    "sample": false
+  },
+  {
+    "file": "42c800f0cfc6cdaa3f2c.wav",
+    "text": "再见啦！让眼睛休息一下，也去和身边的人玩一玩吧。",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "1eca932e9620244a3f62.wav",
+    "text": "看，我在屏幕里展开小翅膀啦！你坐着看就好。我们想象着去云朵上散散步。",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "57e9f46dd2eda46b9865.wav",
+    "text": "你好呀，我是屏幕里的 AI 小狗天天！很高兴见到你。今天想聊些什么呢？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "edce300130e5faa9710b.wav",
+    "text": "看我的小爪子，哒哒哒！你可以坐着给我数数，一、二、三！",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "c9c9b2877bda9298ba27.wav",
+    "text": "小鼻子动一动！我们想象一下，花园里飘来了淡淡的花香。",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "d89b65966c6a066b5b34.wav",
+    "text": "一小步，再一小步。我在屏幕里的小花园散步呢！",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "21cbd5bd79f389449061.wav",
+    "text": "我的尾巴也开心地摇起来啦！今天有什么让你开心的小事？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "a4d88da039c1dc9fc4a5.wav",
+    "text": "眨一下眼睛，送你一个小小的问好！",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "235605cb3a6c2cec4ab4.wav",
+    "text": "小兔子发现了一颗会发光的种子。它想给种子找一个家。你觉得种在花园里，还是窗边的小花盆里呢？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "389979d679baf20b2ad4.wav",
+    "text": "阳光看起来是白色的，其实藏着好多颜色！雨后的水滴能把这些颜色分开，就成了彩虹。你最喜欢哪种颜色？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "be427053c80c1b549bba.wav",
+    "text": "来猜猜看：长长的耳朵，短短的尾巴，蹦蹦跳跳。它是什么小动物呀？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "84eb47c102dd28caf60f.wav",
+    "text": "小兔子，蹦蹦跳！你的想象真有意思。我们再想一种住在森林里的动物吧？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "811529f511e343d17ff5.wav",
+    "text": "我听见啦！现在是预设演示，你可以试试让我招手、摇尾巴，或者讲一个故事。",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "80bfa183803e50f38b39.wav",
+    "text": "小兔子找到一颗发光的种子。它想给种子安个家。你想选花园，还是窗边的花盆？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "5310f45729a6de323a9d.wav",
+    "text": "种子住进了花园。小兔子发现泥土干干的。我们给它浇一点水，还是先看看小水壶？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "fc25c5c304ad8cc8a4eb.wav",
+    "text": "种子住进了窗边的花盆。小兔子请大人帮忙放稳花盆。我们先浇一点水，还是给花盆画个标记？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "b90a3d452e700fef2021.wav",
+    "text": "小水壶里有清清的水。小兔子慢慢浇了一点，让泥土湿润。过了几天，会发生什么呢？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "beea2d8fba986e975781.wav",
+    "text": "花盆上多了一个笑眯眯的小太阳。小兔子照顾种子，耐心等了几天。要看看它的变化吗？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "a5a1d8c48786d4e016e3.wav",
+    "text": "一片嫩绿的小芽探出了头！小兔子真开心。它想邀请小伙伴来看，还是画下小芽的样子？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "5a596f9eafab74453baa.wav",
+    "text": "小伙伴们围着小芽，轻声说你好。小兔子发现，分享一件小小的开心事，也能让大家笑起来。故事讲完啦。",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "50aa9dfe5955fc7675d0.wav",
+    "text": "小兔子画下小芽，把画送给家人。它记住了等待和照顾的时光。发光种子的故事讲完啦。",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "c5f14615420f7b3cd514.wav",
+    "text": "来猜第一位动物朋友：长耳朵，短尾巴，喜欢蹦蹦跳。它是谁？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "8f6ea5f497e919972b62.wav",
+    "text": "再想一想，它有两只长长的耳朵。可以选小兔子，也可以让我告诉你答案。",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "da73d72ba026db28df3c.wav",
+    "text": "答案是小兔子！长耳朵和蹦蹦跳是这道题的线索。要认识下一位动物朋友吗？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "326c0639de66e7938b1e.wav",
+    "text": "第二位朋友有大耳朵，还有一条长长的鼻子。它是谁？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "2d13e6f6eea6f02fbae9.wav",
+    "text": "它能用长鼻子卷起食物。你想选大象，还是听我说答案？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "1be96d40c452b693d375.wav",
+    "text": "答案是大象！它的鼻子能帮助它取水和拿食物。还有最后一位朋友。",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "5d9621ef3c7f1c68cce1.wav",
+    "text": "最后一位朋友会喵喵叫，脚下有软软的肉垫。它是谁？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "c90da9203bd807768f89.wav",
+    "text": "它会轻轻地喵一声。你想选小猫咪，还是让我告诉你答案？",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "b755feea21e01973d80b.wav",
+    "text": "答案是小猫咪！我们认识了兔子、大象和小猫。今天的猜动物结束啦，给眼睛和耳朵休息一下吧。",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "cef83c24c33bf24683ca.wav",
+    "text": "我还没明白你选的是哪一个。可以点下面的选项，或者让我再说一遍。",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "77a0d56d7263a2da6d57.wav",
+    "text": "好呀，我们停下来。你可以聊点别的，也可以休息一下。",
+    "style": "gentle",
+    "calm": false,
+    "sample": false
+  },
+  {
+    "file": "a4c6a2049361a612cb6f.wav",
+    "text": "嗨！我是天天！小爪子准备好啦，我们一起去发现有趣的事情吧！",
+    "style": "gentle",
+    "calm": false,
+    "sample": true
+  }
+]

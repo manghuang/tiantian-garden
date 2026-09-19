@@ -1,0 +1,22 @@
+# Local Wrangler only. Copy to .dev.vars and replace the placeholder code.
+LOCAL_DEVELOPMENT=true
+PUBLIC_ORIGIN=http://127.0.0.1:8787
+ACCESS_CODE=replace-with-a-long-random-local-code
+# Leave empty for offline demo; do not put keys in this example or chat.
+OPENAI_API_KEY=
+# DeepSeek conversation. Cloudflare ASR/TTS use the AI binding; no OpenAI key is needed for them.
+DEEPSEEK_API_KEY=
+DEEPSEEK_MODEL=deepseek-flash
+# Default Chinese TTS. MiniMax runs through the existing Cloudflare AI binding.
+DEEPSEEK_TTS=cloudflare-minimax
+DEEPSEEK_ASR=cloudflare
+# Keep this only when manually switching back to MeloTTS.
+CLOUDFLARE_MELOTTS_LANG=zh
+# Built-in Chinese voice chosen for the cheerful 天天-like character style.
+CLOUDFLARE_TTS_MODEL=minimax/speech-2.8-turbo
+CLOUDFLARE_TTS_VOICE_ID=Chinese (Mandarin)_Cute_Spirit
+OPENAI_TRANSCRIPTION_MODEL=gpt-4o-mini-transcribe
+OPENAI_TTS_MODEL=gpt-4o-mini-tts
+OPENAI_TTS_VOICE=coral
+# Optional existing custom voice; leave empty to use the built-in voice.
+OPENAI_CUSTOM_VOICE_ID=

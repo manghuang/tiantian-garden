@@ -1,0 +1,163 @@
+{
+  "result": {
+    "transcription_info": {
+      "language": "zh",
+      "language_probability": 1,
+      "duration": 7.48,
+      "duration_after_vad": 7.48
+    },
+    "text": "哇,你也是天天呀! 好巧! 那我们一起去发现什么有趣的事情呢?",
+    "word_count": 3,
+    "segments": [
+      {
+        "start": 0,
+        "end": 2.36,
+        "text": "哇,你也是天天呀!",
+        "temperature": 0,
+        "avg_logprob": -0.3515625,
+        "compression_ratio": 0.8777777777777778,
+        "no_speech_prob": 0,
+        "words": [
+          {
+            "word": "哇,",
+            "start": 0,
+            "end": 0.36
+          },
+          {
+            "word": "你",
+            "start": 0.88,
+            "end": 1.16
+          },
+          {
+            "word": "也是",
+            "start": 1.16,
+            "end": 1.44
+          },
+          {
+            "word": "天",
+            "start": 1.44,
+            "end": 1.66
+          },
+          {
+            "word": "天",
+            "start": 1.66,
+            "end": 1.98
+          },
+          {
+            "word": "呀!",
+            "start": 1.98,
+            "end": 2.36
+          }
+        ],
+        "word_count": 1
+      },
+      {
+        "start": 2.92,
+        "end": 3.36,
+        "text": "好巧!",
+        "temperature": 0,
+        "avg_logprob": -0.3515625,
+        "compression_ratio": 0.8777777777777778,
+        "no_speech_prob": 0,
+        "words": [
+          {
+            "word": "好",
+            "start": 2.92,
+            "end": 3.18
+          },
+          {
+            "word": "巧!",
+            "start": 3.18,
+            "end": 3.36
+          }
+        ],
+        "word_count": 1
+      },
+      {
+        "start": 4.38,
+        "end": 6.96,
+        "text": "那我们一起去发现什么有趣的事情呢?",
+        "temperature": 0,
+        "avg_logprob": -0.3515625,
+        "compression_ratio": 0.8777777777777778,
+        "no_speech_prob": 0,
+        "words": [
+          {
+            "word": "那",
+            "start": 4.38,
+            "end": 4.64
+          },
+          {
+            "word": "我们",
+            "start": 4.64,
+            "end": 4.86
+          },
+          {
+            "word": "一起",
+            "start": 4.86,
+            "end": 5.16
+          },
+          {
+            "word": "去",
+            "start": 5.16,
+            "end": 5.34
+          },
+          {
+            "word": "发",
+            "start": 5.34,
+            "end": 5.56
+          },
+          {
+            "word": "现",
+            "start": 5.56,
+            "end": 5.72
+          },
+          {
+            "word": "什么",
+            "start": 5.72,
+            "end": 5.96
+          },
+          {
+            "word": "有",
+            "start": 5.96,
+            "end": 6.16
+          },
+          {
+            "word": "趣",
+            "start": 6.16,
+            "end": 6.32
+          },
+          {
+            "word": "的",
+            "start": 6.32,
+            "end": 6.46
+          },
+          {
+            "word": "事情",
+            "start": 6.46,
+            "end": 6.74
+          },
+          {
+            "word": "呢?",
+            "start": 6.74,
+            "end": 6.96
+          }
+        ],
+        "word_count": 1
+      }
+    ],
+    "vtt": "WEBVTT\n\n00:00.000 --> 00:00.360\n哇,\n\n00:00.880 --> 00:01.160\n你\n\n00:01.160 --> 00:01.440\n也是\n\n00:01.440 --> 00:01.660\n天\n\n00:01.660 --> 00:01.980\n天\n\n00:01.980 --> 00:02.360\n呀!\n\n00:02.920 --> 00:03.180\n好\n\n00:03.180 --> 00:03.360\n巧!\n\n00:04.380 --> 00:04.640\n那\n\n00:04.640 --> 00:04.860\n我们\n\n00:04.860 --> 00:05.160\n一起\n\n00:05.160 --> 00:05.340\n去\n\n00:05.340 --> 00:05.560\n发\n\n00:05.560 --> 00:05.720\n现\n\n00:05.720 --> 00:05.960\n什么\n\n00:05.960 --> 00:06.160\n有\n\n00:06.160 --> 00:06.320\n趣\n\n00:06.320 --> 00:06.460\n的\n\n00:06.460 --> 00:06.740\n事情\n\n00:06.740 --> 00:06.960\n呢?\n\n",
+    "usage": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "neurons": 5.813236300432
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

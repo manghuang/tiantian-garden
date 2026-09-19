@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tiantian-garden",
+  "account_id": "748c38139c4cd7a116bbc759c73a0680",
+  "main": "cloudflare/worker.js",
+  "compatibility_date": "2026-09-12",
+  "workers_dev": true,
+  "preview_urls": false,
+  "ai": { "binding": "AI" },
+  "assets": { "directory": ".cf-assets", "binding": "ASSETS", "run_worker_first": true },
+  "durable_objects": { "bindings": [{ "name": "GARDEN", "class_name": "GardenControl" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["GardenControl"] }],
+  "observability": { "enabled": false },
+  "vars": {
+    "PUBLIC_ORIGIN": "https://tiantian-garden.1255529524.workers.dev",
+    "PUBLIC_ORIGINS": "https://tiantian-garden.1255529524.workers.dev,https://tiantian-garden.catcoder.dpdns.org",
+    "CHILD_USE_ENABLED": "false",
+    "OPENAI_REALTIME_MODEL": "gpt-realtime-2.1",
+    "OPENAI_REALTIME_VOICE": "coral",
+    "DEEPSEEK_MODEL": "deepseek-flash",
+    "DEEPSEEK_ASR": "cloudflare",
+    "DEEPSEEK_TTS": "local-gpu",
+    "CLOUDFLARE_MELOTTS_LANG": "zh",
+    "CLOUDFLARE_TTS_MODEL": "minimax/speech-2.8-turbo"
+  }
+}

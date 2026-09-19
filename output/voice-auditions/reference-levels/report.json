@@ -1,0 +1,99 @@
+{
+  "generatedAt": "2026-09-16T16:33:08.460Z",
+  "source": "../.tools/voice-reference/clip-1440/candidates/skye-hook-padded.wav",
+  "referenceText": "太好了，我钩住了！",
+  "method": "cut0,temperature 0.7,speed 1,seed 42",
+  "levels": [
+    {
+      "name": "raw",
+      "filter": null
+    },
+    {
+      "name": "gain6",
+      "filter": "volume=6dB"
+    },
+    {
+      "name": "gain12",
+      "filter": "volume=12dB"
+    },
+    {
+      "name": "loudnorm",
+      "filter": "loudnorm=I=-20:TP=-2:LRA=11"
+    }
+  ],
+  "samples": [
+    {
+      "reference": "raw",
+      "phrase": "你好呀，我是天天！我们一起去发现有趣的事情吧。",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\raw-1.wav",
+      "bytes": 349484
+    },
+    {
+      "reference": "raw",
+      "phrase": "别着急，我们慢慢来。我陪你再试一次，好吗？",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\raw-2.wav",
+      "bytes": 395564
+    },
+    {
+      "reference": "raw",
+      "phrase": "准备好了吗？让我们飞上天空，开始新的冒险吧！",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\raw-3.wav",
+      "bytes": 329004
+    },
+    {
+      "reference": "gain6",
+      "phrase": "你好呀，我是天天！我们一起去发现有趣的事情吧。",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\gain6-1.wav",
+      "bytes": 275244
+    },
+    {
+      "reference": "gain6",
+      "phrase": "别着急，我们慢慢来。我陪你再试一次，好吗？",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\gain6-2.wav",
+      "bytes": 382764
+    },
+    {
+      "reference": "gain6",
+      "phrase": "准备好了吗？让我们飞上天空，开始新的冒险吧！",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\gain6-3.wav",
+      "bytes": 300844
+    },
+    {
+      "reference": "gain12",
+      "phrase": "你好呀，我是天天！我们一起去发现有趣的事情吧。",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\gain12-1.wav",
+      "bytes": 285484
+    },
+    {
+      "reference": "gain12",
+      "phrase": "别着急，我们慢慢来。我陪你再试一次，好吗？",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\gain12-2.wav",
+      "bytes": 380204
+    },
+    {
+      "reference": "gain12",
+      "phrase": "准备好了吗？让我们飞上天空，开始新的冒险吧！",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\gain12-3.wav",
+      "bytes": 288044
+    },
+    {
+      "reference": "loudnorm",
+      "phrase": "你好呀，我是天天！我们一起去发现有趣的事情吧。",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\loudnorm-1.wav",
+      "bytes": 275244
+    },
+    {
+      "reference": "loudnorm",
+      "phrase": "别着急，我们慢慢来。我陪你再试一次，好吗？",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\loudnorm-2.wav",
+      "bytes": 382764
+    },
+    {
+      "reference": "loudnorm",
+      "phrase": "准备好了吗？让我们飞上天空，开始新的冒险吧！",
+      "file": "C:\\Users\\12555\\Documents\\ChatGPT\\2DPic-3Dmodule\\output\\voice-auditions\\reference-levels\\loudnorm-3.wav",
+      "bytes": 300844
+    }
+  ],
+  "voiceSimilarityVerified": false
+}

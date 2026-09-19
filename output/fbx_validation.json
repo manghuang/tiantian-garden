@@ -1,16 +1,77 @@
 {
   "armatures": 1,
   "bones": [
-    33
+    40
   ],
   "animation_actions": [
+    "Key|Skye_Rig|Curious_Look",
     "Key|Skye_Rig|Happy_Tail",
+    "Key|Skye_Rig|Hello_Wave",
     "Key|Skye_Rig|Idle_Breathe",
+    "Key|Skye_Rig|Mouth_OpenClose",
+    "Key|Skye_Rig|Play_Bow",
+    "Key|Skye_Rig|Sniff",
     "Key|Skye_Rig|Takeoff_Hover",
+    "Key|Skye_Rig|Trot",
     "Key|Skye_Rig|Walk",
+    "Key|Skye_Rig|Wink",
+    "Skye_Rig|Skye_Rig|Curious_Look",
     "Skye_Rig|Skye_Rig|Happy_Tail",
+    "Skye_Rig|Skye_Rig|Hello_Wave",
     "Skye_Rig|Skye_Rig|Idle_Breathe",
+    "Skye_Rig|Skye_Rig|Mouth_OpenClose",
+    "Skye_Rig|Skye_Rig|Play_Bow",
+    "Skye_Rig|Skye_Rig|Sniff",
     "Skye_Rig|Skye_Rig|Takeoff_Hover",
-    "Skye_Rig|Skye_Rig|Walk"
-  ]
+    "Skye_Rig|Skye_Rig|Trot",
+    "Skye_Rig|Skye_Rig|Walk",
+    "Skye_Rig|Skye_Rig|Wink"
+  ],
+  "facial_animation": [
+    {
+      "name": "Idle_Breathe",
+      "changing_facial_curves": true
+    },
+    {
+      "name": "Mouth_OpenClose",
+      "changing_facial_curves": true
+    },
+    {
+      "name": "Walk",
+      "changing_facial_curves": true
+    },
+    {
+      "name": "Trot",
+      "changing_facial_curves": true
+    },
+    {
+      "name": "Happy_Tail",
+      "changing_facial_curves": true
+    },
+    {
+      "name": "Curious_Look",
+      "changing_facial_curves": true
+    },
+    {
+      "name": "Sniff",
+      "changing_facial_curves": true
+    },
+    {
+      "name": "Play_Bow",
+      "changing_facial_curves": true
+    },
+    {
+      "name": "Wink",
+      "changing_facial_curves": true
+    },
+    {
+      "name": "Hello_Wave",
+      "changing_facial_curves": true
+    },
+    {
+      "name": "Takeoff_Hover",
+      "changing_facial_curves": true
+    }
+  ],
+  "passed": true
 }
