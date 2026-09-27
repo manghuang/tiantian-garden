@@ -1,0 +1,39 @@
+{
+  "source": "output/Skye_Refined_v48/export/Skye_Refined_v48_r2.glb",
+  "target": "companion/assets/dog-v48.glb",
+  "sourceSha256": "11f639ab3a9e2504913bb539424ce115d273e1e866668ebd0dc2a4e690d6706f",
+  "targetSha256": "0cb051c019f6e271ae497651a8430f1efc0aca66d3f0ef3741121caf48b476fe",
+  "sourceBytes": 187149772,
+  "targetBytes": 20538444,
+  "triangleCount": 1503859,
+  "animations": [
+    "Blink",
+    "Blink_Double",
+    "Curious_Look",
+    "Ear_Wiggle",
+    "Hello_Wave",
+    "Idle_Breathe",
+    "Joyful_Smile",
+    "Jump",
+    "Lip_Phonemes",
+    "Mouth_Close",
+    "Play_Bow",
+    "Playful_Pant",
+    "Relaxed_Eyes",
+    "Run",
+    "Shake_Off",
+    "Smile",
+    "Sniff",
+    "Tail_Wag",
+    "Talk",
+    "Walk",
+    "Wink",
+    "Wink_R"
+  ],
+  "omittedSourceAction": {
+    "name": "Look_Around",
+    "reason": "The Blender action animates custom rig properties, which the glTF exporter does not emit as morph or bone tracks."
+  },
+  "compression": "EXT_meshopt_compression with 14-bit positions, 12-bit UVs, quantized normals and weights; no mesh simplification",
+  "exportPolicy": "Blender glTF export retains the four highest joint influences per vertex and normalizes their weights."
+}

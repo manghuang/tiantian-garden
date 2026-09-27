@@ -1,13 +1,16 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { ACTIONS } from '../shared/behavior.js';
+import { ACTIONS, MODEL_ACTIONS } from '../shared/behavior.js';
 import { expressiveClip, motionLevel, performancePose } from './motion.js';
 
+const DISPLAY_MODEL_HEIGHT = 2.65;
+
 export class DogScene {
-  constructor(container, { onLoad, onProgress, onError, onAction, level, modelUrl = '/assets/dog.glb' }) {
-    this.container = container; this.onAction = onAction; this.level = level;
+  constructor(container, { onLoad, onProgress, onError, onAction, level, modelUrl = '/assets/dog.glb', modelId = 'balanced' }) {
+    this.container = container; this.onAction = onAction; this.level = level; this.onLoad = onLoad; this.onProgress = onProgress; this.onError = onError;
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
     this.renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -23,6 +26,7 @@ export class DogScene {
     this.camera.position.set(3.1, 2.75, 8.0);
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.target.set(0, 1.45, 0); this.controls.enableDamping = true;
+    this.defaultCameraOffset = this.camera.position.clone().sub(this.controls.target);
     this.controls.enablePan = false; this.controls.minDistance = 5; this.controls.maxDistance = 12;
     this.controls.minPolarAngle = 0.55; this.controls.maxPolarAngle = Math.PI / 2 - 0.04;
     this.controls.update(); this.controls.saveState();
@@ -48,7 +52,65 @@ export class DogScene {
     this.performance = new THREE.Group(); this.scene.add(this.performance); this.performanceTime = 0;
     this.observer = new ResizeObserver(() => this.resize()); this.observer.observe(container); this.resize();
     this.renderer.setAnimationLoop(() => this.tick());
-    new GLTFLoader().load(modelUrl, gltf => {
+    this.loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+    this.modelUrl = ''; this.modelId = modelId; this.modelLoadId = 0;
+    void this.setModel(modelUrl, modelId);
+    this.renderer.domElement.addEventListener('webglcontextlost', event => { event.preventDefault(); this.onError('图形设备暂时不可用，请刷新页面或换用桌面浏览器。'); });
+  }
+  disposeModel(root) {
+    if (!root) return;
+    const geometries = new Set(), materials = new Set(), textures = new Set();
+    root.traverse(node => {
+      if (node.geometry) geometries.add(node.geometry);
+      const list = Array.isArray(node.material) ? node.material : [node.material];
+      for (const material of list) if (material) {
+        materials.add(material);
+        for (const value of Object.values(material)) if (value?.isTexture) textures.add(value);
+      }
+    });
+    geometries.forEach(geometry => geometry.dispose());
+    materials.forEach(material => material.dispose());
+    textures.forEach(texture => texture.dispose());
+  }
+  frameModel(model) {
+    model.updateMatrixWorld(true);
+    const bounds = new THREE.Box3().setFromObject(model);
+    const size = bounds.getSize(new THREE.Vector3());
+    const center = bounds.getCenter(new THREE.Vector3());
+    if (!Number.isFinite(size.y) || size.y <= 1e-4) return false;
+
+    const scale = DISPLAY_MODEL_HEIGHT / size.y;
+    const frame = new THREE.Group();
+    frame.name = 'Model framing';
+    frame.scale.setScalar(scale);
+    frame.position.set(-center.x * scale, -bounds.min.y * scale, -center.z * scale);
+    frame.add(model);
+    this.performance.add(frame);
+    this.modelFrame = frame;
+
+    this.controls.target.set(0, DISPLAY_MODEL_HEIGHT / 2, 0);
+    this.camera.position.copy(this.controls.target).add(this.defaultCameraOffset);
+    this.controls.update();
+    this.controls.saveState();
+    return true;
+  }
+  setModel(modelUrl, modelId = 'balanced') {
+    if (this.model && this.modelUrl === modelUrl) return Promise.resolve(true);
+    const requestId = ++this.modelLoadId;
+    this.modelUrl = modelUrl; this.modelId = modelId;
+    clearTimeout(this.idleTimer);
+    this.mixer?.stopAllAction();
+    if (this.model) {
+      this.mixer?.uncacheRoot(this.model);
+      this.performance.remove(this.modelFrame || this.model);
+      this.disposeModel(this.model);
+    }
+    this.model = null; this.modelFrame = null; this.mixer = null; this.activeAction = null; this.activeName = null;
+    this.performance.position.set(0, 0, 0); this.performance.rotation.set(0, 0, 0);
+    this.jaw = null; this.jawOpen = null; this.jawClosed = null; this.head = null; this.groom = []; this.actions = {};
+    this.renderer.domElement.dataset.modelUrl = modelUrl;
+    return new Promise(resolve => this.loader.load(modelUrl, gltf => {
+      if (requestId !== this.modelLoadId) { this.disposeModel(gltf.scene); resolve(false); return; }
       this.model = gltf.scene;
       this.model.traverse(node => {
         if (node.isMesh) {
@@ -58,22 +120,26 @@ export class DogScene {
           materials.forEach(m => { m.envMapIntensity = 0.65; });
         }
       });
-      const irises = [];
-      this.model.traverse(node => { if (node.isMesh && /Iris/.test(node.name)) irises.push(node); });
-      this.renderer.domElement.dataset.eyeTextures = String(irises.filter(node => node.material.map?.image).length);
-      if (irises.length !== 2 || irises.some(node => !node.material.map?.image)) {
-        onError('眼睛贴图没有加载成功，请刷新页面重试。');
-        return;
+      const eyes = [];
+      this.model.traverse(node => { if (node.isMesh && /(Iris|Ocular[\s_.-]*surface)/i.test(node.name)) eyes.push(node); });
+      const eyeTextureCount = eyes.filter(node => {
+        const list = Array.isArray(node.material) ? node.material : [node.material];
+        return list.some(material => material && Object.values(material).some(value => value?.isTexture && value.image));
+      }).length;
+      this.renderer.domElement.dataset.eyeTextures = String(eyeTextureCount);
+      if (eyes.length !== 2 || eyeTextureCount === 0) {
+        this.disposeModel(this.model); this.model = null;
+        this.onError('眼部模型或贴图没有加载成功，请刷新页面重试。'); resolve(false); return;
       }
-      const box = new THREE.Box3().setFromObject(this.model);
-      this.model.position.y -= box.min.y;
-      this.performance.add(this.model);
+      if (!this.frameModel(this.model)) {
+        this.disposeModel(this.model); this.model = null;
+        this.onError('模型尺寸无效，请刷新页面重试。'); resolve(false); return;
+      }
       this.jaw = this.model.getObjectByName('jaw');
       this.head = this.model.getObjectByName('head'); this.speechNod = new THREE.Quaternion(); this.speechEuler = new THREE.Euler();
       this.mixer = new THREE.AnimationMixer(this.model);
       this.sourceClips = gltf.animations; this.rebuildActions();
-      const mouthClip = gltf.animations.find(c => c.name === 'Mouth_OpenClose');
-      const jawTrack = mouthClip?.tracks.find(t => t.name === 'jaw.quaternion');
+      const jawTrack = gltf.animations.flatMap(clip => clip.tracks).find(track => track.name === 'jaw.quaternion');
       if (jawTrack) {
         this.jawClosed = new THREE.Quaternion().fromArray(jawTrack.values, 0);
         this.jawOpen = this.jawClosed.clone(); let angle = 0;
@@ -84,9 +150,14 @@ export class DogScene {
       }
       this.mixer.addEventListener('finished', e => { if (e.action === this.activeAction) this.play('idle'); });
       this.play('idle');
-      onLoad({ animations: gltf.animations.map(c => c.name), jaw: Boolean(this.jawOpen) });
-    }, event => onProgress(event.total ? Math.round(event.loaded / event.total * 100) : null), () => onError('模型暂时没有加载成功，请刷新页面重试。'));
-    this.renderer.domElement.addEventListener('webglcontextlost', event => { event.preventDefault(); onError('图形设备暂时不可用，请刷新页面或换用桌面浏览器。'); });
+      this.onLoad({ animations: gltf.animations.map(c => c.name), jaw: Boolean(this.jawOpen), modelId });
+      resolve(true);
+    }, event => {
+      if (requestId === this.modelLoadId) this.onProgress(event.total ? Math.round(event.loaded / event.total * 100) : null);
+    }, () => {
+      if (requestId === this.modelLoadId) this.onError('模型暂时没有加载成功，请刷新页面重试。');
+      resolve(false);
+    }));
   }
   resize() {
     const { clientWidth: w, clientHeight: h } = this.container;
@@ -94,7 +165,9 @@ export class DogScene {
     this.renderer.setSize(w, h); this.camera.aspect = w / h; this.camera.updateProjectionMatrix();
   }
   play(name) {
-    const spec = ACTIONS[name]; const next = spec && this.actions[spec.clip];
+    const spec = ACTIONS[name];
+    if (!spec || !MODEL_ACTIONS[this.modelId]?.includes(name)) return false;
+    const next = (spec.clips || [spec.clip]).map(clip => this.actions[clip]).find(Boolean);
     if (!next) return false;
     clearTimeout(this.idleTimer);
     if (this.activeAction === next && name === 'idle') return true;
@@ -104,7 +177,7 @@ export class DogScene {
     next.fadeIn(0.3).play();
     if (previous && previous !== next) previous.fadeOut(0.3);
     this.activeAction = next; this.activeName = name; this.performanceTime = 0; this.onAction(name);
-    if (['walk', 'trot'].includes(name)) { next.setLoop(THREE.LoopRepeat, Infinity); this.idleTimer = setTimeout(() => this.play('idle'), 4500); }
+    if (['walk', 'trot', 'run'].includes(name)) { next.setLoop(THREE.LoopRepeat, Infinity); this.idleTimer = setTimeout(() => this.play('idle'), 4500); }
     return true;
   }
   rebuildActions() {

@@ -1,30 +1,32 @@
 # Cloudflare 部署与验收
 
-目标平台为 Cloudflare Workers + Static Assets + SQLite Durable Objects。页面、轻量模型及配音在同一站点；`GardenControl` 保存登录、限流和会话截止时间。当前线上语音链路使用 Cloudflare 中文识别与本机 GPU 角色模型；MeloTTS 和 MiniMax 仍可显式选择，原版音色相似度仍待试听确认。
+目标平台为 Cloudflare Workers + Static Assets + SQLite Durable Objects。页面、轻量模型及配音在同一站点；`GardenControl` 保存登录、限流和会话截止时间。当前线上语音配置使用 Cloudflare 中文识别和 MiniMax 直连接口，仍需真实账号试听与延迟验收。
 
 ## 当前线上部署
 
-2026-09-18 更新：版本 `b903e9b3-e0ff-4ea6-b203-8468cb1c44a2` 已切换到 `DEEPSEEK_TTS=local-gpu`。本机 RTX 4060 Ti / GPT-SoVITS v2ProPlus 桥接已启动并连接，线上生产回归通过真实 GPU 开场白、Cloudflare 中文识别 → DeepSeek → 本机 TTS、打断、下一轮恢复和退出；140 项测试通过。
+2026-09-26 更新：版本 `6f6997f5-940f-4a6e-8187-7213a535b086` 已部署。家长设置可切换经典轻量模型和精细表情 v48，默认仍为经典轻量模型；动作能力按所选模型筛选。前序版本修正了 Three.js 名称规范化后 v48 眼部网格识别失败的问题；本版本在 CSP `script-src` 中允许 Meshopt 解码器编译 WebAssembly（`wasm-unsafe-eval`），修复浏览器策略阻止 v48 模型解码的问题。Worker 配置为 `MODEL_DEFAULT=balanced`、`DEEPSEEK_ASR=cloudflare`、`TTS_PROVIDER=minimax_direct`、`CHILD_USE_ENABLED=false`。部署时确认了 `ACCESS_CODE`、`DEEPSEEK_API_KEY`、`MINIMAX_API_KEY` 等所需 Secret 名称；未读取密钥值。
 
 - 地址：https://tiantian-garden.1255529524.workers.dev；自定义域名：https://tiantian-garden.catcoder.dpdns.org
-- 当前配置：默认 `DEEPSEEK_ASR=cloudflare`、`DEEPSEEK_TTS=local-gpu`。Worker 不接收本机权重或参考音频，只通过独立 `VOICE_WORKER_TOKEN` 接收本机桥接主动建立的音频连接；线上保留 `DEEPSEEK_API_KEY` Secret。使用期间需要保持根目录 `Start_Local_Voice.cmd` 运行。
-- 上一版：`83ba14b0-70cb-46d2-8dd5-c47ec13fd4d8`，曾尝试 MiniMax Speech 2.8 Turbo；余额不足时回退系统朗读，已切回本机 GPU。
+- 当前配置：`MODEL_DEFAULT=balanced`、`DEEPSEEK_ASR=cloudflare`、`DEEPSEEK_TTS=cloudflare-minimax`、`TTS_PROVIDER=minimax_direct`。当前无需启动本机音色桥接；MiniMax 直连凭据保存在 Worker Secret 中。
+- 上一语音版本：`b903e9b3-e0ff-4ea6-b203-8468cb1c44a2` 使用本机 GPT-SoVITS 桥接；更早版本 `83ba14b0-70cb-46d2-8dd5-c47ec13fd4d8` 曾试用 MiniMax Speech 2.8 Turbo，当时余额不足后曾回退系统朗读。
 - 前一语音输入版本：`a276761d-d205-47ea-b169-e8b098c8a9f7`，只使用浏览器本机声音输出，历史 [音频输入验收](../cloudflare/acceptance/audio-acceptance-2026-09-14.json) 保留。
 - 前一文字版本：`91eb2f54-15c8-4876-a550-859af6bc1759`；更早 `e9a4e1e9-74a8-480f-b7df-d55af8fe395c` 缺少连续对话修复。
 - 独立线上口令保存在本机 `.env.production`，此文件已被 Git 忽略；本地 `.dev.vars` 的示例口令未发布。DeepSeek 密钥由 Wrangler secrets 存储，没有进入网页资源。
 - `node scripts/cloudflare/publish-secrets.js` 将 `.env.production` 的口令和 `.dev.vars` 中已填写的模型密钥通过标准输入写入 Worker secrets；不打印值，不删除未填写的已有云端 secret。运行前检查 `wrangler.jsonc` 的目标账号和地址。
 - 历史文字版本：102 项自动测试及当时 dry-run 通过，Worker 71.73 KiB / gzip 18.42 KiB。真实线上 24 项断言通过：HTTPS/CSP、登录前保护、Secure/HttpOnly Cookie、CSRF/跨站拒绝、完整 GLB/WAV、WebSocket、两轮 DeepSeek 回答与动作、上下文保留、退出断线及旧 Cookie 撤销。记录见 [云端验收数据](../cloudflare/acceptance/acceptance-2026-09-14.json)。
-- 尚未验证：线上浏览器画面、本机朗读、真实麦克风/原声音色、实际五分钟到期及 Alarm、回滚演练、移动设备长期性能。浏览器控制连接失败；服务端鉴权与文件检查不代表画面验收。`CHILD_USE_ENABLED=false`。
+- 前一版本线上 HTTP 检查中，两个域名首页均返回 200；未登录访问 `/api/config` 和 v48 GLB 均返回 401，符合登录保护。当前版本尚未完成登录后的模型切换画面、真实麦克风和语音输出、实际五分钟到期及 Alarm、回滚演练、移动设备长期性能验收。`CHILD_USE_ENABLED=false`。
 
 ## 当前验证证据
 
-- `npm run cf:build`：83 个应用资源，共约 52.0 MiB，最大文件为 23.5 MiB 模型，均小于 Cloudflare 单文件 25 MiB 限制。Wrangler 自身还会生成资源清单。
-- `npm run cf:check`：MiniMax 默认版本预检通过并已部署。2026-09-13 的 71.39 KiB 预检属于此前历史版本。
+- `npm run cf:build`：84 个应用资源，共 71.7 MiB；经典轻量模型约 23.5 MiB，v48 模型约 19.6 MiB，均小于 Cloudflare 单文件 25 MiB 限制。Wrangler 自身还会生成资源清单。
+- `npm run cf:check`：2026-09-26 模型切换版本 dry-run 通过，Worker 111.39 KiB / gzip 27.66 KiB；此次 dry-run 不代表已部署。2026-09-13 的 71.39 KiB 预检属于此前历史版本。
+- `npm run model:v48:validate`：v48 GLB 0 错误、0 警告，保留 22 个可导出动画片段；验证器无法解码 Meshopt 扩展，因此将该扩展列为信息项。
 - `npm test`：140 项通过，覆盖手机录音兼容、文字模式、语音播放打断、MeloTTS / MiniMax 音频、云端失败兜底和 DeepSeek 适配器回归测试。后端生命周期测试使用存储/上游替身。
 - `node scripts/cloudflare/mobile-live-smoke.mjs`：线上开场白、文字回复、合成 WAV → Cloudflare 识别 → DeepSeek 回复及退出清理通过；当前 MiniMax 返回 402/2021 时明确报告本机朗读兜底。该脚本不模拟真实手机浏览器播放。
 - `npm run cf:relay-smoke`：真实本地 workerd / WebSocketPair / Durable Object 连接通过 OpenAI 中转、DeepSeek 文字及转写/合成音频、字幕、服务端动作、注入拒绝、名额回收和退出测试。`npm run cf:relay-smoke -- --browser` 另提供回环地址测试页，用本地测试音验证实际 AudioWorklet 与播放；不连接模型服务、不采集麦克风。
 - `npm run cf:smoke`：在真实本地 workerd / Durable Objects 运行时验证登录、CSRF、24,603,508 字节 GLB、WAV 读取、退出和旧 Cookie 失效。此检查不创建 OpenAI 会话。
-- 历史浏览器检查通过本地版本的登录、模型渲染、故事选项、配音请求成功和退出回到登录页。现已完成用户账号授权及线上部署；当前浏览器控制工具不可用，最新页面仍需浏览器复核。
+- 历史浏览器检查通过旧版本的登录、模型渲染、故事选项、配音请求和退出回到登录页；该证据不涵盖 v48 模型切换。当前浏览器控制工具不可用，线上新页面仍需复核。
+- 2026-09-26：新增经典版 / v48 家长可选模型与动作能力过滤，轻量版仍是默认项；版本 `5a1a8e8b-868c-4f8c-8212-a42f95db62cc` 修正 v48 眼部网格误判，版本 `6f6997f5-940f-4a6e-8187-7213a535b086` 放行 Meshopt 所需的 WebAssembly 编译能力。`wrangler deployments list` 确认 `6f6997f5-940f-4a6e-8187-7213a535b086` 当前流量为 100%；本机线上 HEAD 请求因 TLS 凭据错误未能核实响应头，登录后的浏览器实机切换检查仍待完成。
 
 ## 本地运行
 

@@ -49,7 +49,7 @@ export class OpenAIProvider {
       if (this.stream) for (const track of this.stream.getTracks()) this.pc.addTrack(track, this.stream);
       else this.pc.addTransceiver('audio', { direction: 'recvonly' });
       this.channel = this.pc.createDataChannel('oai-events');
-      this.protocol = new RealtimeProtocol({ send: e => this.send(e), emit: (type, value) => {
+      this.protocol = new RealtimeProtocol({ model: settings.model, send: e => this.send(e), emit: (type, value) => {
         if (this.closed) return;
         if (type === 'responseEnd' && this.pendingTexts.length && !this.protocol.active && !this.generating) {
           const texts = this.pendingTexts.splice(0);

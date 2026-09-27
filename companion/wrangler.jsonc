@@ -18,6 +18,7 @@
     "OPENAI_REALTIME_MODEL": "gpt-realtime-2.1",
     "OPENAI_REALTIME_VOICE": "coral",
     "DEEPSEEK_MODEL": "deepseek-flash",
+    "MODEL_DEFAULT": "balanced",
     "DEEPSEEK_ASR": "cloudflare",
     "DEEPSEEK_TTS": "cloudflare-minimax",
     "TTS_PROVIDER": "minimax_direct",

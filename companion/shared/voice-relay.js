@@ -140,7 +140,7 @@ export class VoiceRelay {
             if (item.type !== 'function_call' || !isId(item.call_id) || this.handled.has(item.call_id)) continue;
             this.handled.add(item.call_id);
             let behavior = null;
-            try { if (item.name === 'perform_behavior' && typeof item.arguments === 'string' && item.arguments.length <= 1000) behavior = validateBehavior(JSON.parse(item.arguments)); } catch { /* Rejected below. */ }
+            try { if (item.name === 'perform_behavior' && typeof item.arguments === 'string' && item.arguments.length <= 1000) behavior = validateBehavior(JSON.parse(item.arguments), this.settings?.model); } catch { /* Rejected below. */ }
             const accepted = !cancelled && !this.toolContinuation && e.response.status === 'completed' && count === 0 && Boolean(behavior);
             if (accepted) this.emit({ type: 'garden.behavior', response_id: id, behavior });
             this.send({ type: 'conversation.item.create', item: { type: 'function_call_output', call_id: item.call_id, output: JSON.stringify(accepted ? { ok: true, ...behavior } : { ok: false, error: 'Invalid or excess behavior' }) } });

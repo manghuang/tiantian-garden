@@ -26,7 +26,7 @@ document.querySelector('#app').innerHTML = `
         <div class="motion-shortcuts" aria-label="体验动作"><button data-showcase="wave">招招手</button><button data-showcase="happy">开心小跳</button><button data-showcase="fly">飞一下</button></div>
         <div class="loading" id="loading"><span class="loading-paw">${icon('paw')}</span><strong id="loading-label">天天正在走进花园…</strong><span>第一次见面需要加载精细模型</span><div class="progress-track"><i id="progress"></i></div></div>
         <div class="character-label"><span class="online-dot"></span><strong>天天</strong><span id="action-label">轻轻呼吸</span></div>
-        <div class="view-controls"><span>拖动看看我</span><button id="reset-view" class="icon-button" aria-label="恢复模型视角" title="恢复视角">${icon('rotate')}</button><button id="quality" class="icon-button" aria-label="切换省电显示" aria-pressed="false" title="省电显示：隐藏细毛">${icon('leaf')}</button></div>
+        <div class="view-controls"><span>拖动看看我</span><button id="reset-view" class="icon-button" aria-label="恢复模型视角" title="恢复视角">${icon('rotate')}</button><button id="quality" class="icon-button" aria-label="切换省电显示" aria-pressed="false" title="省电显示：降低像素负担；经典版隐藏细毛">${icon('leaf')}</button></div>
         <div class="garden-bottom"><span>${icon('shield')}我是屏幕里的 AI 小伙伴</span><button id="wave-button">和我打招呼 ${icon('paw')}</button></div>
       </section>
       <section class="conversation" aria-label="和天天聊天">
@@ -49,10 +49,12 @@ document.querySelector('#app').innerHTML = `
       <button class="activity" data-activity="story" aria-pressed="false"><span class="activity-icon lavender">${icon('book')}</span><span><strong>听故事</strong><small>下一页，藏着什么呢</small></span>${icon('arrow')}</button>
       <button class="activity" data-activity="discover" aria-pressed="false"><span class="activity-icon sage">${icon('leaf')}</span><span><strong>好奇时间</strong><small>给世界一个为什么</small></span>${icon('arrow')}</button>
       <button class="activity" data-activity="play" aria-pressed="false"><span class="activity-icon yellow">${icon('spark')}</span><span><strong>一起玩</strong><small>猜一猜，笑一笑</small></span>${icon('arrow')}</button>
+      <button class="activity" data-activity="command" aria-pressed="false"><span class="activity-icon yellow">${icon('spark')}</span><span><strong>动作口令</strong><small>说出你想看的动作</small></span>${icon('arrow')}</button>
     </div></section>
     <footer><span>${icon('leaf')} 慢慢长大，好好玩耍。</span><span>为 4–8 岁设计 · 建议家长陪伴体验</span></footer>
   </main>
   <dialog id="settings-dialog"><form id="settings-form"><div class="dialog-heading"><div><p class="eyebrow">A MOMENT FOR PARENTS</p><h2>让陪伴，更适合孩子</h2></div><button type="button" class="icon-button close-dialog" aria-label="关闭家长设置">${icon('close')}</button></div>
+    <label>天天的 3D 模型<select id="model-select"></select></label><p class="field-note" id="model-note"></p>
     <label>互动服务<select id="provider-select"></select></label><p class="field-note" id="provider-note"></p>
     <div class="form-row"><label>表达年龄<select id="age-select"><option value="4-5">4–5 岁 · 更短、更简单</option><option value="6-8">6–8 岁 · 多一点探索</option></select></label><label>每次互动<select id="minutes-select"><option value="5">5 分钟</option><option value="10" selected>10 分钟</option><option value="15">15 分钟</option></select></label></div>
     <div class="form-row"><label>声音风格<select id="voice-style-select"><option value="bright">明亮活泼 · 卡通女声</option><option value="gentle">温柔讲故事</option></select></label><label>动作表现<select id="motion-select"><option value="natural">自然</option><option value="lively" selected>活泼（默认）</option><option value="expressive">夸张</option></select></label></div>
@@ -61,7 +63,7 @@ document.querySelector('#app').innerHTML = `
     <p id="voice-preview-note" class="field-note" role="status">这是角色化合成声音，不是动画原声。实时语音使用服务器配置的音色，声音风格在新会话生效。</p>
     <div class="preview-buttons" aria-label="动作预览"><button type="button" data-motion="wave">看看招手</button><button type="button" data-motion="happy">开心小跳</button><button type="button" data-motion="curious">好奇歪头</button></div>
     <p class="field-note">动作预览会应用所选动作档位并关闭设置，方便观察天天。</p>
-    <label class="check-row"><input type="checkbox" id="lightweight-check">省电显示：隐藏细毛，降低画面负担</label>
+    <label class="check-row"><input type="checkbox" id="lightweight-check">省电显示：降低像素负担；模型含独立细毛时会隐藏细毛</label>
     <div class="parent-info">${icon('shield')}<p id="voice-data-info">天天是 AI 角色，声音由合成服务生成。实时语音只在按住“按住说话”按钮时发送麦克风音频；本应用不保存录音，也不写入聊天记录。服务方的数据处理规则需要由部署者单独确认。</p></div>
     <p class="field-note">当前是本机原型。首次语音测试请由成年人进行；正式儿童使用需完成数据保留、内容安全和家长同意配置。</p>
     <button class="primary-button" type="submit" id="save-settings">保存设置</button></form></dialog>
@@ -77,12 +79,34 @@ document.querySelector('#app').innerHTML = `
 
 const $ = id => document.getElementById(id);
 let config, scene, provider, active = false, connecting = false, pushTalking = false, pushTalkPhase = 'idle', activePointerId = null, activeInput = null, modelReady = false, lightweight = false, textOnlyInput = false;
-let selectedProvider = 'demo', settings = sessionSettings(), expiresAt = 0, sessionVersion = 0, state = 'ready';
+let selectedProvider = 'demo', selectedModel = 'balanced', settings = sessionSettings(), expiresAt = 0, sessionVersion = 0, state = 'ready';
 let localVoice = '', motion = 'lively', previewing = false, pendingInitialText = '';
 const messageElements = new Map();
-const prompts = { chat: '天天，你好！', story: '给我讲一个故事', discover: '为什么会有彩虹？', play: '我们来猜动物吧' };
+const prompts = { chat: '天天，你好！', story: '给我讲一个故事', discover: '为什么会有彩虹？', play: '我们来猜动物吧', command: '天天，请招手和我打个招呼' };
 
 function notice(text) { $('notice').textContent = text || ''; $('notice').hidden = !text; }
+function configuredModels() {
+  if (Array.isArray(config?.models) && config.models.length) return config.models;
+  return [{ id: 'balanced', label: '经典轻量版', url: config?.modelUrl || '/assets/dog-balanced.glb', description: '默认轻量模型。' }];
+}
+function modelById(id) { return configuredModels().find(model => model.id === id) || configuredModels()[0]; }
+function showModelNote(id = $('model-select').value) { const model = modelById(id); $('model-note').textContent = model?.description || ''; }
+async function applyModel(id, fallbackId = config?.defaultModel || 'balanced') {
+  const target = modelById(id);
+  if (!target || !scene) return false;
+  modelReady = false; $('loading').hidden = false; $('loading-label').textContent = `正在切换到${target.label}…`; $('progress').style.width = '0%'; updateUI();
+  const loaded = await scene.setModel(target.url, target.id);
+  if (loaded) return true;
+  const fallback = modelById(fallbackId);
+  if (fallback && fallback.id !== target.id) {
+    selectedModel = fallback.id; settings = sessionSettings({ ...settings, model: selectedModel });
+    $('model-select').value = selectedModel; showModelNote(selectedModel);
+    try { localStorage.setItem('tiantian-model', selectedModel); } catch { /* Storage can be disabled by the browser. */ }
+    notice(`${target.label}没有加载成功，已切回${fallback.label}。`);
+    return scene.setModel(fallback.url, fallback.id);
+  }
+  return false;
+}
 function addMessage(role, text, id = crypto.randomUUID()) {
   let item = messageElements.get(id);
   if (!item) {
@@ -328,7 +352,7 @@ function providerNote() {
   updateDataInfo(id);
 }
 $('parent-button').onclick = () => {
-  $('provider-select').value = selectedProvider; $('age-select').value = settings.ageBand; $('minutes-select').value = settings.minutes; $('lightweight-check').checked = lightweight;
+  $('provider-select').value = selectedProvider; $('model-select').value = selectedModel; showModelNote(selectedModel); $('age-select').value = settings.ageBand; $('minutes-select').value = settings.minutes; $('lightweight-check').checked = lightweight;
   $('voice-style-select').value = settings.voiceStyle; $('motion-select').value = motion;
   $('preview-voice').textContent = active || connecting ? '结束互动并试听演示配音' : '试听演示配音';
   void waitForVoices().then(voices => {
@@ -357,10 +381,17 @@ $('settings-dialog').addEventListener('close', () => { if (previewing) localSpee
 $('provider-select').onchange = providerNote;
 $('settings-form').onsubmit = event => {
   event.preventDefault(); if (active || connecting) endSession();
-  selectedProvider = $('provider-select').value; settings = sessionSettings({ ...settings, ageBand: $('age-select').value, minutes: Number($('minutes-select').value), voiceStyle: $('voice-style-select').value });
+  const previousModel = selectedModel, nextModel = $('model-select').value;
+  selectedProvider = $('provider-select').value; selectedModel = nextModel;
+  settings = sessionSettings({ ...settings, model: selectedModel, ageBand: $('age-select').value, minutes: Number($('minutes-select').value), voiceStyle: $('voice-style-select').value });
   localVoice = $('local-voice-select').value; motion = $('motion-select').value; scene?.setMotionLevel(motion);
   setQuality($('lightweight-check').checked); $('settings-dialog').close(); notice(''); updateUI(); $('clock-label').textContent = `每次 ${settings.minutes} 分钟，刚刚好`;
+  if (selectedModel !== previousModel) {
+    try { localStorage.setItem('tiantian-model', selectedModel); } catch { /* Storage can be disabled by the browser. */ }
+    void applyModel(selectedModel, previousModel);
+  }
 };
+$('model-select').onchange = () => showModelNote();
 document.querySelectorAll('.close-dialog').forEach(button => { button.onclick = () => button.closest('dialog').close(); });
 window.addEventListener('pagehide', () => { endSession(); });
 // Moving the app into the background closes the mic rather than leaving it transmitting invisibly.
@@ -373,13 +404,20 @@ setInterval(() => {
 }, 500);
 
 config = bootstrapConfig; selectedProvider = config.defaultProvider;
+const modelOptions = configuredModels();
+for (const model of modelOptions) $('model-select').add(new Option(model.label, model.id));
+let storedModel = '';
+try { storedModel = localStorage.getItem('tiantian-model') || ''; } catch { /* Storage can be disabled by the browser. */ }
+selectedModel = modelOptions.some(model => model.id === storedModel) ? storedModel : modelOptions.some(model => model.id === config.defaultModel) ? config.defaultModel : modelOptions[0].id;
+settings = sessionSettings({ ...settings, model: selectedModel }); $('model-select').value = selectedModel; showModelNote(selectedModel);
 for (const entry of config.providers) $('provider-select').add(new Option(entry.label, entry.id));
 updateDataInfo(selectedProvider);
 $('logout-button').hidden = !config.accessRequired;
 clearMessages(); updateUI();
 try {
   scene = new DogScene($('scene'), {
-    modelUrl: config.modelUrl,
+    modelUrl: modelById(selectedModel).url || config.modelUrl,
+    modelId: selectedModel,
     level: () => provider?.level() || 0,
     onProgress: percent => { $('progress').style.width = `${percent || 4}%`; $('loading-label').textContent = percent === 100 ? '正在梳理毛毛，马上就好…' : `天天正在走进花园…${percent ? ` ${percent}%` : ''}`; },
     onLoad: () => { modelReady = true; $('loading').hidden = true; setQuality(lightweight); updateUI(); },

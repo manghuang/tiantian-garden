@@ -31,7 +31,7 @@ export class RelayProvider {
     if (inputMode === 'text') { this.audio = false; this.textOnly = true; this.emit('inputMode', 'text'); }
     if (this.closed) return;
     try {
-      this.protocol = new RealtimeProtocol({ send: () => {}, emit: (type, value) => { if (!this.closed) this.emit(type, value); } });
+      this.protocol = new RealtimeProtocol({ model: this.settings?.model, send: () => {}, emit: (type, value) => { if (!this.closed) this.emit(type, value); } });
       if (this.audio || this.outputAudio) {
       try {
       this.context = new AudioContext({ sampleRate: 24000 });
@@ -125,7 +125,7 @@ export class RelayProvider {
     }
     const responseId = event.response_id ?? event.response?.id;
     if (this.protocol.interrupted.has(responseId) && event.type !== 'response.done') return;
-    if (event.type === 'garden.behavior') { const behavior = validateBehavior(event.behavior); if (behavior) this.emit('behavior', behavior); return; }
+    if (event.type === 'garden.behavior') { const behavior = validateBehavior(event.behavior, this.settings?.model); if (behavior) this.emit('behavior', behavior); return; }
     if (event.type === 'response.output_audio.delta') { this.player?.append(event.item_id, event.delta, event.audio_format || 'audio/pcm'); return; }
     if (event.type === 'response.output_audio.done') {
       const pending = this.player?.finish(event.item_id, event.playback_rate);

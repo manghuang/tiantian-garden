@@ -45,13 +45,21 @@ export function createApp({ env = process.env, fetcher = fetch } = {}) {
   app.get('/api/auth', access.status);
   app.post('/api/login', access.login);
   app.use('/api', access.require);
-  app.get('/api/config', (req, res) => res.json({
-    csrf: req.access.csrf, defaultProvider: configured ? 'openai' : 'demo',
-    accessRequired: deployment.protected,
-    providers: [{ id: 'demo', label: '本地演示', ready: true }, { id: 'openai', label: 'OpenAI 实时语音', ready: configured }],
-    childUseEnabled: env.CHILD_USE_ENABLED === 'true',
-    modelUrl: env.MODEL_QUALITY !== 'full' && existsSync(resolve(appRoot, 'assets/dog-balanced.glb')) ? '/assets/dog-balanced.glb' : '/assets/dog.glb',
-  }));
+  app.get('/api/config', (req, res) => {
+    const models = [];
+    if (existsSync(resolve(appRoot, 'assets/dog-balanced.glb'))) models.push({ id: 'balanced', label: '经典轻量版', url: '/assets/dog-balanced.glb', description: '23.5 MiB，加载更快，适合低性能设备。' });
+    if (existsSync(resolve(appRoot, 'assets/dog-v48.glb'))) models.push({ id: 'v48', label: '精细表情版 v48', url: '/assets/dog-v48.glb', description: '耳尾、跑跳和面部表情动作更多，画面负担也更高。' });
+    if (existsSync(resolve(assetRoot, 'Skye_Animated.glb'))) models.push({ id: 'classic_full', label: '经典高精度版（加载较慢）', url: '/assets/dog.glb', description: '旧版原始高精度模型，体积较大。' });
+    const requestedModel = env.MODEL_DEFAULT || (env.MODEL_QUALITY === 'full' ? 'classic_full' : 'balanced');
+    const defaultModel = models.some(model => model.id === requestedModel) ? requestedModel : models[0]?.id || 'balanced';
+    return res.json({
+      csrf: req.access.csrf, defaultProvider: configured ? 'openai' : 'demo',
+      accessRequired: deployment.protected,
+      providers: [{ id: 'demo', label: '本地演示', ready: true }, { id: 'openai', label: 'OpenAI 实时语音', ready: configured }],
+      childUseEnabled: env.CHILD_USE_ENABLED === 'true', models, defaultModel,
+      modelUrl: models.find(model => model.id === defaultModel)?.url || '/assets/dog-balanced.glb',
+    });
+  });
   app.use('/api', (req, res, next) => {
     if (req.get('X-Session-Token') !== req.access.csrf) return res.status(403).json({ error: '页面已过期，请刷新后重试。' });
     if (!access.sameOrigin(req)) return res.status(403).json({ error: '不允许跨站请求。' });
@@ -132,6 +140,7 @@ export function createApp({ env = process.env, fetcher = fetch } = {}) {
   });
   app.get('/assets/dog.glb', access.require, (_req, res) => res.sendFile(resolve(assetRoot, 'Skye_Animated.glb')));
   app.get('/assets/dog-balanced.glb', access.require, (_req, res) => res.sendFile(resolve(appRoot, 'assets/dog-balanced.glb')));
+  app.get('/assets/dog-v48.glb', access.require, (_req, res) => res.sendFile(resolve(appRoot, 'assets/dog-v48.glb')));
   app.get('/assets/dog-preview.png', access.require, (_req, res) => res.sendFile(resolve(assetRoot, 'Skye_Preview.png')));
   app.use('/api', (_req, res) => res.status(404).json({ error: '接口不存在。' }));
   app.use((err, _req, res, next) => {

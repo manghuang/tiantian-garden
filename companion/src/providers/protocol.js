@@ -2,8 +2,8 @@ import { validateBehavior } from '../../shared/behavior.js';
 
 // Only documented events reach the view; tool arguments are data, never code.
 export class RealtimeProtocol {
-  constructor({ send, emit }) {
-    this.send = send; this.emit = emit; this.active = null; this.interrupted = new Set(); this.handled = new Set();
+  constructor({ send, emit, model = 'balanced' }) {
+    this.send = send; this.emit = emit; this.model = model; this.active = null; this.interrupted = new Set(); this.handled = new Set();
   }
   interrupt() {
     if (this.active) { this.interrupted.add(this.active); this.send({ type: 'response.cancel', response_id: this.active }); }
@@ -36,7 +36,7 @@ export class RealtimeProtocol {
           if (item.type !== 'function_call' || !item.call_id || this.handled.has(item.call_id)) continue;
           this.handled.add(item.call_id);
           let behavior = null;
-          try { behavior = item.name === 'perform_behavior' ? validateBehavior(JSON.parse(item.arguments)) : null; } catch { /* Invalid tool JSON is rejected. */ }
+          try { behavior = item.name === 'perform_behavior' ? validateBehavior(JSON.parse(item.arguments), this.model) : null; } catch { /* Invalid tool JSON is rejected. */ }
           const accepted = behavior && toolCount === 0;
           if (accepted) this.emit('behavior', behavior);
           this.send({ type: 'conversation.item.create', item: { type: 'function_call_output', call_id: item.call_id, output: JSON.stringify({ ok: Boolean(accepted), ...(accepted ? behavior : { error: 'Invalid or excess behavior' }) }) } });

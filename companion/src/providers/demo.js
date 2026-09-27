@@ -3,7 +3,7 @@ import { localSpeech } from '../local-speech.js';
 
 export class DemoProvider {
   constructor({ emit }) { this.emit = emit; this.generation = 0; }
-  async connect(settings) { this.settings = settings; this.conversation = new DemoConversation(settings.activity); this.closed = false; this.emit('state', 'ready'); }
+  async connect(settings) { this.settings = settings; this.conversation = new DemoConversation(settings.activity, settings.model); this.closed = false; this.emit('state', 'ready'); }
   sendText(text) {
     this.interrupt();
     const generation = this.generation;

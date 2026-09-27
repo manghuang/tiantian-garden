@@ -28,7 +28,7 @@ export function activityReplies() { return [...Object.values(SCENES), CLARIFY, D
 
 // A finite, local demo: no model claims, scores, personal profiles or persistence.
 export class DemoConversation {
-  constructor(activity = 'chat') { this.activity = activity; this.node = null; this.last = null; }
+  constructor(activity = 'chat', model = 'balanced') { this.activity = activity; this.model = model; this.node = null; this.last = null; }
   show(id) {
     this.node = id; this.last = this.result(SCENES[id]); return this.last;
   }
@@ -37,7 +37,7 @@ export class DemoConversation {
     const text = String(input).trim().slice(0, 500);
     const safe = safetyReply(text);
     if (safe) { this.node = null; this.activity = 'chat'; return this.last = this.result(safe); }
-    if (/再见|拜拜|休息|结束互动/.test(text)) { this.node = null; return { ...this.result(demoReply('再见')), endSession: true }; }
+    if (/再见|拜拜|休息|结束互动/.test(text)) { this.node = null; return { ...this.result(demoReply('再见', 'chat', this.model)), endSession: true }; }
     if (/不想|不要|不玩|不听|停止/.test(text)) { this.node = null; this.activity = 'chat'; return this.last = this.result(DECLINE); }
     if (/再说|重复|没听清/.test(text) && this.last) return this.last;
     if (/从头|重新开始/.test(text) && this.node) return this.show(['seed', 'garden', 'pot', 'watering', 'drawing', 'sprout', 'friends', 'picture'].includes(this.node) ? 'seed' : 'rabbit');
@@ -48,11 +48,11 @@ export class DemoConversation {
       if (matched.length === 1 && !/不是|不选/.test(text)) return this.show(matched[0].next);
       if (/故事/.test(text)) return this.show('seed');
       if (/猜动物|玩游戏/.test(text)) return this.show('rabbit');
-      if (/飞|翅膀|招手|摇尾|跑|走|闻|嗅|眨眼/.test(text)) return { ...this.result(demoReply(text)), choices: this.result(current).choices };
+      if (/飞|翅膀|招手|摇尾|摇耳|耳朵|跑|跳|抖|走|闻|嗅|眨眼|笑/.test(text)) return { ...this.result(demoReply(text, 'chat', this.model)), choices: this.result(current).choices };
       return { ...this.result(CLARIFY), choices: this.result(current).choices };
     }
     if (/故事|种子/.test(text) || this.activity === 'story') return this.show('seed');
     if (/猜|玩/.test(text) || this.activity === 'play') return this.show('rabbit');
-    return this.last = this.result(demoReply(text, this.activity));
+    return this.last = this.result(demoReply(text, this.activity, this.model));
   }
 }

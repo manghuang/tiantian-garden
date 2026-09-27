@@ -95,6 +95,11 @@ export class GardenControl {
       const speech = deepseekSpeech(this.env);
       const voiceReady = speech.tts === 'local-gpu' ? this.localVoice.ready : speech.ttsReady;
       const label = speech.tts === 'local-gpu' ? 'DeepSeek + 本机角色音色' : speech.tts === 'cloudflare-minimax' ? 'DeepSeek + Cloudflare 天天音色' : speech.tts === 'minimax_direct' ? 'DeepSeek + MiniMax 直连音色' : speech.tts === 'cloudflare-melotts' ? 'DeepSeek + Cloudflare MeloTTS' : speech.asr === 'cloudflare' ? 'DeepSeek + Cloudflare 语音输入' : this.env.OPENAI_API_KEY ? 'DeepSeek 对话 + OpenAI 语音' : 'DeepSeek 文字 + 本机朗读';
+      const models = [
+        { id: 'balanced', label: '经典轻量版', url: '/assets/dog-balanced.glb', description: '23.5 MiB，加载更快，适合低性能设备；含待机、招手、走路、小跑与飞行动作。' },
+        { id: 'v48', label: '精细表情版 v48', url: '/assets/dog-v48.glb', description: '耳尾、跑跳和面部表情动作更多，画面负担也更高；暂不含飞行动画。' },
+      ];
+      const defaultModel = models.some(model => model.id === this.env.MODEL_DEFAULT) ? this.env.MODEL_DEFAULT : 'balanced';
       return json({
         csrf: login.csrf, defaultProvider: this.env.OPENAI_API_KEY ? 'openai' : this.env.DEEPSEEK_API_KEY ? 'deepseek' : 'demo', accessRequired: true,
         providers: [
@@ -102,7 +107,8 @@ export class GardenControl {
           { id: 'openai', label: 'OpenAI 实时语音', ready: Boolean(this.env.OPENAI_API_KEY), audio: true, moderation: this.env.REALTIME_TRANSPORT === 'webrtc' ? 'none' : 'output-text' },
           { id: 'deepseek', label, ready: Boolean(this.env.DEEPSEEK_API_KEY), ...speech, voiceReady, moderation: this.env.OPENAI_API_KEY ? 'openai-text' : 'local-rules' },
         ],
-        childUseEnabled: this.env.CHILD_USE_ENABLED === 'true', modelUrl: '/assets/dog-balanced.glb',
+        childUseEnabled: this.env.CHILD_USE_ENABLED === 'true', models, defaultModel,
+        modelUrl: models.find(model => model.id === defaultModel).url,
         realtimeTransport: this.env.REALTIME_TRANSPORT === 'webrtc' ? 'webrtc' : 'websocket',
       });
     }

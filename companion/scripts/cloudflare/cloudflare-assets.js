@@ -15,6 +15,7 @@ for (const entry of readdirSync(target)) {
 }
 cpSync(join(root, 'dist'), target, { recursive: true });
 cpSync(join(root, 'assets/dog-balanced.glb'), join(target, 'assets/dog-balanced.glb'));
+cpSync(join(root, 'assets/dog-v48.glb'), join(target, 'assets/dog-v48.glb'));
 let count = 0; let bytes = 0;
 function inspect(folder) {
   for (const entry of readdirSync(folder, { withFileTypes: true })) {
