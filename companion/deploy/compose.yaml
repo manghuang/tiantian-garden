@@ -17,7 +17,7 @@ services:
       OPENAI_REALTIME_MODEL: ${OPENAI_REALTIME_MODEL:-gpt-realtime-2.1}
       OPENAI_REALTIME_VOICE: ${OPENAI_REALTIME_VOICE:-coral}
       OPENAI_CUSTOM_VOICE_ID: ${OPENAI_CUSTOM_VOICE_ID:-}
-      MODEL_QUALITY: ${MODEL_QUALITY:-balanced}
+      MODEL_DEFAULT: ${MODEL_DEFAULT:-balanced}
       CHILD_USE_ENABLED: ${CHILD_USE_ENABLED:-false}
       SESSION_STORE_FILE: /app/companion/data/realtime-leases.json
     volumes:

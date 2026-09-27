@@ -61,9 +61,9 @@ test('arbitrary files and credentials are not served by the API', async t => {
   assert.equal((await request('/api/.env', undefined, { method: 'GET' })).status, 404);
 });
 
-test('operator can select the original full model without changing the optimized artifact', async t => {
+test('legacy full-model setting falls back to the shipped balanced model', async t => {
   const { config } = await fixture(t, { env: { MODEL_QUALITY: 'full' } });
-  assert.equal(config.modelUrl, '/assets/dog.glb');
+  assert.equal(config.modelUrl, '/assets/dog-balanced.glb');
 });
 
 test('configured custom voice id overrides built-in voice and the chosen character style reaches the session', async t => {

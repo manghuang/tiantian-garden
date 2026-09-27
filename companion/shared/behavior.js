@@ -25,7 +25,6 @@ export const ACTIONS = Object.freeze({
 });
 export const MODEL_ACTIONS = Object.freeze({
   balanced: ['idle', 'wave', 'happy', 'curious', 'sniff', 'play', 'wink', 'walk', 'trot', 'fly'],
-  classic_full: ['idle', 'wave', 'happy', 'curious', 'sniff', 'play', 'wink', 'walk', 'trot', 'fly'],
   v48: ['idle', 'wave', 'happy', 'curious', 'sniff', 'play', 'wink', 'walk', 'run', 'jump', 'ear_wiggle', 'tail_wag', 'blink_double', 'smile', 'shake_off', 'talk', 'playful_pant', 'wink_r', 'relaxed_eyes'],
 });
 export const EMOTIONS = ['warm', 'happy', 'curious', 'calm', 'sad'];

@@ -1,5 +1,5 @@
 {
-  "source": "output/Skye_Animated.glb",
+  "source": "external build source (not committed)",
   "target": "companion/assets/dog-balanced.glb",
   "sourceSha256": "2973096d598084c5cbf2b3a5e6cfc0286ab5b120357af0e3c71e0a96c44ecc99",
   "targetSha256": "79f338f1e9706bf5690d715e6149eee07842027b6305b56964d48cd4cb6d8fb0",

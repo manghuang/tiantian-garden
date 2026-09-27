@@ -71,7 +71,7 @@ encoded.copy(output, 0, 0, 20); output.writeUInt32LE(output.length, 8); output.w
 paddedJSON.copy(output, 20); binaryChunk.copy(output, 20 + paddedJSON.length);
 writeFileSync(target, output);
 const report = {
-  source: 'output/Skye_Animated.glb', target: 'companion/assets/dog-balanced.glb',
+  source: 'external build source (not committed)', target: 'companion/assets/dog-balanced.glb',
   sourceSha256: createHash('sha256').update(original).digest('hex'),
   targetSha256: createHash('sha256').update(output).digest('hex'),
   originalBytes: original.length, optimizedBytes: output.length,

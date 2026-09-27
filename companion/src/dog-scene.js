@@ -9,7 +9,7 @@ import { expressiveClip, motionLevel, performancePose } from './motion.js';
 const DISPLAY_MODEL_HEIGHT = 2.65;
 
 export class DogScene {
-  constructor(container, { onLoad, onProgress, onError, onAction, level, modelUrl = '/assets/dog.glb', modelId = 'balanced' }) {
+  constructor(container, { onLoad, onProgress, onError, onAction, level, modelUrl = '/assets/dog-balanced.glb', modelId = 'balanced' }) {
     this.container = container; this.onAction = onAction; this.level = level; this.onLoad = onLoad; this.onProgress = onProgress; this.onError = onError;
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
     this.renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));

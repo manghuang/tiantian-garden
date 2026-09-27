@@ -26,7 +26,7 @@ test('comforting replies reduce excitement and invalid voice style cannot inject
 
 // Read real animation quaternion data without a browser/GPU or downloading textures.
 function actualClips() {
-  const b = readFileSync(new URL('../../output/Skye_Animated.glb', import.meta.url));
+  const b = readFileSync(new URL('../assets/dog-balanced.glb', import.meta.url));
   const jsonSize = b.readUInt32LE(12); const j = JSON.parse(b.subarray(20, 20 + jsonSize).toString());
   const binary = b.subarray(28 + jsonSize);
   function accessor(index) {

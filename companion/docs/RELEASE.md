@@ -84,11 +84,11 @@
 
 2026-09-13 修复浏览器中双眼全白：Three.js ImageBitmapLoader 通过 `fetch(blob:)` 读取 GLB 内嵌贴图，原 CSP 仅在 `img-src` 放行 blob，导致虹膜加载失败。Node 与 Cloudflare 现在共用允许 `connect-src 'self' blob:` 的策略，其余来源限制保留。加载后检查两只眼睛的贴图，失败时显示提示而不展示缺失瞳孔的模型。已在本地 Cloudflare 页面确认正面、斜侧面、招手及小跳时虹膜与瞳孔可见；54 项测试、网页构建与 Worker dry-run 通过。此修复没有改写原模型、眼部几何或动画。
 
-`assets/dog-balanced.glb` 是独立发布资产，原始 `output/Skye_Animated.glb` 保留。每个细毛网格按固定抽样保留 8% 完整毛束；主体减面限制误差，保留有多个骨骼权重的顶点。眼球、口腔和带形态键的网格不减面；动画关键帧与绑定矩阵不改写，导出后恢复原始节点 TRS/matrix，避免导出器近似单位变换带来的漂移。近距离细毛密度低于原模型。
+`assets/dog-balanced.glb` 是独立发布资产。每个细毛网格按固定抽样保留 8% 完整毛束；主体减面限制误差，保留有多个骨骼权重的顶点。眼球、口腔和带形态键的网格不减面；动画关键帧与绑定矩阵不改写，导出后恢复原始节点 TRS/matrix，避免导出器近似单位变换带来的漂移。近距离细毛密度低于原模型。仓库只保留轻量版和 v48 两个运行时模型，原始源文件不随仓库发布。
 
 修改原模型后，使用 `npm ci --include=dev`、`npm run model:build`、`npm run model:validate`、`npm test` 重新生成和验证，再构建网页。体积/面数/源文件哈希见 `assets/model-report.json`，验证结果与目标文件哈希见 `assets/model-validation.json`。生成工具使用 [glTF Transform](https://gltf-transform.dev/modules/core/classes/NodeIO) 和 Meshoptimizer；没有使用线上模型转换服务。
 
-服务器默认选择轻量文件，可配置 `MODEL_QUALITY=full` 后重启使用原始精细模型。两条模型路由均执行访问控制。当前标准文件仍约 50 万三角面，尚未达到设计中 10–30 万的长期目标；没有用单次桌面帧率观察替代低端平板的温度、内存和持续帧率测试。
+服务器默认选择轻量文件，可通过 `MODEL_DEFAULT=v48` 切换到精细表情版。两条模型路由均执行访问控制。当前标准文件仍约 50 万三角面，尚未达到设计中 10–30 万的长期目标；没有用单次桌面帧率观察替代低端平板的温度、内存和持续帧率测试。
 
 ## 配置与运行
 

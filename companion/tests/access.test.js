@@ -46,8 +46,8 @@ test('public exposure fails closed without HTTPS origin and a strong admission c
 test('private deployment requires login, binds origin and issues secure independent cookies/CSRF', async t => {
   const { request, login } = await fixture(t, { env: { DEPLOYMENT_MODE: 'private', PUBLIC_ORIGIN: origin } });
   assert.equal((await request('/api/config')).status, 401);
-  assert.equal((await request('/assets/dog.glb')).status, 401);
   assert.equal((await request('/assets/dog-balanced.glb')).status, 401);
+  assert.equal((await request('/assets/dog-v48.glb')).status, 401);
   assert.equal((await request('/api/auth', { headers: { Host: 'evil.example', 'X-Forwarded-Host': 'garden.example' } })).status, 403);
   assert.equal((await request('/api/login', { body: { code }, headers: { Origin: 'https://evil.example' } })).status, 403);
   assert.equal((await request('/api/login', { body: { code }, headers: { Origin: '' } })).status, 403);

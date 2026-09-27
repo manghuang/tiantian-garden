@@ -17,7 +17,6 @@ COPY --from=build /app/companion/dist ./dist
 COPY companion/package.json ./
 COPY companion/server ./server
 COPY companion/shared ./shared
-COPY output/Skye_Animated.glb output/Skye_Preview.png /app/output/
 COPY companion/assets ./assets
 RUN mkdir -p /app/companion/data && chown node:node /app/companion/data
 USER node
